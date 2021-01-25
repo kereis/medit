@@ -6,52 +6,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <LinearLayout
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <ScrollView
-            android:id="@+id/textEditorContainer"
+        <net.dankito.richtexteditor.android.RichTextEditor
+            android:id="@+id/editor"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
+            android:layout_height="0dp"
+            android:layout_weight="10"
+            />
 
-            <EditText
-                android:id="@+id/textEditorBox"
-                style="@style/Widget.AppCompat.EditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="start"
-                android:inputType="textMultiLine" />
-        </ScrollView>
-
-        <LinearLayout
-            android:id="@+id/toolBar"
+        <me.humenius.medit.ui.editor.toolbar.MarkdownEditorToolbar
+            android:id="@+id/editorToolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/textEditorContainer"
-            android:orientation="horizontal">
+            android:layout_height="36dp"
+            android:background="@color/colorPrimary"
+            />
 
-            <Button
-                android:id="@+id/button3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Button" />
+<!--            <net.dankito.richtexteditor.android.toolbar.AllCommandsEditorToolbar-->
+<!--                android:id="@+id/editorToolbar"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="36dp"-->
+<!--                android:background="@color/colorPrimary"-->
+<!--                />-->
 
-            <Button
-                android:id="@+id/button4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Button" />
-        </LinearLayout>
-
-    </RelativeLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
