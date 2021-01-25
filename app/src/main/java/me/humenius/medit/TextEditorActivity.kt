@@ -1,7 +1,7 @@
 package me.humenius.medit
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.toolbar.EditorToolbar
 import net.dankito.utils.android.permissions.IPermissionsService
