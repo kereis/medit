@@ -3,8 +3,9 @@ package me.humenius.medit.editor
 import android.widget.EditText
 
 /**
- * <h1>TextAction</h1>
- * <p>Defines a text action that applies text formatting</p>
+ * **TextAction**
+ *
+ * Defines a text action that applies text formatting
  *
  * @author humenius
  * @version 1.0.0

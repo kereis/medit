@@ -7,8 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 
 /**
- * <h1>AbstractFragment</h1>
- * <p>A base class for handling fragments
+ * **AbstractFragment**
+ *
+ * A base class for handling fragments
  *
  * @see Fragment
  * @author humenius
@@ -20,7 +21,7 @@ abstract class AbstractFragment(layoutId: Int) : Fragment(layoutId) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var view = super.onCreateView(inflater, container, savedInstanceState)
+        val view = super.onCreateView(inflater, container, savedInstanceState)
 
         initView()
 
