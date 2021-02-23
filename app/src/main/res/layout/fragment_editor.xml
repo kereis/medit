@@ -18,10 +18,11 @@
         android:background="#00000000"/>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:background="#ddd">
 
         <HorizontalScrollView
             android:layout_width="match_parent"
@@ -35,15 +36,15 @@
 
                 <ImageButton
                     style="@style/ToolbarButton"
-                    app:srcCompat="@drawable/ic_format_bold_white_48dp" />
+                    app:srcCompat="@drawable/ic_bold" />
 
                 <ImageButton
                     style="@style/ToolbarButton"
-                    app:srcCompat="@drawable/ic_format_italic_white_48dp" />
+                    app:srcCompat="@drawable/ic_italics" />
 
                 <ImageButton
                     style="@style/ToolbarButton"
-                    app:srcCompat="@drawable/ic_format_underlined_white_48dp" />
+                    app:srcCompat="@drawable/ic_underline" />
             </LinearLayout>
         </HorizontalScrollView>
     </LinearLayout>
