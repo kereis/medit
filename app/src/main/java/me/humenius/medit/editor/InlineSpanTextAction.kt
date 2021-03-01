@@ -1,17 +1,19 @@
-package me.humenius.medit.format.markdown
+package me.humenius.medit.editor
 
 import android.widget.EditText
-import me.humenius.medit.editor.TextAction
 
 /**
  * **InlineSpanTextAction**
  *
- * An inline text format action
+ * Applies bold text formatting at current selection.
+ * If no text in `editTextView` is selected, a template will be inserted
+ * and the selection cursor will be set to the center of the formatting.
  *
  * @author humenius
  * @version 1.0.0
  */
-abstract class InlineSpanTextAction(private val tag: String) : TextAction() {
+
+class InlineSpanTextAction(private val token: String) : TextAction() {
     override fun apply(editTextView: EditText) {
         val start = editTextView.selectionStart
         val end = editTextView.selectionEnd
@@ -19,11 +21,11 @@ abstract class InlineSpanTextAction(private val tag: String) : TextAction() {
         val content = editTextView.text
 
         if (editTextView.hasSelection()) {
-            content.insert(start, tag)
-            content.insert(end + 1, tag)
+            content.insert(start, token + token)
+            editTextView.setSelection(start + 1)
         } else {
-            content.insert(start, tag + tag)
-            editTextView.setSelection(start + 2)
+            content.insert(start, token)
+            content.insert(end + 1, token)
         }
     }
 }
