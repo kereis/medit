@@ -2,7 +2,6 @@ package me.humenius.medit.ui.editor
 
 import android.content.Context
 import android.util.AttributeSet
-import android.widget.ImageButton
 
 class TextActionButton : androidx.appcompat.widget.AppCompatImageButton {
     constructor(context: Context) : super(context)
@@ -12,6 +11,4 @@ class TextActionButton : androidx.appcompat.widget.AppCompatImageButton {
         attrs,
         defStyleAttr
     )
-
-
 }

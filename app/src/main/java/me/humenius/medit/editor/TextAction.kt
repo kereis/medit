@@ -10,6 +10,6 @@ import android.widget.EditText
  * @author humenius
  * @version 1.0.0
  */
-abstract class TextAction() {
+abstract class TextAction {
     abstract fun apply(editTextView: EditText)
 }

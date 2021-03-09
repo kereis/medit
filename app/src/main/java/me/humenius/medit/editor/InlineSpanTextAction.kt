@@ -21,11 +21,11 @@ class InlineSpanTextAction(private val token: String) : TextAction() {
         val content = editTextView.text
 
         if (editTextView.hasSelection()) {
-            content.insert(start, token + token)
-            editTextView.setSelection(start + 1)
-        } else {
             content.insert(start, token)
-            content.insert(end + 1, token)
+            content.insert(end + token.length, token)
+        } else {
+            content.insert(start, token + token)
+            editTextView.setSelection(start + token.length)
         }
     }
 }
