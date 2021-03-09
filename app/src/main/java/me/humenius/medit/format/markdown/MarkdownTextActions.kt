@@ -8,6 +8,9 @@ enum class MarkdownTextActions(val textAction: TextAction) {
     BOLD(InlineSpanTextAction("**")),
     ITALIC(InlineSpanTextAction("*")),
     INLINE_CODE(InlineSpanTextAction("`")),
+    LINK(InlineSpanTextAction("")),
 
-    CODE_BLOCK(BlockTextAction("```")), QUOTE(BlockTextAction(">"))
+    CODE_BLOCK(BlockTextAction("```")), QUOTE(BlockTextAction(">")),
+    // PICTURE
+    // Headers
 }

@@ -1,0 +1,12 @@
+name: Quality control
+on: [pull_request, push]
+
+
+jobs:
+  quality-control:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+      - name: Grant execute permission for Gradle wrapper
+        run: chmod +x gradlew

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/edit_area"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -15,7 +16,7 @@
         android:scrollHorizontally="false"
         android:scrollbars="none"
         android:layout_marginBottom="48dp"
-        android:background="#00000000"/>
+        android:background="#00000000" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,16 +37,30 @@
 
                 <ImageButton
                     style="@style/ToolbarButton"
+                    android:id="@+id/action_bar_bold"
                     app:srcCompat="@drawable/ic_bold" />
 
                 <ImageButton
                     style="@style/ToolbarButton"
+                    android:id="@+id/action_bar_italics"
                     app:srcCompat="@drawable/ic_italics" />
 
                 <ImageButton
                     style="@style/ToolbarButton"
+                    android:id="@+id/action_bar_inline_code"
                     app:srcCompat="@drawable/ic_underline" />
             </LinearLayout>
         </HorizontalScrollView>
     </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:contentDescription="@string/fragment_editor_fab_render_md"
+        android:id="@+id/fab_render_md"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="72dp"
+        android:layout_marginEnd="20dp"
+        tools:ignore="RelativeOverlap" />
 </RelativeLayout>
