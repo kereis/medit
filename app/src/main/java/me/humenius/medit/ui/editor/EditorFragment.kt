@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import me.humenius.medit.R
 import me.humenius.medit.databinding.FragmentEditorBinding
 import me.humenius.medit.format.markdown.MarkdownTextActions
+import me.humenius.medit.parser.MarkdownParser
 
 class EditorFragment : Fragment(R.layout.fragment_editor) {
     private var _binding: FragmentEditorBinding? = null
@@ -40,7 +42,9 @@ class EditorFragment : Fragment(R.layout.fragment_editor) {
         }
 
         binding.fabRenderMd.setOnClickListener {
-            
+            Toast.makeText(it.context, "Test", Toast.LENGTH_SHORT).show()
+
+            val view = MarkdownParser.render(binding.contentInput.text.toString())
         }
     }
 }
