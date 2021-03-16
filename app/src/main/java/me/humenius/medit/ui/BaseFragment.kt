@@ -19,7 +19,7 @@ abstract class BaseFragment<VB : ViewBinding>(private val layoutId: Int) : Fragm
     protected var toolbar: Toolbar? = null
     protected var toolbarTitle: String? = "MeDit"
 
-    private lateinit var mContext: AppCompatActivity
+    protected lateinit var mContext: AppCompatActivity
 
     abstract val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> VB
 

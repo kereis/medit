@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_file_explorer"
+    app:startDestination="@id/navigation_fileExplorerRecentListFragment">
+
+    <fragment
+        android:id="@+id/navigation_fileExplorerRecentListFragment"
+        android:name="me.humenius.medit.ui.explorer.FileExplorerRecentListFragment"
+        android:label="FileExplorerRecentListFragment" />
+    <fragment
+        android:id="@+id/navigation_fileExplorerStorageListFragment"
+        android:name="me.humenius.medit.ui.explorer.FileExplorerStorageListFragment"
+        android:label="FileExplorerStorageListFragment" />
+</navigation>
