@@ -2,46 +2,43 @@ package me.humenius.medit.ui.editor
 
 import android.os.Bundle
 import android.text.Spanned
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import me.humenius.medit.R
 import me.humenius.medit.databinding.FragmentPreviewBinding
+import me.humenius.medit.ui.BaseFragment
 
-class MarkdownRenderFragment(private val textToDisplay: Spanned) : Fragment(R.layout.fragment_preview) {
-    private var _binding: FragmentPreviewBinding? = null
-    private val binding get() = _binding!!
+class MarkdownRenderFragment(private val textToDisplay: Spanned)
+    : BaseFragment<FragmentPreviewBinding>(R.layout.fragment_preview) {
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentPreviewBinding.inflate(inflater, container, false)
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean)
+        -> FragmentPreviewBinding = FragmentPreviewBinding::inflate
 
-        binding.previewTextView.text = textToDisplay
-
+    override fun initView() {
         initToolbar()
 
-        return binding.root
+        binding.previewTextView.text = textToDisplay
     }
 
     private fun initToolbar() {
-        val toolbar = binding.previewToolbar
-        val superActivity = activity as AppCompatActivity
+        val newToolbar = requireView().findViewById<Toolbar>(R.id.toolbar)
 
-        superActivity.setSupportActionBar(toolbar)
-        // TODO replace icon
-        toolbar.setNavigationIcon(R.drawable.ic_notifications_black_24dp)
-        toolbar.title = "Markdown Preview"
-
-        toolbar.setNavigationOnClickListener {
-            if (!parentFragmentManager.popBackStackImmediate()) {
-                activity?.onBackPressed()
+        if (newToolbar != null) {
+            newToolbar.title = "Markdown Preview"
+            newToolbar.setNavigationIcon(R.drawable.ic_dashboard_black_24dp)
+            newToolbar.setNavigationOnClickListener {
+                if (!parentFragmentManager.popBackStackImmediate())
+                    activity?.onBackPressed()
             }
-        }
 
+            toolbar = newToolbar
+        } else {
+            Log.println(Log.WARN, javaClass.name, "Could not initialize toolbar.")
+        }
     }
 }
