@@ -16,7 +16,9 @@
         android:scrollHorizontally="false"
         android:scrollbars="none"
         android:layout_marginBottom="48dp"
-        android:background="#00000000" />
+        android:background="#00000000"
+        android:text="My test example"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
