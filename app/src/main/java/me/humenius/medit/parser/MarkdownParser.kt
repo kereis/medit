@@ -18,7 +18,6 @@ import io.noties.markwon.Markwon
 import me.humenius.medit.R
 import me.humenius.medit.databinding.FragmentEditorBinding
 import me.humenius.medit.databinding.FragmentPreviewBinding
-import me.humenius.medit.extensions.toPx
 import me.humenius.medit.ui.editor.MarkdownRenderFragment
 
 sealed class MarkdownParser {
