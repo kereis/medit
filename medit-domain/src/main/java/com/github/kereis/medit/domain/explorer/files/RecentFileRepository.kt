@@ -6,6 +6,8 @@ interface RecentFileRepository {
 
     fun getLastRecentlyUsedFiles(period: Int): List<File>
 
+    fun update(vararg files: File)
+
     fun insert(vararg newFiles: File)
 
     fun delete(file: File)

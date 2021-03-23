@@ -1,4 +1,3 @@
-include ':test123'
 include ':medit-abstractcode'
 include ':medit-plugins'
 include ':medit-adapters'
