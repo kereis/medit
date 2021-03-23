@@ -2,7 +2,6 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'org.jlleitschuh.gradle.ktlint'
-    id 'kotlin-kapt'
 }
 
 android {
@@ -10,7 +9,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "me.humenius.medit"
+        applicationId "com.github.kereis.medit"
         minSdkVersion 28
         targetSdkVersion 30
         versionCode 1
@@ -40,7 +39,6 @@ android {
 
 dependencies {
     final def markwon_version = '4.6.2'
-    final def room_version = "2.2.6"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.3.2'
@@ -61,17 +59,6 @@ dependencies {
     implementation "io.noties.markwon:ext-latex:$markwon_version"
     implementation "io.noties.markwon:inline-parser:$markwon_version"
     /* ---------------- */
-    
-    /* Android Room framework */
-    implementation "androidx.room:room-runtime:$room_version"
-    kapt "androidx.room:room-compiler:$room_version"
-
-    // optional - Kotlin Extensions and Coroutines support for Room
-    implementation "androidx.room:room-ktx:$room_version"
-
-    // optional - Test helpers
-    testImplementation "androidx.room:room-testing:$room_version"
-    /* ---------------------- */
     
     /* Test frameworks */
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
