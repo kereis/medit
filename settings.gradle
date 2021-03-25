@@ -1,7 +1,6 @@
-include ':medit-abstractcode'
-include ':medit-plugins'
-include ':medit-adapters'
-include ':medit-domain'
+include ':abstraction-code'
+include ':adapters'
+include ':domain'
 include ':app'
 
 rootProject.name = "medit"
