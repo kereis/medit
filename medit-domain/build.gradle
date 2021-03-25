@@ -1,8 +1,8 @@
-plugins {
-    id 'com.android.library'
-    id 'kotlin-android'
-    id 'kotlin-kapt'
-}
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'org.jlleitschuh.gradle.ktlint'
+apply plugin: "org.jlleitschuh.gradle.ktlint-idea"
 
 android {
     compileSdkVersion 30
@@ -12,7 +12,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 30
         versionCode 1
-        versionName "1.0"
+        versionName '1.0.0'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         // consumerProguardFiles "consumer-rules.pro"
