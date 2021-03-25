@@ -1,4 +1,4 @@
-package com.github.kereis.medit.plugins
+package com.github.kereis.medit.persistence
 
 import android.content.Context
 import androidx.room.Database
@@ -17,8 +17,13 @@ abstract class AppDatabase : RoomDatabase() {
         @Volatile private var instance: AppDatabase? = null
 
         fun getInstance(context: Context): AppDatabase {
-            return instance ?: synchronized(lockObj) {
-                instance ?: buildDatabase(context).also { instance = it }
+            return instance
+                ?: synchronized(lockObj) {
+                instance
+                    ?: buildDatabase(
+                        context
+                    )
+                        .also { instance = it }
             }
         }
 

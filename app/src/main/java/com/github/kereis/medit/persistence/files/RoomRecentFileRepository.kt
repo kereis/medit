@@ -1,4 +1,4 @@
-package com.github.kereis.medit.plugins.explorer.files
+package com.github.kereis.medit.persistence.files
 
 import androidx.room.Dao
 import androidx.room.Delete
