@@ -38,16 +38,16 @@ dependencies {
 
     final def room_version = "2.2.6"
 
-    implementation Kotlin.stdlib
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     /* Android Room framework */
-    implementation AndroidX.room.runtime
-    kapt AndroidX.room.compiler
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
 
     // optional - Kotlin Extensions and Coroutines support for Room
-    implementation AndroidX.room.ktx
+    implementation "androidx.room:room-ktx:$room_version"
 
     // optional - Test helpers
-    testImplementation AndroidX.room.testing
+    testImplementation "androidx.room:room-testing:$room_version"
     /* ---------------------- */
 }
