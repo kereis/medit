@@ -23,6 +23,30 @@ buildscript {
     }
 }
 
+apply plugin: "org.jlleitschuh.gradle.ktlint-idea"
+apply plugin: "org.jlleitschuh.gradle.ktlint"
+
+subprojects {
+    apply plugin: "org.jlleitschuh.gradle.ktlint"
+
+    ktlint {
+        android = true
+        verbose = true
+        outputColorName = "RED"
+        reporters {
+            reporter "checkstyle"
+            reporter "plain"
+
+            customReporters {
+                "html" {
+                    fileExtension = "html"
+                    dependency = "me.cassiano:ktlint-html-reporter:0.2.3"
+                }
+            }
+        }
+    }
+}
+
 allprojects {
     repositories {
         google()
