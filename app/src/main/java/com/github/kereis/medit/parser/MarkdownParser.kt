@@ -2,8 +2,8 @@ package com.github.kereis.medit.parser
 
 import android.content.Context
 import androidx.fragment.app.Fragment
-import io.noties.markwon.Markwon
 import com.github.kereis.medit.ui.editor.MarkdownRenderFragment
+import io.noties.markwon.Markwon
 
 sealed class MarkdownParser {
     companion object {

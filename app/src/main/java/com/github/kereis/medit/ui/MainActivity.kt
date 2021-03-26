@@ -9,15 +9,15 @@ import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.github.kereis.medit.R
 import com.github.kereis.medit.databinding.ActivityMainBinding
 import com.github.kereis.medit.ui.explorer.FileExplorerRecentListFragment
 import com.github.kereis.medit.ui.explorer.FileExplorerStorageListFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class MainActivity
-    : AppCompatActivity(R.layout.activity_main),
-      BottomNavigationView.OnNavigationItemSelectedListener {
+class MainActivity :
+    AppCompatActivity(R.layout.activity_main),
+    BottomNavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var sectionPagerAdapter: FragmentStateAdapter
@@ -38,7 +38,6 @@ class MainActivity
         viewPager.offscreenPageLimit = binding.bottomNavigationBar.menu.size
 
         binding.bottomNavigationBar.setOnNavigationItemSelectedListener(this)
-
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -58,15 +57,19 @@ class MainActivity
         return false
     }
 
-    inner class SectionPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
+    inner class SectionPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(
+        fragmentActivity
+    ) {
         override fun getItemCount(): Int {
             return binding.bottomNavigationBar.menu.size
         }
 
         override fun createFragment(position: Int): Fragment {
             when (binding.bottomNavigationBar.menu[position].itemId) {
-                R.id.navigation_fileExplorerStorageListFragment -> return FileExplorerStorageListFragment()
-                R.id.navigation_fileExplorerRecentListFragment -> return FileExplorerRecentListFragment()
+                R.id.navigation_fileExplorerStorageListFragment
+                -> return FileExplorerStorageListFragment()
+                R.id.navigation_fileExplorerRecentListFragment
+                -> return FileExplorerRecentListFragment()
             }
 
             return FileExplorerRecentListFragment()
