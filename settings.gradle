@@ -1,6 +1,6 @@
+include ':domain'
 include ':abstraction-code'
 include ':adapters'
-include ':domain'
 include ':app'
 
 rootProject.name = "medit"

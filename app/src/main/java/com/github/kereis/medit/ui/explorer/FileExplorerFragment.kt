@@ -4,35 +4,45 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.commit
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.github.kereis.medit.R
 import com.github.kereis.medit.databinding.FragmentFileExplorerBinding
 import com.github.kereis.medit.ui.BaseFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class FileExplorerFragment
-    : BaseFragment<FragmentFileExplorerBinding>(R.layout.fragment_file_explorer) {
+class FileExplorerFragment :
+    BaseFragment<FragmentFileExplorerBinding>(R.layout.fragment_file_explorer) {
 
-    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentFileExplorerBinding
-        get() = FragmentFileExplorerBinding::inflate
+    override val bindingInflater:
+        (LayoutInflater, ViewGroup?, Boolean) -> FragmentFileExplorerBinding
+            get() = FragmentFileExplorerBinding::inflate
 
-    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        parentFragmentManager.commit {
-            when (item.itemId) {
-                R.id.navigation_fileExplorerRecentListFragment -> {
-                    Log.println(Log.INFO, javaClass.name, "Committing navigation change to FileExplorerRecentListFragment")
-                    replace(R.id.nav_host_fragment_container, FileExplorerRecentListFragment())
-                    return@OnNavigationItemSelectedListener true
-                }
-                R.id.navigation_fileExplorerStorageListFragment -> {
-                    Log.println(Log.INFO, javaClass.name, "Committing navigation change to FileExplorerStorageListFragment")
-                    replace(R.id.nav_host_fragment_container, FileExplorerStorageListFragment())
-                    return@OnNavigationItemSelectedListener true
+    private val mOnNavigationItemSelectedListener =
+        BottomNavigationView.OnNavigationItemSelectedListener { item ->
+            parentFragmentManager.commit {
+                when (item.itemId) {
+                    R.id.navigation_fileExplorerRecentListFragment -> {
+                        Log.println(
+                            Log.INFO,
+                            javaClass.name,
+                            "Committing navigation change to FileExplorerRecentListFragment"
+                        )
+                        replace(R.id.nav_host_fragment_container, FileExplorerRecentListFragment())
+                        return@OnNavigationItemSelectedListener true
+                    }
+                    R.id.navigation_fileExplorerStorageListFragment -> {
+                        Log.println(
+                            Log.INFO,
+                            javaClass.name,
+                            "Committing navigation change to FileExplorerStorageListFragment"
+                        )
+                        replace(R.id.nav_host_fragment_container, FileExplorerStorageListFragment())
+                        return@OnNavigationItemSelectedListener true
+                    }
                 }
             }
-        }
 
-        false
-    }
+            false
+        }
 
     override fun initView() {
         toolbarTitle = "File Explorer"

@@ -9,11 +9,11 @@ import com.github.kereis.medit.R
 import com.github.kereis.medit.databinding.FragmentPreviewBinding
 import com.github.kereis.medit.ui.BaseFragment
 
-class MarkdownRenderFragment(private val textToDisplay: Spanned)
-    : BaseFragment<FragmentPreviewBinding>(R.layout.fragment_preview) {
+class MarkdownRenderFragment(private val textToDisplay: Spanned) :
+    BaseFragment<FragmentPreviewBinding>(R.layout.fragment_preview) {
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean)
-        -> FragmentPreviewBinding = FragmentPreviewBinding::inflate
+    -> FragmentPreviewBinding = FragmentPreviewBinding::inflate
 
     override fun initView() {
         initToolbar()

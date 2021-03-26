@@ -19,12 +19,12 @@ abstract class AppDatabase : RoomDatabase() {
         fun getInstance(context: Context): AppDatabase {
             return instance
                 ?: synchronized(lockObj) {
-                instance
-                    ?: buildDatabase(
-                        context
-                    )
-                        .also { instance = it }
-            }
+                    instance
+                        ?: buildDatabase(
+                            context
+                        )
+                            .also { instance = it }
+                }
         }
 
         private fun buildDatabase(context: Context): AppDatabase {

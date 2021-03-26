@@ -13,7 +13,12 @@ interface RoomRecentFileRepository : RecentFileRepository {
     @Query("SELECT * FROM file")
     override fun getAll(): List<File>
 
-    @Query("SELECT * FROM file WHERE last_access_date > (SELECT DATETIME('now', '-' + :period + ' second'))")
+    @Query(
+        "SELECT * FROM file " +
+            "WHERE lastAccess > (" +
+            "SELECT DATETIME('now', '-' + :period + ' second')" +
+            ")"
+    )
     override fun getLastRecentlyUsedFiles(period: Int): List<File>
 
     @Update
