@@ -1,4 +1,4 @@
-package com.github.kereis.medit.persistence
+package com.kereis.github.medit.plugins.database
 
 import android.content.Context
 import androidx.room.Database
