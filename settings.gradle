@@ -1,3 +1,4 @@
+include ':plugins-database'
 include ':domain'
 include ':abstraction-code'
 include ':adapters'

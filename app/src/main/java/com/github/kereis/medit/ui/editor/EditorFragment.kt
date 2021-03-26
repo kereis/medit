@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.commit
 import com.github.kereis.medit.R
 import com.github.kereis.medit.databinding.FragmentEditorBinding
-import com.github.kereis.medit.format.markdown.MarkdownTextActions
+import com.github.kereis.medit.domain.format.markdown.MarkdownTextActions
 import com.github.kereis.medit.parser.MarkdownParser
 import com.github.kereis.medit.ui.BaseFragment
 
