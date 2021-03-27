@@ -1,7 +1,7 @@
-include ':plugins-database'
+include ':plugins-android-database'
 include ':domain'
 include ':abstraction-code'
 include ':adapters'
-include ':app'
+include ':plugins-android'
 
 rootProject.name = "medit"
