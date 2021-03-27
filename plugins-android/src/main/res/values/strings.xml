@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">MeDit</string>
-    <string name="file_explorer_nav_title_recent">Recent files</string>
+    <string name="file_explorer_nav_title_recent">Recent com.kereis.github.medit.adapters.explorer.files</string>
     <string name="file_explorer_nav_title_storage">Storage</string>
     <string name="fragment_editor_fab_render_md">// TODO Refaktor</string>
 </resources>
