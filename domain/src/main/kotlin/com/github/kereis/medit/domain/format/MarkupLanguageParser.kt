@@ -1,4 +1,4 @@
-package com.kereis.github.medit.domain.format
+package com.github.kereis.medit.domain.format
 
 abstract class MarkupLanguageParser {
 

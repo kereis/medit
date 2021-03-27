@@ -1,4 +1,4 @@
-package com.kereis.github.medit.domain.editor
+package com.github.kereis.medit.domain.editor
 
 abstract class TextEditor {
 

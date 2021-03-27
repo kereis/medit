@@ -1,6 +1,6 @@
-package com.kereis.github.medit.domain.editor
+package com.github.kereis.medit.domain.editor
 
-import com.kereis.github.medit.domain.explorer.files.File
+import com.github.kereis.medit.domain.explorer.files.File
 
 data class Document(
     val title: String,

@@ -1,4 +1,4 @@
-package com.kereis.github.medit.domain.editor.actions
+package com.github.kereis.medit.domain.editor.actions
 
 /**
  * # TextAction

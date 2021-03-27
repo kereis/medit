@@ -6,9 +6,6 @@ java {
 }
 
 dependencies {
-    final def room_version = "2.2.6"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-
-    implementation "androidx.room:room-common:$room_version"
 }
