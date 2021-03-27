@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.kereis.github.medit.domain.explorer.files.File
+import com.github.kereis.medit.domain.explorer.files.File
 
 @Database(entities = [File::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {

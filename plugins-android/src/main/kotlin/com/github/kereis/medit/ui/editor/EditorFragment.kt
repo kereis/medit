@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.commit
 import com.github.kereis.medit.R
+import com.github.kereis.medit.application.format.markdown.MarkdownTextActions
 import com.github.kereis.medit.databinding.FragmentEditorBinding
-import com.kereis.github.medit.domain.format.markdown.MarkdownTextActions
 import com.github.kereis.medit.parser.MarkdownParser
 import com.github.kereis.medit.ui.BaseFragment
 

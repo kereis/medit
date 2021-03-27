@@ -1,4 +1,4 @@
-package com.kereis.github.medit.domain.explorer.files
+package com.github.kereis.medit.domain.explorer.files
 
 interface RecentFileRepository {
 

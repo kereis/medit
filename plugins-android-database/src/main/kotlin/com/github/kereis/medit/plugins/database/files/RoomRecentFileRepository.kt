@@ -5,8 +5,8 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.kereis.github.medit.domain.explorer.files.File
-import com.kereis.github.medit.domain.explorer.files.RecentFileRepository
+import com.github.kereis.medit.domain.explorer.files.File
+import com.github.kereis.medit.domain.explorer.files.RecentFileRepository
 
 @Dao
 interface RoomRecentFileRepository : RecentFileRepository {

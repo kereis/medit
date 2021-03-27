@@ -1,8 +1,8 @@
-package com.kereis.github.medit.domain.format.markdown
+package com.github.kereis.medit.application.format.markdown
 
-import com.kereis.github.medit.domain.editor.actions.BlockTextAction
-import com.kereis.github.medit.domain.editor.actions.InlineSpanTextAction
-import com.kereis.github.medit.domain.editor.actions.TextAction
+import com.github.kereis.medit.application.editor.actions.BlockTextAction
+import com.github.kereis.medit.application.editor.actions.InlineSpanTextAction
+import com.github.kereis.medit.domain.editor.actions.TextAction
 
 enum class MarkdownTextActions(val textAction: TextAction) {
     BOLD(InlineSpanTextAction("**")),
