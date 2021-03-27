@@ -1,4 +1,4 @@
-# Built application files
+# Built application com.kereis.github.medit.adapters.explorer.files
 *.apk
 *.aar
 *.ap_
@@ -7,17 +7,17 @@
 # Files for the ART/Dalvik VM
 *.dex
 
-# Java class files
+# Java class com.kereis.github.medit.adapters.explorer.files
 *.class
 
-# Generated files
+# Generated com.kereis.github.medit.adapters.explorer.files
 bin/
 gen/
 out/
-#  Uncomment the following line in case you need and you don't have the release build type files in your app
+#  Uncomment the following line in case you need and you don't have the release build type com.kereis.github.medit.adapters.explorer.files in your app
 # release/
 
-# Gradle files
+# Gradle com.kereis.github.medit.adapters.explorer.files
 .gradle/
 build/
 
@@ -30,7 +30,7 @@ proguard/
 # Log Files
 *.log
 
-# Android Studio Navigation editor temp files
+# Android Studio Navigation editor temp com.kereis.github.medit.adapters.explorer.files
 .navigation/
 
 # Android Studio captures folder
@@ -50,8 +50,8 @@ captures/
 # Comment next line if keeping position of elements in Navigation Editor is relevant for you
 .idea/navEditor.xml
 
-# Keystore files
-# Uncomment the following lines if you do not want to check your keystore files in.
+# Keystore com.kereis.github.medit.adapters.explorer.files
+# Uncomment the following lines if you do not want to check your keystore com.kereis.github.medit.adapters.explorer.files in.
 #*.jks
 #*.keystore
 

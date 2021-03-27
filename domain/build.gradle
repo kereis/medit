@@ -5,16 +5,6 @@ java {
     targetCompatibility = JavaVersion.VERSION_1_8
 }
 
-configurations {
-    provided
-}
-
-sourceSets {
-    main {
-        compileClasspath += configurations.provided
-    }
-}
-
 dependencies {
     final def room_version = "2.2.6"
 
