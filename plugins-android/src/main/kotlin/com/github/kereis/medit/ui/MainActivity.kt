@@ -14,7 +14,9 @@ import com.github.kereis.medit.databinding.ActivityMainBinding
 import com.github.kereis.medit.ui.explorer.FileExplorerRecentListFragment
 import com.github.kereis.medit.ui.explorer.FileExplorerStorageListFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity :
     AppCompatActivity(R.layout.activity_main),
     BottomNavigationView.OnNavigationItemSelectedListener {
