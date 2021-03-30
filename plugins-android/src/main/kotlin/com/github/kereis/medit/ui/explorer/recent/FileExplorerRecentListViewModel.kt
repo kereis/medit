@@ -1,6 +1,5 @@
 package com.github.kereis.medit.ui.explorer.recent
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.distinctUntilChanged
@@ -12,6 +11,7 @@ import com.github.kereis.medit.domain.explorer.files.RecentFileRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
+import timber.log.Timber
 
 @HiltViewModel
 class FileExplorerRecentListViewModel
@@ -25,7 +25,7 @@ class FileExplorerRecentListViewModel
     val fetchFileList = currentFileList.distinctUntilChanged().switchMap {
         liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
             val list = recentFileRepository.getAll()
-            Log.e(FileExplorerRecentListViewModel::javaClass.name, list.toString())
+            Timber.d("Got list of files! %s", list.toString())
             emit(list)
         }
     }

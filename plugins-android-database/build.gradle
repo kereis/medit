@@ -71,4 +71,8 @@ dependencies {
     // optional - Test helpers
     testImplementation "androidx.room:room-testing:$room_version"
     /* ---------------------- */
+
+    /* Logging */
+    implementation "com.jakewharton.timber:timber:$timber_version"
+    /* ------- */
 }

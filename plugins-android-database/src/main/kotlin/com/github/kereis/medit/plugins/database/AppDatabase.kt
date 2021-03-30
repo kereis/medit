@@ -11,6 +11,7 @@ import com.github.kereis.medit.adapters.explorer.room.files.FileEntity
 import com.github.kereis.medit.adapters.explorer.room.files.getSampleFileEntityData
 import com.github.kereis.medit.plugins.database.files.RoomRecentFileRepository
 import java.util.concurrent.Executors
+import timber.log.Timber
 
 @Database(entities = [FileEntity::class], version = 1)
 @TypeConverters(DateTimeTypeConverter::class)
@@ -46,6 +47,10 @@ abstract class AppDatabase : RoomDatabase() {
                             super.onCreate(db)
 
                             // TODO Remove or add logic for debug versions?
+                            Timber.i(
+                                "Feeding Room database '%s' with test data",
+                                "medit.db"
+                            )
                             Executors.newSingleThreadExecutor().execute {
                                 getInstance(context).recentFilesDao().insert(
                                     *getSampleFileEntityData()
