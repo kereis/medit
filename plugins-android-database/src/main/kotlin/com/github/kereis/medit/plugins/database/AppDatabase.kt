@@ -10,6 +10,7 @@ import com.github.kereis.medit.adapters.explorer.room.DateTimeTypeConverter
 import com.github.kereis.medit.adapters.explorer.room.files.FileEntity
 import com.github.kereis.medit.adapters.explorer.room.files.getSampleFileEntityData
 import com.github.kereis.medit.plugins.database.files.RoomRecentFileRepository
+import java.util.concurrent.Executors
 
 @Database(entities = [FileEntity::class], version = 1)
 @TypeConverters(DateTimeTypeConverter::class)
@@ -45,7 +46,11 @@ abstract class AppDatabase : RoomDatabase() {
                             super.onCreate(db)
 
                             // TODO Remove or add logic for debug versions?
-                            getInstance(context).recentFilesDao().insert(*getSampleFileEntityData())
+                            Executors.newSingleThreadExecutor().execute {
+                                getInstance(context).recentFilesDao().insert(
+                                    *getSampleFileEntityData()
+                                )
+                            }
                         }
                     }
                 )

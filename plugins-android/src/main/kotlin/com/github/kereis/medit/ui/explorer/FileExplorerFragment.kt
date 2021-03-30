@@ -7,6 +7,7 @@ import androidx.fragment.app.commit
 import com.github.kereis.medit.R
 import com.github.kereis.medit.databinding.FragmentFileExplorerBinding
 import com.github.kereis.medit.ui.BaseFragment
+import com.github.kereis.medit.ui.explorer.recent.FileExplorerRecentListFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class FileExplorerFragment :
