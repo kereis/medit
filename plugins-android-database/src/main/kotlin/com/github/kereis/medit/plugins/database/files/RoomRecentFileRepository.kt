@@ -1,31 +1,31 @@
 package com.github.kereis.medit.plugins.database.files
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
-import com.github.kereis.medit.adapters.explorer.room.files.FileEntity
+import com.github.kereis.medit.adapters.explorer.room.files.asDomainFileList
+import com.github.kereis.medit.adapters.explorer.room.files.asFileEntity
+import com.github.kereis.medit.adapters.explorer.room.files.asFileEntityArray
+import com.github.kereis.medit.domain.explorer.files.File
+import com.github.kereis.medit.domain.explorer.files.RecentFileRepository
 
-@Dao
-interface RoomRecentFileRepository {
-    @Query("SELECT * FROM recent_files")
-    fun getAll(): List<FileEntity>
+class RoomRecentFileRepository(
+    private val recentFileDao: RecentFileDao
+) : RecentFileRepository {
+    override suspend fun getAll(): List<File> {
+        return recentFileDao.getAll().asDomainFileList()
+    }
 
-    @Query(
-        "SELECT * FROM recent_files " +
-            "WHERE lastAccess > (" +
-            "SELECT DATETIME('now', '-' + :period + ' second')" +
-            ")"
-    )
-    fun getLastRecentlyUsedFiles(period: Int): List<FileEntity>
+    override suspend fun getLastRecentlyUsedFiles(period: Int): List<File> {
+        return recentFileDao.getLastRecentlyUsedFiles(period).asDomainFileList()
+    }
 
-    @Update
-    fun update(vararg files: FileEntity)
+    override suspend fun update(vararg files: File) {
+        recentFileDao.update(*files.asFileEntityArray())
+    }
 
-    @Insert
-    fun insert(vararg newFiles: FileEntity)
+    override suspend fun insert(vararg newFiles: File) {
+        recentFileDao.insert(*newFiles.asFileEntityArray())
+    }
 
-    @Delete
-    fun delete(file: FileEntity)
+    override suspend fun delete(file: File) {
+        recentFileDao.delete(file.asFileEntity())
+    }
 }

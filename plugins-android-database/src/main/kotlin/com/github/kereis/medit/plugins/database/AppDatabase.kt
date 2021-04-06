@@ -9,15 +9,17 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.github.kereis.medit.adapters.explorer.room.DateTimeTypeConverter
 import com.github.kereis.medit.adapters.explorer.room.files.FileEntity
 import com.github.kereis.medit.adapters.explorer.room.files.getSampleFileEntityData
-import com.github.kereis.medit.plugins.database.files.RoomRecentFileRepository
+import com.github.kereis.medit.plugins.database.files.RecentFileDao
+import kotlinx.coroutines.runBlocking
 import java.util.concurrent.Executors
 import timber.log.Timber
+import java.time.OffsetDateTime
 
 @Database(entities = [FileEntity::class], version = 1)
 @TypeConverters(DateTimeTypeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun recentFilesDao(): RoomRecentFileRepository
+    abstract fun recentFilesDao(): RecentFileDao
 
     companion object {
         private val lockObj = Any()
@@ -36,30 +38,19 @@ abstract class AppDatabase : RoomDatabase() {
         }
 
         private fun buildDatabase(context: Context): AppDatabase {
-            return Room.databaseBuilder(
+            val db = Room.databaseBuilder(
                 context.applicationContext,
                 AppDatabase::class.java,
                 "medit.db"
-            )
-                .addCallback(
-                    object : RoomDatabase.Callback() {
-                        override fun onCreate(db: SupportSQLiteDatabase) {
-                            super.onCreate(db)
+            ).build()
 
-                            // TODO Remove or add logic for debug versions?
-                            Timber.i(
-                                "Feeding Room database '%s' with test data",
-                                "medit.db"
-                            )
-                            Executors.newSingleThreadExecutor().execute {
-                                getInstance(context).recentFilesDao().insert(
-                                    *getSampleFileEntityData()
-                                )
-                            }
-                        }
-                    }
-                )
-                .build()
+            // TODO: Other mechanism for debug entries?
+            runBlocking {
+                Timber.i("Pre-populating room database!")
+                db.recentFilesDao().insert(*getSampleFileEntityData())
+            }
+
+            return db
         }
     }
 }
