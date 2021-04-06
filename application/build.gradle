@@ -5,6 +5,9 @@ plugins {
 dependencies {
 
     implementation project(":domain")
+    implementation project(":abstraction-code")
+
+    implementation "com.google.dagger:dagger:2.33"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
