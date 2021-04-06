@@ -4,12 +4,20 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.github.kereis.medit.domain.explorer.files.File
+import androidx.room.TypeConverters
+import androidx.sqlite.db.SupportSQLiteDatabase
+import com.github.kereis.medit.adapters.explorer.room.DateTimeTypeConverter
+import com.github.kereis.medit.adapters.explorer.room.files.FileEntity
+import com.github.kereis.medit.adapters.explorer.room.files.getSampleFileEntityData
+import com.github.kereis.medit.plugins.database.files.RoomRecentFileRepository
+import java.util.concurrent.Executors
+import timber.log.Timber
 
-@Database(entities = [File::class], version = 1)
+@Database(entities = [FileEntity::class], version = 1)
+@TypeConverters(DateTimeTypeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun recentFilesDao(): Any
+    abstract fun recentFilesDao(): RoomRecentFileRepository
 
     companion object {
         private val lockObj = Any()
@@ -32,7 +40,26 @@ abstract class AppDatabase : RoomDatabase() {
                 context.applicationContext,
                 AppDatabase::class.java,
                 "medit.db"
-            ).build()
+            )
+                .addCallback(
+                    object : RoomDatabase.Callback() {
+                        override fun onCreate(db: SupportSQLiteDatabase) {
+                            super.onCreate(db)
+
+                            // TODO Remove or add logic for debug versions?
+                            Timber.i(
+                                "Feeding Room database '%s' with test data",
+                                "medit.db"
+                            )
+                            Executors.newSingleThreadExecutor().execute {
+                                getInstance(context).recentFilesDao().insert(
+                                    *getSampleFileEntityData()
+                                )
+                            }
+                        }
+                    }
+                )
+                .build()
         }
     }
 }

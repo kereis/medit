@@ -7,5 +7,7 @@ java {
 
 dependencies {
 
+    implementation project(":abstraction-code")
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }

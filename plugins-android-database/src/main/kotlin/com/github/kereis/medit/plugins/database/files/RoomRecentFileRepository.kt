@@ -5,28 +5,27 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.github.kereis.medit.domain.explorer.files.File
-import com.github.kereis.medit.domain.explorer.files.RecentFileRepository
+import com.github.kereis.medit.adapters.explorer.room.files.FileEntity
 
 @Dao
-interface RoomRecentFileRepository : RecentFileRepository {
-    @Query("SELECT * FROM file")
-    override fun getAll(): List<File>
+interface RoomRecentFileRepository {
+    @Query("SELECT * FROM recent_files")
+    fun getAll(): List<FileEntity>
 
     @Query(
-        "SELECT * FROM file " +
+        "SELECT * FROM recent_files " +
             "WHERE lastAccess > (" +
             "SELECT DATETIME('now', '-' + :period + ' second')" +
             ")"
     )
-    override fun getLastRecentlyUsedFiles(period: Int): List<File>
+    fun getLastRecentlyUsedFiles(period: Int): List<FileEntity>
 
     @Update
-    override fun update(vararg files: File)
+    fun update(vararg files: FileEntity)
 
     @Insert
-    override fun insert(vararg newFiles: File)
+    fun insert(vararg newFiles: FileEntity)
 
     @Delete
-    override fun delete(file: File)
+    fun delete(file: FileEntity)
 }
