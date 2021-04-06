@@ -1,13 +1,14 @@
 package com.github.kereis.medit.ui.explorer
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.commit
 import com.github.kereis.medit.R
 import com.github.kereis.medit.databinding.FragmentFileExplorerBinding
 import com.github.kereis.medit.ui.BaseFragment
+import com.github.kereis.medit.ui.explorer.recent.FileExplorerRecentListFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import timber.log.Timber
 
 class FileExplorerFragment :
     BaseFragment<FragmentFileExplorerBinding>(R.layout.fragment_file_explorer) {
@@ -21,18 +22,14 @@ class FileExplorerFragment :
             parentFragmentManager.commit {
                 when (item.itemId) {
                     R.id.navigation_fileExplorerRecentListFragment -> {
-                        Log.println(
-                            Log.INFO,
-                            javaClass.name,
+                        Timber.i(
                             "Committing navigation change to FileExplorerRecentListFragment"
                         )
                         replace(R.id.nav_host_fragment_container, FileExplorerRecentListFragment())
                         return@OnNavigationItemSelectedListener true
                     }
                     R.id.navigation_fileExplorerStorageListFragment -> {
-                        Log.println(
-                            Log.INFO,
-                            javaClass.name,
+                        Timber.i(
                             "Committing navigation change to FileExplorerStorageListFragment"
                         )
                         replace(R.id.nav_host_fragment_container, FileExplorerStorageListFragment())

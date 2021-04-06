@@ -5,16 +5,17 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.get
-import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.github.kereis.medit.R
 import com.github.kereis.medit.databinding.ActivityMainBinding
-import com.github.kereis.medit.ui.explorer.FileExplorerRecentListFragment
 import com.github.kereis.medit.ui.explorer.FileExplorerStorageListFragment
+import com.github.kereis.medit.ui.explorer.recent.FileExplorerRecentListFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity :
     AppCompatActivity(R.layout.activity_main),
     BottomNavigationView.OnNavigationItemSelectedListener {
@@ -35,7 +36,7 @@ class MainActivity :
         sectionPagerAdapter = SectionPagerAdapter(this)
         val viewPager = binding.mainViewPager
         viewPager.adapter = sectionPagerAdapter
-        viewPager.offscreenPageLimit = binding.bottomNavigationBar.menu.size
+        viewPager.offscreenPageLimit = binding.bottomNavigationBar.menu.size()
 
         binding.bottomNavigationBar.setOnNavigationItemSelectedListener(this)
     }
@@ -61,7 +62,7 @@ class MainActivity :
         fragmentActivity
     ) {
         override fun getItemCount(): Int {
-            return binding.bottomNavigationBar.menu.size
+            return binding.bottomNavigationBar.menu.size()
         }
 
         override fun createFragment(position: Int): Fragment {

@@ -1,11 +1,12 @@
 package com.github.kereis.medit.domain.explorer.files
 
-import java.sql.Timestamp
+import java.time.OffsetDateTime
 
 data class File(
 
+    val id: Int,
     val fileName: String,
     val fileExtension: String?,
     val filePath: String,
-    val lastAccess: Timestamp,
+    val lastAccess: OffsetDateTime,
 )
