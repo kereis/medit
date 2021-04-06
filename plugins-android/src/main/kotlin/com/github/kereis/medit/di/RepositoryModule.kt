@@ -6,6 +6,7 @@ import com.github.kereis.medit.domain.explorer.files.RecentFileRepository
 import com.github.kereis.medit.plugins.database.AppDatabase
 import com.github.kereis.medit.plugins.database.files.RecentFileDao
 import com.github.kereis.medit.plugins.database.files.RoomRecentFileRepository
+import com.github.kereis.medit.ui.ToastService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,16 +16,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DatabaseModule {
-
-    @Singleton
-    @Provides
-    fun provideRoomInstance(
-        @ApplicationContext context: Context
-    ) = AppDatabase.getInstance(context)
-
-    @Provides
-    fun provideRecentFilesDao(db: AppDatabase) = db.recentFilesDao()
+object RepositoryModule {
 
     @AnyThread
     @Singleton
