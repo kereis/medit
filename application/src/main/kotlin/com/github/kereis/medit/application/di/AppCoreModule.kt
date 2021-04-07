@@ -11,6 +11,6 @@ object AppCoreModule {
 
     @Provides
     @Singleton
-    fun provideRecentFileRepositoryService(recentFileRepository: RecentFileRepository)
-        = RecentFileRepositoryService(recentFileRepository)
+    fun provideRecentFileRepositoryService(recentFileRepository: RecentFileRepository) =
+        RecentFileRepositoryService(recentFileRepository)
 }

@@ -15,18 +15,15 @@ import com.github.kereis.medit.ui.explorer.FileExplorerStorageListFragment
 import com.github.kereis.medit.ui.explorer.recent.FileExplorerRecentListFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity
-    : AppCompatActivity(R.layout.activity_main),
+class MainActivity :
+    AppCompatActivity(R.layout.activity_main),
     BottomNavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var sectionPagerAdapter: FragmentStateAdapter
     private lateinit var toolbar: Toolbar
-
-    @Inject lateinit var toastService: ToastService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

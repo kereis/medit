@@ -16,10 +16,10 @@ import com.github.kereis.medit.ui.components.SelectableEditText
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class EditorFragment
-    : BaseFragment<FragmentEditorBinding>(R.layout.fragment_editor),
-      TextEditor,
-      SelectableEditText.OnSelectionChangedListener{
+class EditorFragment :
+    BaseFragment<FragmentEditorBinding>(R.layout.fragment_editor),
+    TextEditor,
+    SelectableEditText.OnSelectionChangedListener {
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentEditorBinding
         get() = FragmentEditorBinding::inflate
