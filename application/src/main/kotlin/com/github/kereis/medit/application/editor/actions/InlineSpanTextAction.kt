@@ -1,5 +1,6 @@
 package com.github.kereis.medit.application.editor.actions
 
+import com.github.kereis.medit.domain.editor.TextEditor
 import com.github.kereis.medit.domain.editor.actions.TextAction
 
 /**
@@ -13,21 +14,17 @@ import com.github.kereis.medit.domain.editor.actions.TextAction
  */
 
 class InlineSpanTextAction(private val token: String) : TextAction() {
-    override fun apply(text: String): String {
-        TODO("Not yet implemented")
+
+    override fun apply(textEditor: TextEditor) {
+        val start = textEditor.selectionStart
+        val end = textEditor.selectionEnd
+
+        if (textEditor.hasSelection) {
+            textEditor.insert(start, token)
+            textEditor.insert(end + token.length, token)
+        } else {
+            textEditor.insert(start, token + token)
+            textEditor.setCursor(start + token.length)
+        }
     }
-    // override fun apply(editTextView: EditText) {
-    //     val start = editTextView.selectionStart
-    //     val end = editTextView.selectionEnd
-    //
-    //     val content = editTextView.text
-    //
-    //     if (editTextView.hasSelection()) {
-    //         content.insert(start, token)
-    //         content.insert(end + token.length, token)
-    //     } else {
-    //         content.insert(start, token + token)
-    //         editTextView.setSelection(start + token.length)
-    //     }
-    // }
 }

@@ -1,22 +1,19 @@
 package com.github.kereis.medit.application.editor.actions
 
+import com.github.kereis.medit.domain.editor.TextEditor
 import com.github.kereis.medit.domain.editor.actions.TextAction
 
-class BlockTextAction(private val token: String) : TextAction() {
-    override fun apply(text: String): String {
-        TODO("Not yet implemented")
+class BlockTextAction(token: String) : TextAction() {
+
+    private val startBlock = "\n$token"
+    private val endBlock = "\n\n$token\n"
+
+    override fun apply(textEditor: TextEditor) {
+        val text = textEditor.text
+
+        val endIndex = textEditor.selectionEnd
+
+        textEditor.insert(endIndex, "$startBlock$endBlock")
+        textEditor.setCursor(endIndex + startBlock.length)
     }
-    // private val startBlock = "\n$token"
-    // private val endBlock = "\n\n$token\n"
-    //
-    // override fun apply(editTextView: EditText) {
-    //     val end = editTextView.selectionEnd
-    //
-    //     val content = editTextView.text
-    //
-    //     if (!editTextView.hasSelection()) {
-    //         content.insert(end, "$startBlock$endBlock")
-    //         editTextView.setSelection(end + startBlock.length)
-    //     }
-    // }
 }
