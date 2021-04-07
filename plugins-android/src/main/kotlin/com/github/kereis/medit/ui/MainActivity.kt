@@ -1,5 +1,6 @@
 package com.github.kereis.medit.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -14,15 +15,18 @@ import com.github.kereis.medit.ui.explorer.FileExplorerStorageListFragment
 import com.github.kereis.medit.ui.explorer.recent.FileExplorerRecentListFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity :
-    AppCompatActivity(R.layout.activity_main),
+class MainActivity
+    : AppCompatActivity(R.layout.activity_main),
     BottomNavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var sectionPagerAdapter: FragmentStateAdapter
     private lateinit var toolbar: Toolbar
+
+    @Inject lateinit var toastService: ToastService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +43,11 @@ class MainActivity :
         viewPager.offscreenPageLimit = binding.bottomNavigationBar.menu.size()
 
         binding.bottomNavigationBar.setOnNavigationItemSelectedListener(this)
+
+        binding.fabAdd.setOnClickListener {
+            val intent = Intent(this, EditorActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

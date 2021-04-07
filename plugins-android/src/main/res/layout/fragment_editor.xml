@@ -8,7 +8,7 @@
 
     <include layout="@layout/toolbar" />
 
-    <EditText
+    <com.github.kereis.medit.ui.components.SelectableEditText
         android:id="@+id/content_input"
         android:textColor="#333"
         android:layout_width="match_parent"

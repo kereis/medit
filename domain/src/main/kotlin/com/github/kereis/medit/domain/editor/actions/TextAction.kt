@@ -1,5 +1,7 @@
 package com.github.kereis.medit.domain.editor.actions
 
+import com.github.kereis.medit.domain.editor.TextEditor
+
 /**
  * # TextAction
  *
@@ -9,5 +11,5 @@ package com.github.kereis.medit.domain.editor.actions
  */
 abstract class TextAction {
 
-    abstract fun apply(text: String): String
+    abstract fun apply(textEditor: TextEditor)
 }

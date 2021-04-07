@@ -5,8 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import com.github.kereis.medit.R
 import com.github.kereis.medit.databinding.ActivityEditorBinding
+import com.github.kereis.medit.ui.editor.EditorFragment
 import com.github.kereis.medit.ui.explorer.FileExplorerFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class EditorActivity : AppCompatActivity(R.layout.activity_editor) {
     private lateinit var binding: ActivityEditorBinding
 
@@ -17,7 +20,7 @@ class EditorActivity : AppCompatActivity(R.layout.activity_editor) {
         setContentView(binding.root)
 
         supportFragmentManager.commit {
-            replace(R.id.fragment_container, FileExplorerFragment())
+            replace(R.id.fragment_container, EditorFragment())
         }
     }
 }
