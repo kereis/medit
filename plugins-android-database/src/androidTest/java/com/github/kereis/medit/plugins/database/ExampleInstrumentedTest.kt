@@ -17,6 +17,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.kereis.github.medit.plugins.database.test", appContext.packageName)
+        assertEquals("com.github.kereis.medit.plugins.database.test", appContext.packageName)
     }
 }
