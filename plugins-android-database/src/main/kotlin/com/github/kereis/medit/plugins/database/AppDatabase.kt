@@ -5,15 +5,12 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import androidx.sqlite.db.SupportSQLiteDatabase
 import com.github.kereis.medit.adapters.explorer.room.DateTimeTypeConverter
 import com.github.kereis.medit.adapters.explorer.room.files.FileEntity
 import com.github.kereis.medit.adapters.explorer.room.files.getSampleFileEntityData
 import com.github.kereis.medit.plugins.database.files.RecentFileDao
 import kotlinx.coroutines.runBlocking
-import java.util.concurrent.Executors
 import timber.log.Timber
-import java.time.OffsetDateTime
 
 @Database(entities = [FileEntity::class], version = 1)
 @TypeConverters(DateTimeTypeConverter::class)

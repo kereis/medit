@@ -6,7 +6,6 @@ import androidx.fragment.app.commit
 import com.github.kereis.medit.R
 import com.github.kereis.medit.databinding.ActivityEditorBinding
 import com.github.kereis.medit.ui.editor.EditorFragment
-import com.github.kereis.medit.ui.explorer.FileExplorerFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
