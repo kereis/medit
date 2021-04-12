@@ -10,6 +10,6 @@
         android:label="FileExplorerRecentListFragment" />
     <fragment
         android:id="@+id/navigation_fileExplorerStorageListFragment"
-        android:name="com.github.kereis.medit.ui.explorer.FileExplorerStorageListFragment"
+        android:name="com.github.kereis.medit.ui.explorer.storage.FileExplorerStorageListFragment"
         android:label="FileExplorerStorageListFragment" />
 </navigation>

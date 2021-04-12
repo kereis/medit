@@ -7,13 +7,20 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import com.github.kereis.medit.R
+import com.github.kereis.medit.application.files.FileStorageService
 import com.github.kereis.medit.application.format.markdown.MarkdownTextActions
 import com.github.kereis.medit.databinding.FragmentEditorBinding
+import com.github.kereis.medit.domain.editor.Document
 import com.github.kereis.medit.domain.editor.TextEditor
+import com.github.kereis.medit.domain.explorer.files.File
 import com.github.kereis.medit.parser.MarkdownParser
 import com.github.kereis.medit.ui.BaseFragment
 import com.github.kereis.medit.ui.components.SelectableEditText
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.runBlocking
+import timber.log.Timber
+import java.nio.file.Paths
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class EditorFragment :
@@ -24,12 +31,16 @@ class EditorFragment :
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentEditorBinding
         get() = FragmentEditorBinding::inflate
 
+    @Inject
+    lateinit var fileStorageService: FileStorageService
+
     private val viewModel by activityViewModels<EditorViewModel>()
 
     override fun initView() {
         toolbarTitle = "Edit file"
         super.initView()
         setup()
+        readBundle()
     }
 
     override val selectionStart: Int
@@ -49,6 +60,38 @@ class EditorFragment :
 
     override fun setCursor(atIndex: Int) {
         binding.contentInput.setSelection(atIndex)
+    }
+
+    override fun load(document: Document) {
+        TODO("Not yet implemented")
+    }
+
+    override fun save() {
+        TODO("Not yet implemented")
+    }
+
+    override fun saveAs(file: File) {
+        TODO("Not yet implemented")
+    }
+
+    private fun readBundle() {
+        arguments?.let { args ->
+            args.getString("FILE_NAME")?.let { rawPath ->
+                val path = Paths.get(rawPath)
+
+                fileStorageService.findFile(path)?.let { file ->
+                    runBlocking {
+                        fileStorageService.loadDocument(file).handleResult(
+                            onSuccess = {
+                                Timber.i("document found - now loading")
+                                load(it)
+                            },
+                            onFailure = { Timber.e(it) }
+                        )
+                    }
+                }
+            }
+        }
     }
 
     private fun setup() {
