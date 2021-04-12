@@ -1,8 +1,10 @@
 package com.github.kereis.medit.ui
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.get
@@ -11,10 +13,11 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.github.kereis.medit.R
 import com.github.kereis.medit.databinding.ActivityMainBinding
-import com.github.kereis.medit.ui.explorer.FileExplorerStorageListFragment
 import com.github.kereis.medit.ui.explorer.recent.FileExplorerRecentListFragment
+import com.github.kereis.medit.ui.explorer.storage.FileExplorerStorageListFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity :
@@ -24,6 +27,7 @@ class MainActivity :
     private lateinit var binding: ActivityMainBinding
     private lateinit var sectionPagerAdapter: FragmentStateAdapter
     private lateinit var toolbar: Toolbar
+    private lateinit var getFilePath: ActivityResultLauncher<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,11 +61,33 @@ class MainActivity :
             R.id.navigation_fileExplorerStorageListFragment -> {
                 binding.mainViewPager.currentItem = 1
                 toolbar.setTitle(R.string.file_explorer_nav_title_storage)
+
+                Timber.i(
+                    "Opening file opening intent in FileExplorerStorageListFragment"
+                )
+                val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                    type = "text/markdown"
+                    addCategory(Intent.CATEGORY_OPENABLE)
+                }
+
+                startActivityForResult(intent, 2)
+
                 return true
             }
         }
 
         return false
+    }
+
+    private fun openEditorActivity(uri: Uri) {
+        val intent = Intent(this, EditorActivity::class.java)
+
+        val bundle = Bundle()
+        bundle.putString("FILE_PATH", uri.toString())
+
+        intent.putExtras(bundle)
+
+        startActivity(intent)
     }
 
     inner class SectionPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(
