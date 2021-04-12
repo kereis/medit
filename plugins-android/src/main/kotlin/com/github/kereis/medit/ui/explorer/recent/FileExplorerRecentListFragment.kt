@@ -40,7 +40,7 @@ class FileExplorerRecentListFragment :
         viewModel.fetchFileList.observe(
             viewLifecycleOwner,
             {
-                adapter.setFileList(it)
+                //adapter.setFileList(it)
             }
         )
     }

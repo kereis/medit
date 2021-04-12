@@ -3,18 +3,19 @@ package com.github.kereis.medit.ui.explorer.recent
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.documentfile.provider.DocumentFile
 import androidx.recyclerview.widget.RecyclerView
 import com.github.kereis.medit.databinding.FragmentFileExplorerRecentListElementBinding
-import com.github.kereis.medit.domain.explorer.files.File
 import com.github.kereis.medit.ui.AbstractViewHolder
+import com.github.kereis.medit.ui.explorer.FileExplorerFileElementViewHolder
 
 class FileExplorerRecentListAdapter(
     private val context: Context
 ) : RecyclerView.Adapter<AbstractViewHolder<*>>() {
 
-    private var fileList = listOf<File>()
+    private var fileList = listOf<DocumentFile>()
 
-    fun setFileList(fileList: List<File>) {
+    fun setFileList(fileList: List<DocumentFile>) {
         this.fileList = fileList
         notifyDataSetChanged()
     }
@@ -26,25 +27,14 @@ class FileExplorerRecentListAdapter(
             false
         )
 
-        return FileExplorerRecentListViewHolder(itemBinding)
+        return FileExplorerFileElementViewHolder(null, itemBinding)
     }
 
     override fun onBindViewHolder(holder: AbstractViewHolder<*>, position: Int) {
         when (holder) {
-            is FileExplorerRecentListViewHolder -> holder.bind(fileList[position])
+            is FileExplorerFileElementViewHolder -> holder.bind(fileList[position])
         }
     }
 
     override fun getItemCount(): Int = fileList.size
-
-    private inner class FileExplorerRecentListViewHolder(
-        private val binding: FragmentFileExplorerRecentListElementBinding
-    ) : AbstractViewHolder<File>(binding.root) {
-
-        override fun bind(item: File) = with(binding) {
-            fileExplorerRecentFilesElementName.text = item.fileName
-            fileExplorerRecentFilesElementPath.text = item.filePath
-            fileExplorerRecentFilesElementLastAccess.text = item.lastAccess.toString()
-        }
-    }
 }

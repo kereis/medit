@@ -1,5 +1,7 @@
 package com.github.kereis.medit.domain.editor
 
+import com.github.kereis.medit.domain.explorer.files.File
+
 interface TextEditor {
 
     val selectionStart: Int
@@ -19,4 +21,10 @@ interface TextEditor {
     fun insert(atIndex: Int, text: String)
 
     fun setCursor(atIndex: Int)
+
+    fun load(document: Document)
+
+    fun save()
+
+    fun saveAs(file: File)
 }
