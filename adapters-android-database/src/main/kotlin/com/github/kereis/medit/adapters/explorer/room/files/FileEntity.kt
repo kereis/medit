@@ -3,6 +3,7 @@ package com.github.kereis.medit.adapters.explorer.room.files
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.github.kereis.medit.domain.explorer.files.File
+import java.nio.file.Paths
 import java.time.OffsetDateTime
 
 @Entity(tableName = "recent_files")
@@ -16,17 +17,21 @@ data class FileEntity(
     val lastAccess: OffsetDateTime,
 )
 
-fun FileEntity.asDomainFile(): File = File(id, fileName, fileExtension, filePath, lastAccess)
+fun FileEntity.asDomainFile(): File =
+    File(id, fileName, fileExtension, Paths.get(filePath), lastAccess)
+
 fun List<FileEntity>.asDomainFileList(): List<File> = map {
-    File(it.id, it.fileName, it.fileExtension, it.filePath, it.lastAccess)
+    File(it.id, it.fileName, it.fileExtension, Paths.get(it.filePath), it.lastAccess)
 }
 
-fun File.asFileEntity(): FileEntity = FileEntity(id, fileName, fileExtension, filePath, lastAccess)
+fun File.asFileEntity(): FileEntity =
+    FileEntity(id!!, fileName, fileExtension, filePath.toString(), lastAccess)
+
 fun List<File>.asFileEntityList(): List<FileEntity> = map {
-    FileEntity(it.id, it.fileName, it.fileExtension, it.filePath, it.lastAccess)
+    FileEntity(it.id!!, it.fileName, it.fileExtension, it.filePath.toString(), it.lastAccess)
 }
 fun Array<out File>.asFileEntityArray(): Array<out FileEntity> = map {
-    FileEntity(it.id, it.fileName, it.fileExtension, it.filePath, it.lastAccess)
+    FileEntity(it.id!!, it.fileName, it.fileExtension, it.filePath.toString(), it.lastAccess)
 }.toTypedArray()
 
 fun getSampleFileEntityData(): Array<FileEntity> {

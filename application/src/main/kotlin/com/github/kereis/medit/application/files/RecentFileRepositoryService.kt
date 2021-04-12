@@ -9,4 +9,8 @@ class RecentFileRepositoryService(
     suspend fun getAll(): List<File> {
         return recentFileRepository.getAll()
     }
+
+    suspend fun updateAccess(file: File) {
+        recentFileRepository.update(File.updateAccessTime(file))
+    }
 }

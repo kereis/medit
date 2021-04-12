@@ -10,4 +10,6 @@ dependencies {
     implementation project(":abstraction-code")
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1'
 }
