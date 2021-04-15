@@ -1,5 +1,6 @@
 plugins {
     id 'kotlin'
+    id 'kotlin-kapt'
 }
 
 dependencies {
@@ -7,4 +8,5 @@ dependencies {
     implementation project(":domain")
     implementation project(":abstraction-code")
 
+    kapt 'com.google.dagger:dagger-compiler:2.33'
 }
