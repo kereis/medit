@@ -1,5 +1,6 @@
 plugins {
     id 'kotlin'
+    id 'kotlin-kapt'
 }
 
 java {
@@ -8,12 +9,15 @@ java {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    api "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
-    implementation "com.google.dagger:dagger:2.33"
+    api "com.google.dagger:dagger:2.33"
+    kapt 'com.google.dagger:dagger-compiler:2.33'
 
     //rx-java
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.9'
-    implementation "com.squareup.retrofit2:adapter-rxjava2:2.5.0"
+    api 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    api 'io.reactivex.rxjava2:rxjava:2.2.9'
+    api "com.squareup.retrofit2:adapter-rxjava2:2.5.0"
+
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1'
 }
