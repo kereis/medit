@@ -1,6 +1,7 @@
 package com.github.kereis.medit.di
 
 import android.content.Context
+import com.github.kereis.medit.adapter.android.di.AndroidFilesystemAdapterModule
 import com.github.kereis.medit.application.di.AppCoreModule
 import com.github.kereis.medit.plugins.database.AppDatabase
 import dagger.Module
@@ -10,7 +11,12 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-@Module(includes = [AppCoreModule::class])
+@Module(
+    includes = [
+        AppCoreModule::class,
+        AndroidFilesystemAdapterModule::class
+    ]
+)
 @InstallIn(SingletonComponent::class)
 object AppModule {
 

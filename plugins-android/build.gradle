@@ -45,6 +45,7 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
+    implementation project(':adapters-android-fs')
     implementation project(':plugins-android-database')
     implementation project(':application')
     implementation project(':domain')
