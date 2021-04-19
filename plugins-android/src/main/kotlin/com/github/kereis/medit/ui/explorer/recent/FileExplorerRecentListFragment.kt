@@ -3,6 +3,7 @@ package com.github.kereis.medit.ui.explorer.recent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.documentfile.provider.DocumentFile
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.kereis.medit.R
@@ -40,7 +41,10 @@ class FileExplorerRecentListFragment :
         viewModel.fetchFileList.observe(
             viewLifecycleOwner,
             {
-                //adapter.setFileList(it)
+                // TODO Move into mapper class
+                adapter.setFileList(it.map { domainFile ->
+                    DocumentFile.fromFile(domainFile.filePath.toFile())
+                })
             }
         )
     }

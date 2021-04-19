@@ -3,9 +3,13 @@ package com.github.kereis.medit.ui.editor
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.github.kereis.medit.domain.editor.Document
+import com.github.kereis.medit.domain.editor.History
+import com.github.kereis.medit.domain.explorer.files.File
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import timber.log.Timber
+import java.time.OffsetDateTime
+import javax.inject.Inject
 
 @HiltViewModel
 class EditorViewModel
@@ -13,22 +17,43 @@ class EditorViewModel
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val _content = savedStateHandle.getLiveData("content", "")
     private val _selectionStart = savedStateHandle.getLiveData<Int>("selection_start")
     private val _selectionEnd = savedStateHandle.getLiveData<Int>("selection_end")
+    private val _activeDocument =
+        savedStateHandle.getLiveData<Document>(
+            "active_document",
+            Document(
+                "NewFile",
+                "My new content",
+                File(
+                    null,
+                    "NewFile.md",
+                    "md",
+                    java.io.File("").toPath(),
+                    OffsetDateTime.now()
+                ),
+                History()
+            )
+        )
 
-    val content: LiveData<String> = _content
     val selectionStart: LiveData<Int> = _selectionStart
     val selectionEnd: LiveData<Int> = _selectionEnd
+    val activeDocument: LiveData<Document> = _activeDocument
 
     fun onContentChanged(newContent: String) {
         // Timber.d("onContentChanged: %s", newContent)
-        _content.value = newContent
+        _activeDocument.value?.let {
+            it.content = newContent
+        }
     }
 
     fun onSelectionChanged(start: Int, end: Int) {
         Timber.d("onSelectionChanged: %d, %d", start, end)
         _selectionStart.value = start
         _selectionEnd.value = end
+    }
+
+    fun setActiveDocument(document: Document) {
+        _activeDocument.value = document
     }
 }

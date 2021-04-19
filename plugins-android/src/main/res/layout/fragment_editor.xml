@@ -8,6 +8,31 @@
 
     <include layout="@layout/toolbar" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#ddd">
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/editor__debug__save"
+                    android:text="Save" />
+            </LinearLayout>
+        </HorizontalScrollView>
+    </LinearLayout>
+
     <com.github.kereis.medit.ui.components.SelectableEditText
         android:id="@+id/content_input"
         android:textColor="#333"

@@ -1,15 +1,19 @@
 package com.github.kereis.medit.ui.editor
 
+import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import com.github.kereis.medit.R
 import com.github.kereis.medit.application.files.FileStorageService
 import com.github.kereis.medit.application.format.markdown.MarkdownTextActions
 import com.github.kereis.medit.databinding.FragmentEditorBinding
+import com.github.kereis.medit.domain.async.Result
 import com.github.kereis.medit.domain.editor.Document
 import com.github.kereis.medit.domain.editor.TextEditor
 import com.github.kereis.medit.domain.explorer.files.File
@@ -48,7 +52,7 @@ class EditorFragment :
     override val selectionEnd: Int
         get() = viewModel.selectionEnd.value!!
     override val text: String
-        get() = viewModel.content.value!!
+        get() = viewModel.activeDocument.value!!.content
 
     override fun replace(startIndex: Int, endIndex: Int, text: String) {
         binding.contentInput.text?.replace(startIndex, endIndex, text)
@@ -63,7 +67,7 @@ class EditorFragment :
     }
 
     override fun load(document: Document) {
-        TODO("Not yet implemented")
+        viewModel.setActiveDocument(document)
     }
 
     override fun save() {
@@ -120,7 +124,8 @@ class EditorFragment :
                     start: Int,
                     count: Int,
                     after: Int
-                ) {}
+                ) {
+                }
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
@@ -129,6 +134,31 @@ class EditorFragment :
                 }
             }
         )
+
+        binding.editorDebugSave.setOnClickListener {
+            val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                type = "text/markdown"
+                addCategory(Intent.CATEGORY_OPENABLE)
+                putExtra(Intent.EXTRA_TITLE, "TestFile.md")
+            }
+
+            registerForActivityResult(ActivityResultContracts.CreateDocument()) { uri ->
+                runBlocking {
+                    fileStorageService
+                        .saveDocument(viewModel.activeDocument.value!!)
+                        .handleResult { result ->
+                            if (result != Result.State.Done)
+                                return@handleResult
+
+                            Toast.makeText(
+                                this@EditorFragment.mContext,
+                                "Saved!",
+                                Toast.LENGTH_SHORT
+                            )
+                        }
+                }
+            }
+        }
 
         binding.contentInput.addOnSelectionChangedListener(this)
     }
