@@ -1,4 +1,3 @@
-include ':adapters-android-fs'
 include ':application'
 include ':plugins-android-database'
 include ':domain'

@@ -11,5 +11,6 @@ import com.github.kereis.medit.domain.editor.TextEditor
  */
 abstract class TextAction {
 
+    @Deprecated("Will be removed after implemented FormatCommands")
     abstract fun apply(textEditor: TextEditor)
 }

@@ -5,74 +5,41 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.activity.result.ActivityResultLauncher
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.fragment.app.commit
 import com.github.kereis.medit.R
 import com.github.kereis.medit.databinding.FragmentFileExplorerBinding
+import com.github.kereis.medit.domain.explorer.files.AbstractFileLoader
 import com.github.kereis.medit.ui.BaseFragment
 import com.github.kereis.medit.ui.EditorActivity
-import com.github.kereis.medit.ui.explorer.recent.FileExplorerRecentListFragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import timber.log.Timber
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class FileExplorerFragment :
     BaseFragment<FragmentFileExplorerBinding>(R.layout.fragment_file_explorer) {
 
-    private lateinit var getFilePath: ActivityResultLauncher<String>
+    // private lateinit var getFilePath: ActivityResultLauncher<String>
+
+    @Inject
+    lateinit var fileLoader: AbstractFileLoader
 
     override val bindingInflater:
             (LayoutInflater, ViewGroup?, Boolean) -> FragmentFileExplorerBinding
         get() = FragmentFileExplorerBinding::inflate
 
-    private val mOnNavigationItemSelectedListener =
-        BottomNavigationView.OnNavigationItemSelectedListener { item ->
-            parentFragmentManager.commit {
-                when (item.itemId) {
-                    R.id.navigation_fileExplorerRecentListFragment -> {
-                        Timber.i(
-                            "Committing navigation change to FileExplorerRecentListFragment"
-                        )
-                        replace(R.id.nav_host_fragment_container, FileExplorerRecentListFragment())
-                        return@OnNavigationItemSelectedListener true
-                    }
-                    R.id.navigation_fileExplorerStorageListFragment -> {
-                        // Timber.i(
-                        //     "Committing navigation change to FileExplorerStorageListFragment"
-                        // )
-                        // replace(R.id.nav_host_fragment_container, FileExplorerStorageListFragment())
-                        Timber.i(
-                            "Opening file opening intent in FileExplorerStorageListFragment"
-                        )
-                        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-                            type = "text/markdown"
-                            addCategory(Intent.CATEGORY_OPENABLE)
-                        }
+    override fun initView() {
+        toolbarTitle = "File Explorer"
 
-                        getFilePath =
-                            registerForActivityResult(ActivityResultContracts.GetContent()) {
-                                openEditorActivity(it)
-                            }
-                        return@OnNavigationItemSelectedListener true
-                    }
+        binding.fileExplorerNavView.setOnNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.navigation_fileExplorerStorageListFragment -> {
+                    filePickerRequest.launch(arrayOf("text/*"))
                 }
             }
 
             false
         }
-
-    override fun initView() {
-        toolbarTitle = "File Explorer"
-
-        // val navHostFragment = binding.fileExplorerNavHostFragment
-        //
-        // val navController = navHostFragment?.findNavController()
-        //
-        // if (navController != null) {
-        //     binding.fileExplorerNavView.setupWithNavController(navController)
-        // } else {
-        //     Log.println(Log.WARN, javaClass.name, "Cannot instantiate navigation")
-        // }
 
         super.initView()
     }
@@ -87,4 +54,15 @@ class FileExplorerFragment :
 
         startActivity(intent)
     }
+
+    private val filePickerRequest =
+        registerForActivityResult(ActivityResultContracts.OpenDocument()) { result ->
+            if (result != null) Toast.makeText(
+                requireContext(),
+                "Result : $result",
+                Toast.LENGTH_SHORT
+            ).show()
+            else Toast.makeText(requireContext(), "No result :(", Toast.LENGTH_SHORT)
+                .show()
+        }
 }
