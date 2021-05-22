@@ -1,5 +1,6 @@
 package com.github.kereis.medit.ui.editor
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -8,6 +9,7 @@ import com.github.kereis.medit.domain.editor.History
 import com.github.kereis.medit.domain.explorer.files.File
 import dagger.hilt.android.lifecycle.HiltViewModel
 import timber.log.Timber
+import java.net.URI
 import java.time.OffsetDateTime
 import javax.inject.Inject
 
@@ -24,7 +26,7 @@ class EditorViewModel
             "active_document",
             Document(
                 "NewFile",
-                "My new content",
+                mutableListOf("My new content"),
                 File(
                     null,
                     "NewFile.md",
@@ -43,7 +45,7 @@ class EditorViewModel
     fun onContentChanged(newContent: String) {
         // Timber.d("onContentChanged: %s", newContent)
         _activeDocument.value?.let {
-            it.content = newContent
+            it.content = newContent.lines().toMutableList()
         }
     }
 
@@ -55,5 +57,17 @@ class EditorViewModel
 
     fun setActiveDocument(document: Document) {
         _activeDocument.value = document
+    }
+
+    fun updateDocumentFilePath(uri: Uri) {
+        _activeDocument.value?.let { document ->
+            _activeDocument.value =
+                Document(
+                    title = document.title,
+                    content = document.content,
+                    file = File.createByURI(URI(uri.toString())),
+                    history = document.history
+                )
+        }
     }
 }

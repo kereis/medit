@@ -1,6 +1,6 @@
 package com.github.kereis.medit.application.di
 
-import com.github.kereis.medit.application.files.FileStorageService
+// import com.github.kereis.medit.application.files.FileStorageService
 import com.github.kereis.medit.application.files.FileToJavaNIOFileMapper
 import com.github.kereis.medit.application.files.RecentFileRepositoryService
 import com.github.kereis.medit.domain.explorer.files.File
@@ -19,10 +19,10 @@ object AppCoreModule {
     fun provideRecentFileRepositoryService(recentFileRepository: RecentFileRepository) =
         RecentFileRepositoryService(recentFileRepository)
 
-    @Provides
-    @Singleton
-    fun provideFileStorageService() =
-        FileStorageService(ioDispatcher(), provideFileToJavaNIOFileMapper())
+    // @Provides
+    // @Singleton
+    // fun provideFileStorageService() =
+    //     FileStorageService(ioDispatcher(), provideFileToJavaNIOFileMapper())
 
     @Provides
     fun provideFileToJavaNIOFileMapper(): DataMapper<File, java.io.File> = FileToJavaNIOFileMapper()

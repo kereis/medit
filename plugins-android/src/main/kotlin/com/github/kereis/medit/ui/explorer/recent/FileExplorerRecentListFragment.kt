@@ -33,9 +33,8 @@ class FileExplorerRecentListFragment :
     override fun initView() {
         super.initView()
 
-        binding.fileExplorerRecentFilesListView.layoutManager = LinearLayoutManager(
-            requireContext()
-        )
+        binding.fileExplorerRecentFilesListView.layoutManager =
+            LinearLayoutManager(requireContext())
         binding.fileExplorerRecentFilesListView.adapter = adapter
 
         viewModel.fetchFileList.observe(

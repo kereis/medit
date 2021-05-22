@@ -1,6 +1,6 @@
 package com.github.kereis.medit.ui.editor
 
-import android.content.Intent
+// import com.github.kereis.medit.application.files.FileStorageService
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -10,20 +10,17 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import com.github.kereis.medit.R
-import com.github.kereis.medit.application.files.FileStorageService
 import com.github.kereis.medit.application.format.markdown.MarkdownTextActions
 import com.github.kereis.medit.databinding.FragmentEditorBinding
-import com.github.kereis.medit.domain.async.Result
 import com.github.kereis.medit.domain.editor.Document
 import com.github.kereis.medit.domain.editor.TextEditor
+import com.github.kereis.medit.domain.explorer.files.AbstractFileLoader
 import com.github.kereis.medit.domain.explorer.files.File
 import com.github.kereis.medit.parser.MarkdownParser
 import com.github.kereis.medit.ui.BaseFragment
 import com.github.kereis.medit.ui.components.SelectableEditText
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.runBlocking
-import timber.log.Timber
-import java.nio.file.Paths
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -35,16 +32,19 @@ class EditorFragment :
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentEditorBinding
         get() = FragmentEditorBinding::inflate
 
+    // @Inject
+    // lateinit var fileStorageService: FileStorageService
+
     @Inject
-    lateinit var fileStorageService: FileStorageService
+    lateinit var fileLoader: AbstractFileLoader
 
     private val viewModel by activityViewModels<EditorViewModel>()
 
     override fun initView() {
         toolbarTitle = "Edit file"
-        super.initView()
         setup()
         readBundle()
+        super.initView()
     }
 
     override val selectionStart: Int
@@ -52,7 +52,7 @@ class EditorFragment :
     override val selectionEnd: Int
         get() = viewModel.selectionEnd.value!!
     override val text: String
-        get() = viewModel.activeDocument.value!!.content
+        get() = viewModel.activeDocument.value!!.content.toString()
 
     override fun replace(startIndex: Int, endIndex: Int, text: String) {
         binding.contentInput.text?.replace(startIndex, endIndex, text)
@@ -79,24 +79,59 @@ class EditorFragment :
     }
 
     private fun readBundle() {
-        arguments?.let { args ->
-            args.getString("FILE_NAME")?.let { rawPath ->
-                val path = Paths.get(rawPath)
+        // arguments?.let { args ->
+        //     args.getString("FILE_NAME")?.let { rawPath ->
+        //         val path = Paths.get(rawPath)
+        //
+        //         fileStorageService.findFile(path)?.let { file ->
+        //             runBlocking {
+        //                 fileStorageService.loadDocument(file).handleResult(
+        //                     onSuccess = {
+        //                         Timber.i("document found - now loading")
+        //                         load(it)
+        //                     },
+        //                     onFailure = { Timber.e(it) }
+        //                 )
+        //             }
+        //         }
+        //     }
+        // }
+    }
 
-                fileStorageService.findFile(path)?.let { file ->
-                    runBlocking {
-                        fileStorageService.loadDocument(file).handleResult(
-                            onSuccess = {
-                                Timber.i("document found - now loading")
-                                load(it)
-                            },
-                            onFailure = { Timber.e(it) }
-                        )
+    private val fileSaverIntent =
+        registerForActivityResult(ActivityResultContracts.CreateDocument()) { uri ->
+            viewModel.updateDocumentFilePath(uri)
+
+            viewModel.activeDocument.value?.let { document ->
+                runBlocking {
+                    try {
+                        val saveSuccessful = fileLoader.save(document)
+
+                        if (saveSuccessful) {
+                            Toast.makeText(
+                                this@EditorFragment.mContext,
+                                "Saved!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+
+                            viewModel.setActiveDocument(document)
+                        } else {
+                            Toast.makeText(
+                                this@EditorFragment.mContext,
+                                "Failed!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    } catch (e: Exception) {
+                        Toast.makeText(
+                            this@EditorFragment.mContext,
+                            "Failed! ${e.localizedMessage} - $uri",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }
         }
-    }
 
     private fun setup() {
         binding.actionBarBold.setOnClickListener {
@@ -136,28 +171,7 @@ class EditorFragment :
         )
 
         binding.editorDebugSave.setOnClickListener {
-            val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-                type = "text/markdown"
-                addCategory(Intent.CATEGORY_OPENABLE)
-                putExtra(Intent.EXTRA_TITLE, "TestFile.md")
-            }
-
-            registerForActivityResult(ActivityResultContracts.CreateDocument()) { uri ->
-                runBlocking {
-                    fileStorageService
-                        .saveDocument(viewModel.activeDocument.value!!)
-                        .handleResult { result ->
-                            if (result != Result.State.Done)
-                                return@handleResult
-
-                            Toast.makeText(
-                                this@EditorFragment.mContext,
-                                "Saved!",
-                                Toast.LENGTH_SHORT
-                            )
-                        }
-                }
-            }
+            fileSaverIntent.launch(viewModel.activeDocument.value?.file?.fileName ?: "FILE.md")
         }
 
         binding.contentInput.addOnSelectionChangedListener(this)
