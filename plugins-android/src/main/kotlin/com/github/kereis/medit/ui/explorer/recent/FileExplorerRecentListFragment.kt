@@ -1,5 +1,6 @@
 package com.github.kereis.medit.ui.explorer.recent
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -41,8 +42,11 @@ class FileExplorerRecentListFragment :
             viewLifecycleOwner,
             {
                 // TODO Move into mapper class
-                adapter.setFileList(it.map { domainFile ->
-                    DocumentFile.fromFile(domainFile.filePath.toFile())
+                adapter.setFileList(it.mapNotNull { domainFile ->
+                    DocumentFile.fromSingleUri(
+                        requireContext(),
+                        Uri.parse(domainFile.filePath.path)
+                    )
                 })
             }
         )

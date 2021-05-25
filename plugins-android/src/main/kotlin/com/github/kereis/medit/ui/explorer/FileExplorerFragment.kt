@@ -5,7 +5,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.github.kereis.medit.R
 import com.github.kereis.medit.databinding.FragmentFileExplorerBinding
@@ -13,6 +12,7 @@ import com.github.kereis.medit.domain.explorer.files.AbstractFileLoader
 import com.github.kereis.medit.ui.BaseFragment
 import com.github.kereis.medit.ui.EditorActivity
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -56,13 +56,27 @@ class FileExplorerFragment :
     }
 
     private val filePickerRequest =
-        registerForActivityResult(ActivityResultContracts.OpenDocument()) { result ->
-            if (result != null) Toast.makeText(
-                requireContext(),
-                "Result : $result",
-                Toast.LENGTH_SHORT
-            ).show()
-            else Toast.makeText(requireContext(), "No result :(", Toast.LENGTH_SHORT)
-                .show()
+        registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+            uri.let {
+                Timber.d("filePickerRequest = $uri, starting EditorActivity")
+
+                openEditorActivity(uri)
+            }
+
+            // runBlocking {
+            //     val loadedDoc = fileLoader.load(URI(uri.toString()))
+            //
+            //     loadedDoc.let {
+            //
+            //     }
+            // }
+
+            // if (result != null) Toast.makeText(
+            //     requireContext(),
+            //     "Result : $result",
+            //     Toast.LENGTH_SHORT
+            // ).show()
+            // else Toast.makeText(requireContext(), "No result :(", Toast.LENGTH_SHORT)
+            //     .show()
         }
 }

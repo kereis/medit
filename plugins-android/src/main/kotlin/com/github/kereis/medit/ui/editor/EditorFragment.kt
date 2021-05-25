@@ -1,6 +1,7 @@
 package com.github.kereis.medit.ui.editor
 
 // import com.github.kereis.medit.application.files.FileStorageService
+import android.provider.OpenableColumns
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import com.github.kereis.medit.R
 import com.github.kereis.medit.application.format.markdown.MarkdownTextActions
 import com.github.kereis.medit.databinding.FragmentEditorBinding
 import com.github.kereis.medit.domain.editor.Document
+import com.github.kereis.medit.domain.editor.History
 import com.github.kereis.medit.domain.editor.TextEditor
 import com.github.kereis.medit.domain.explorer.files.AbstractFileLoader
 import com.github.kereis.medit.domain.explorer.files.File
@@ -21,6 +23,9 @@ import com.github.kereis.medit.ui.BaseFragment
 import com.github.kereis.medit.ui.components.SelectableEditText
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.runBlocking
+import timber.log.Timber
+import java.net.URI
+import java.time.OffsetDateTime
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -42,8 +47,8 @@ class EditorFragment :
 
     override fun initView() {
         toolbarTitle = "Edit file"
-        setup()
         readBundle()
+        setup()
         super.initView()
     }
 
@@ -96,11 +101,53 @@ class EditorFragment :
         //         }
         //     }
         // }
+
+        Timber.d("Reading bundle")
+
+        arguments?.let {
+            it.getString("FILE_PATH")?.let { rawUri ->
+                Timber.d("Got FILE_PATH from bundle: $rawUri")
+                runBlocking {
+                    fileLoader.load(URI(rawUri))?.let { document ->
+                        Timber.d("Document $rawUri loaded -> $document")
+                        viewModel.setActiveDocument(document)
+                    }
+                }
+            }
+        }
     }
 
     private val fileSaverIntent =
         registerForActivityResult(ActivityResultContracts.CreateDocument()) { uri ->
-            viewModel.updateDocumentFilePath(uri)
+            Timber.d("fileSaverIntent = $uri, ${uri.path}")
+
+            requireContext().contentResolver.query(
+                uri,
+                null,
+                null,
+                null,
+                null
+            )
+                ?.apply {
+                    val nameIndex = getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                    moveToFirst()
+                    val fileName = getString(nameIndex)
+                    val newDocument = Document(
+
+                        title = viewModel.activeDocument.value?.title ?: "",
+                        content = viewModel.activeDocument.value?.content ?: mutableListOf(),
+                        file = File(
+                            id = null,
+                            fileName = fileName,
+                            filePath = URI(uri.toString()),
+                            lastAccess = OffsetDateTime.now()
+                        ),
+                        history = History()
+                    )
+                    viewModel.setActiveDocument(newDocument)
+                }
+
+            // viewModel.updateDocumentFilePath(uri)
 
             viewModel.activeDocument.value?.let { document ->
                 runBlocking {
@@ -123,6 +170,7 @@ class EditorFragment :
                             ).show()
                         }
                     } catch (e: Exception) {
+                        Timber.e(e)
                         Toast.makeText(
                             this@EditorFragment.mContext,
                             "Failed! ${e.localizedMessage} - $uri",
@@ -152,6 +200,8 @@ class EditorFragment :
             }
         }
 
+        binding.contentInput.setText(viewModel.content.value)
+
         binding.contentInput.addTextChangedListener(
             object : TextWatcher {
                 override fun beforeTextChanged(
@@ -171,7 +221,7 @@ class EditorFragment :
         )
 
         binding.editorDebugSave.setOnClickListener {
-            fileSaverIntent.launch(viewModel.activeDocument.value?.file?.fileName ?: "FILE.md")
+            fileSaverIntent.launch("FILE.md")
         }
 
         binding.contentInput.addOnSelectionChangedListener(this)
