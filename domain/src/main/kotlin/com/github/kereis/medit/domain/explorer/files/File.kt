@@ -1,14 +1,12 @@
 package com.github.kereis.medit.domain.explorer.files
 
 import java.net.URI
-import java.nio.file.Path
 import java.time.OffsetDateTime
 
 data class File(
     val id: Int?,
     val fileName: String,
-    val fileExtension: String?,
-    val filePath: Path,
+    val filePath: URI,
     var lastAccess: OffsetDateTime,
 ) {
 
@@ -19,24 +17,23 @@ data class File(
             return File(
                 file.id,
                 file.fileName,
-                file.fileExtension,
                 file.filePath,
                 OffsetDateTime.now()
             )
         }
 
-        @JvmStatic
-        @Throws(IllegalArgumentException::class)
-        fun createByURI(uri: URI): File {
-            val file = java.io.File(uri)
-
-            return File(
-                id = null,
-                fileName = file.name,
-                fileExtension = file.extension,
-                filePath = file.toPath(),
-                lastAccess = OffsetDateTime.now()
-            )
-        }
+        // @JvmStatic
+        // @Throws(IllegalArgumentException::class)
+        // @Deprecated("Remove")
+        // fun createByURI(uri: URI): File {
+        //     val file = java.io.File(uri)
+        //
+        //     return File(
+        //         id = null,
+        //         fileName = file.name,
+        //         filePath = file.toPath(),
+        //         lastAccess = OffsetDateTime.now()
+        //     )
+        // }
     }
 }

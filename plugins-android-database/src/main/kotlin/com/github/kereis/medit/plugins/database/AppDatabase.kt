@@ -12,7 +12,7 @@ import com.github.kereis.medit.plugins.database.files.RecentFileDao
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 
-@Database(entities = [FileEntity::class], version = 1)
+@Database(entities = [FileEntity::class], version = 2)
 @TypeConverters(DateTimeTypeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
@@ -39,7 +39,9 @@ abstract class AppDatabase : RoomDatabase() {
                 context.applicationContext,
                 AppDatabase::class.java,
                 "medit.db"
-            ).build()
+            )
+                .fallbackToDestructiveMigration()
+                .build()
 
             // TODO: Other mechanism for debug entries?
             runBlocking {
