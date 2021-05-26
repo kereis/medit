@@ -8,5 +8,3 @@ data class Document(
     var content: String,
     val file: File
 ) : Serializable
-
-

@@ -42,12 +42,14 @@ class FileExplorerRecentListFragment :
             viewLifecycleOwner,
             {
                 // TODO Move into mapper class
-                adapter.setFileList(it.mapNotNull { domainFile ->
-                    DocumentFile.fromSingleUri(
-                        requireContext(),
-                        Uri.parse(domainFile.filePath.path)
-                    )
-                })
+                adapter.setFileList(
+                    it.mapNotNull { domainFile ->
+                        DocumentFile.fromSingleUri(
+                            requireContext(),
+                            Uri.parse(domainFile.filePath.path)
+                        )
+                    }
+                )
             }
         )
     }
