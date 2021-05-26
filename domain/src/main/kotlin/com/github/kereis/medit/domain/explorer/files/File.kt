@@ -11,6 +11,9 @@ data class File(
     var lastAccess: OffsetDateTime,
 ) : Serializable {
 
+    override fun toString() =
+        "File(id=$id, fileName='$fileName', filePath=$filePath, lastAccess=$lastAccess)"
+
     companion object {
 
         @JvmStatic
@@ -22,19 +25,5 @@ data class File(
                 OffsetDateTime.now()
             )
         }
-
-        // @JvmStatic
-        // @Throws(IllegalArgumentException::class)
-        // @Deprecated("Remove")
-        // fun createByURI(uri: URI): File {
-        //     val file = java.io.File(uri)
-        //
-        //     return File(
-        //         id = null,
-        //         fileName = file.name,
-        //         filePath = file.toPath(),
-        //         lastAccess = OffsetDateTime.now()
-        //     )
-        // }
     }
 }

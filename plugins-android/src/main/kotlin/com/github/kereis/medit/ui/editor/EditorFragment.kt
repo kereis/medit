@@ -83,24 +83,6 @@ class EditorFragment :
     }
 
     private fun readBundle() {
-        // arguments?.let { args ->
-        //     args.getString("FILE_NAME")?.let { rawPath ->
-        //         val path = Paths.get(rawPath)
-        //
-        //         fileStorageService.findFile(path)?.let { file ->
-        //             runBlocking {
-        //                 fileStorageService.loadDocument(file).handleResult(
-        //                     onSuccess = {
-        //                         Timber.i("document found - now loading")
-        //                         load(it)
-        //                     },
-        //                     onFailure = { Timber.e(it) }
-        //                 )
-        //             }
-        //         }
-        //     }
-        // }
-
         Timber.d("Reading bundle")
 
         arguments?.let {
@@ -145,9 +127,7 @@ class EditorFragment :
                     viewModel.setActiveDocument(newDocument)
                     close()
                 }
-            //
-            // // viewModel.updateDocumentFilePath(uri)
-            //
+
             viewModel.activeDocument.value?.let { document ->
                 runBlocking {
                     try {

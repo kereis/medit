@@ -8,10 +8,10 @@ import io.noties.markwon.Markwon
 sealed class MarkdownParser {
     companion object {
         /**
-         * This method returns a `android.view.View` with parsed Markdown text.
+         * This method returns a [android.view.View] with parsed Markdown text.
          * It can be used to exchange fragments when render is requested.
          *
-         * @return `androidx.fragment.app.Fragment` containing the Markdown text
+         * @return [androidx.fragment.app.Fragment] containing the Markdown text
          */
         fun render(context: Context, input: String): Fragment {
             val parser = makeParser(context)
