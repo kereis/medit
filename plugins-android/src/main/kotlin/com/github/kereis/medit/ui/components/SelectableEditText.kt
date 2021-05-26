@@ -3,12 +3,16 @@ package com.github.kereis.medit.ui.components
 import android.content.Context
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
+import com.github.kereis.medit.ui.components.SelectableEditText.OnSelectionChangedListener
 
 /**
  * # SelectableEditText
  *
  * This custom [AppCompatEditText] allows adding [OnSelectionChangedListener]s
  * for selection changes.
+ *
+ * @author kereis
+ * @version 1.0.0
  */
 class SelectableEditText : AppCompatEditText {
     constructor(context: Context) : super(context)

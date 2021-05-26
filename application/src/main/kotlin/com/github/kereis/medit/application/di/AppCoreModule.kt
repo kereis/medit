@@ -17,14 +17,6 @@ object AppCoreModule {
     fun provideRecentFileRepositoryService(recentFileRepository: RecentFileRepository) =
         RecentFileRepositoryService(recentFileRepository)
 
-    // @Provides
-    // @Singleton
-    // fun provideFileStorageService() =
-    //     FileStorageService(ioDispatcher(), provideFileToJavaNIOFileMapper())
-
-    // @Provides
-    // fun provideFileToJavaNIOFileMapper(): DataMapper<File, java.io.File> = FileToJavaNIOFileMapper()
-
     @Provides
     @Singleton
     fun ioDispatcher() = Dispatchers.IO
