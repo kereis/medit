@@ -4,7 +4,6 @@ import android.content.Context
 import android.net.Uri
 import android.provider.OpenableColumns
 import com.github.kereis.medit.domain.editor.Document
-import com.github.kereis.medit.domain.editor.History
 import com.github.kereis.medit.domain.explorer.files.AbstractFileLoader
 import com.github.kereis.medit.domain.explorer.files.File
 import kotlinx.coroutines.CoroutineDispatcher
@@ -14,6 +13,7 @@ import timber.log.Timber
 import java.io.FileOutputStream
 import java.net.URI
 import java.time.OffsetDateTime
+import java.util.stream.Collectors
 
 /**
  * # AndroidFileLoader
@@ -24,7 +24,7 @@ import java.time.OffsetDateTime
  * @version 1.0.0
  */
 class AndroidFileLoader(
-    private val dispatcher: CoroutineDispatcher,
+    dispatcher: CoroutineDispatcher,
     private val context: Context
 ) : AbstractFileLoader() {
 
@@ -65,9 +65,8 @@ class AndroidFileLoader(
 
         return@withContext Document(
             title = "",
-            content = fileContent,
-            file = documentFile,
-            History()
+            content = fileContent.joinToString("\n"),
+            file = documentFile
         )
     }
 

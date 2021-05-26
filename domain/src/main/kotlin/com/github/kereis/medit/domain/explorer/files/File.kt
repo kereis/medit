@@ -1,5 +1,6 @@
 package com.github.kereis.medit.domain.explorer.files
 
+import java.io.Serializable
 import java.net.URI
 import java.time.OffsetDateTime
 
@@ -8,7 +9,7 @@ data class File(
     val fileName: String,
     val filePath: URI,
     var lastAccess: OffsetDateTime,
-) {
+) : Serializable {
 
     companion object {
 
