@@ -35,9 +35,6 @@ class EditorFragment :
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentEditorBinding
         get() = FragmentEditorBinding::inflate
 
-    // @Inject
-    // lateinit var fileStorageService: FileStorageService
-
     @Inject
     lateinit var fileLoader: AbstractFileLoader
 

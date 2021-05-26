@@ -7,5 +7,5 @@ java {
 
 dependencies {
 
-    implementation project(":abstraction-code")
+    api project(":abstraction-code")
 }
