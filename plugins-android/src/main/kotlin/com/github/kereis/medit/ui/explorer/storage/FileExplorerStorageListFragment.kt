@@ -33,21 +33,30 @@ class FileExplorerStorageListFragment :
 
         binding.fileExplorerStorageListView.adapter = adapter
 
-        viewModel.files.observe(this, Observer { files ->
-            files?.let { adapter.setEntries(files) }
-        })
-
-        viewModel.openDirectory.observe(this, Observer { event ->
-            event.getContentIfNotHandled()?.let { directory ->
-                // (activity as MainActivity).showStorageList(directory.uri)
+        viewModel.files.observe(
+            this,
+            Observer { files ->
+                files?.let { adapter.setEntries(files) }
             }
-        })
+        )
 
-        viewModel.openFile.observe(this, Observer { event ->
-            event.getContentIfNotHandled()?.let { documentFile ->
-                openDocument(documentFile)
+        viewModel.openDirectory.observe(
+            this,
+            Observer { event ->
+                event.getContentIfNotHandled()?.let { directory ->
+                    // (activity as MainActivity).showStorageList(directory.uri)
+                }
             }
-        })
+        )
+
+        viewModel.openFile.observe(
+            this,
+            Observer { event ->
+                event.getContentIfNotHandled()?.let { documentFile ->
+                    openDocument(documentFile)
+                }
+            }
+        )
     }
 
     private fun openDocument(documentFile: DocumentFile) {
