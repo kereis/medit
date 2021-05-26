@@ -57,10 +57,12 @@ class FileExplorerFragment :
 
     private val filePickerRequest =
         registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
-            uri.let {
-                Timber.d("filePickerRequest = $uri, starting EditorActivity")
+            Timber.d("filePickerRequest = $uri, starting EditorActivity")
 
+            if (uri != null) {
                 openEditorActivity(uri)
+            } else {
+                Timber.d("Won't start EditorActivity as filePickerRequest returned null")
             }
 
             // runBlocking {
