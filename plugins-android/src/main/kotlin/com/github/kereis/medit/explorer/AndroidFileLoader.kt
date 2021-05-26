@@ -30,6 +30,7 @@ class AndroidFileLoader(
 
     private val coroutineContext = Job() + dispatcher
 
+    @Suppress("BlockingMethodInNonBlockingContext") // We use Dispatchers.IO by DI
     override suspend fun load(uri: URI): Document? = withContext(coroutineContext) {
         val androidUri = Uri.parse(uri.toString())
         val inputStream =
@@ -37,7 +38,7 @@ class AndroidFileLoader(
 
         val fileContent = inputStream.use { stream ->
             stream.bufferedReader().use { reader ->
-                reader.lineSequence().toMutableList()
+                reader.lines().collect(Collectors.toList())
             }
         }
 
@@ -54,6 +55,7 @@ class AndroidFileLoader(
             val nameIndex = getColumnIndex(OpenableColumns.DISPLAY_NAME)
             moveToFirst()
             fileName = getString(nameIndex)
+            close()
         }
 
         val documentFile = File(
@@ -70,6 +72,7 @@ class AndroidFileLoader(
         )
     }
 
+    @Suppress("BlockingMethodInNonBlockingContext") // We use Dispatchers.IO by DI
     override suspend fun save(document: Document): Boolean =
         withContext(coroutineContext) {
             try {
@@ -79,7 +82,7 @@ class AndroidFileLoader(
                 )?.use { descriptor ->
                     FileOutputStream(descriptor.fileDescriptor).use { outputStream ->
                         outputStream.bufferedWriter().use { writer ->
-                            document.content.asSequence().forEach { writer.append(it).appendLine() }
+                            document.content.lines().forEach { writer.append(it).appendLine() }
                         }
                     }
                 }
