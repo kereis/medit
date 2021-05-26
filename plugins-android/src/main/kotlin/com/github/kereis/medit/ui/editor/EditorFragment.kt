@@ -17,7 +17,6 @@ import com.github.kereis.medit.domain.editor.Document
 import com.github.kereis.medit.domain.editor.TextEditor
 import com.github.kereis.medit.domain.explorer.files.AbstractFileLoader
 import com.github.kereis.medit.domain.explorer.files.File
-import com.github.kereis.medit.parser.MarkdownParser
 import com.github.kereis.medit.ui.BaseFragment
 import com.github.kereis.medit.ui.components.SelectableEditText
 import dagger.hilt.android.AndroidEntryPoint
@@ -172,7 +171,8 @@ class EditorFragment :
         }
 
         binding.fabRenderMd.setOnClickListener {
-            val view = MarkdownParser.render(requireContext(), binding.contentInput.text.toString())
+            val view = MarkdownRenderFragment(binding.contentInput.text.toString())
+
             activity?.supportFragmentManager?.commit {
                 replace(R.id.fragment_container, view)
                 addToBackStack(null)
