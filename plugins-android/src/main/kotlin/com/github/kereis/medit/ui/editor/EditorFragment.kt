@@ -14,7 +14,6 @@ import com.github.kereis.medit.R
 import com.github.kereis.medit.application.format.markdown.MarkdownTextActions
 import com.github.kereis.medit.databinding.FragmentEditorBinding
 import com.github.kereis.medit.domain.editor.Document
-import com.github.kereis.medit.domain.editor.History
 import com.github.kereis.medit.domain.editor.TextEditor
 import com.github.kereis.medit.domain.explorer.files.AbstractFileLoader
 import com.github.kereis.medit.domain.explorer.files.File
@@ -135,20 +134,20 @@ class EditorFragment :
                     val newDocument = Document(
 
                         title = viewModel.activeDocument.value?.title ?: "",
-                        content = viewModel.activeDocument.value?.content ?: mutableListOf(),
+                        content = viewModel.activeDocument.value?.content ?: "",
                         file = File(
                             id = null,
                             fileName = fileName,
                             filePath = URI(uri.toString()),
                             lastAccess = OffsetDateTime.now()
-                        ),
-                        history = History()
+                        )
                     )
                     viewModel.setActiveDocument(newDocument)
+                    close()
                 }
-
-            // viewModel.updateDocumentFilePath(uri)
-
+            //
+            // // viewModel.updateDocumentFilePath(uri)
+            //
             viewModel.activeDocument.value?.let { document ->
                 runBlocking {
                     try {
@@ -200,7 +199,7 @@ class EditorFragment :
             }
         }
 
-        binding.contentInput.setText(viewModel.content.value)
+        binding.contentInput.setText(viewModel.content.value.toString())
 
         binding.contentInput.addTextChangedListener(
             object : TextWatcher {

@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.github.kereis.medit.domain.editor.Document
-import com.github.kereis.medit.domain.editor.History
 import com.github.kereis.medit.domain.explorer.files.File
 import dagger.hilt.android.lifecycle.HiltViewModel
 import timber.log.Timber
@@ -16,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class EditorViewModel
 @Inject constructor(
-    private val savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val _selectionStart = savedStateHandle.getLiveData<Int>("selection_start")
@@ -26,14 +25,13 @@ class EditorViewModel
             "active_document",
             Document(
                 "NewFile",
-                mutableListOf("My new content"),
+                "My new content",
                 File(
                     null,
                     "NewFile.md",
                     URI(""),
                     OffsetDateTime.now()
-                ),
-                History()
+                )
             )
         )
     private val _content = MutableLiveData<String>("")
@@ -45,8 +43,9 @@ class EditorViewModel
 
     fun onContentChanged(newContent: String) {
         // Timber.d("onContentChanged: %s", newContent)
+        // val contentList = newContent.lines().toMutableList()
         _activeDocument.value?.let {
-            it.content = newContent.lines().toMutableList()
+            it.content = newContent
         }
         _content.value = newContent
     }
@@ -59,7 +58,7 @@ class EditorViewModel
 
     fun setActiveDocument(document: Document) {
         _activeDocument.value = document
-        _content.value = document.content.joinToString("\n")
+        _content.value = document.content
     }
 
     // fun updateDocumentFilePath(uri: Uri) {
