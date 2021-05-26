@@ -7,4 +7,6 @@ data class Document(
     val title: String,
     var content: String,
     val file: File
-) : Serializable
+) : Serializable {
+    override fun toString() = "Document(title='$title', file=$file)"
+}

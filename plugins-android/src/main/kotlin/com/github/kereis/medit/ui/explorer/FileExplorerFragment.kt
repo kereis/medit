@@ -19,8 +19,6 @@ import javax.inject.Inject
 class FileExplorerFragment :
     BaseFragment<FragmentFileExplorerBinding>(R.layout.fragment_file_explorer) {
 
-    // private lateinit var getFilePath: ActivityResultLauncher<String>
-
     @Inject
     lateinit var fileLoader: AbstractFileLoader
 
@@ -64,21 +62,5 @@ class FileExplorerFragment :
             } else {
                 Timber.d("Won't start EditorActivity as filePickerRequest returned null")
             }
-
-            // runBlocking {
-            //     val loadedDoc = fileLoader.load(URI(uri.toString()))
-            //
-            //     loadedDoc.let {
-            //
-            //     }
-            // }
-
-            // if (result != null) Toast.makeText(
-            //     requireContext(),
-            //     "Result : $result",
-            //     Toast.LENGTH_SHORT
-            // ).show()
-            // else Toast.makeText(requireContext(), "No result :(", Toast.LENGTH_SHORT)
-            //     .show()
         }
 }

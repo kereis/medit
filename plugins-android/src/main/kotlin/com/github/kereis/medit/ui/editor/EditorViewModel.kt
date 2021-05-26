@@ -42,8 +42,6 @@ class EditorViewModel
     val content: LiveData<String> = _content
 
     fun onContentChanged(newContent: String) {
-        // Timber.d("onContentChanged: %s", newContent)
-        // val contentList = newContent.lines().toMutableList()
         _activeDocument.value?.let {
             it.content = newContent
         }
@@ -60,16 +58,4 @@ class EditorViewModel
         _activeDocument.value = document
         _content.value = document.content
     }
-
-    // fun updateDocumentFilePath(uri: Uri) {
-    //     _activeDocument.value?.let { document ->
-    //         _activeDocument.value =
-    //             Document(
-    //                 title = document.title,
-    //                 content = document.content,
-    //                 file = URI(uri.path),
-    //                 history = document.history
-    //             )
-    //     }
-    // }
 }
