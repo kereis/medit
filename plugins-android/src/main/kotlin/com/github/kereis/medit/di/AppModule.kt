@@ -13,7 +13,8 @@ import javax.inject.Singleton
 @Module(
     includes = [
         AppCoreModule::class,
-        FileManagementModule::class
+        FileManagementModule::class,
+        MarkupLanguageRendererModule::class
     ]
 )
 @InstallIn(SingletonComponent::class)

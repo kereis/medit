@@ -17,7 +17,6 @@ import com.github.kereis.medit.domain.editor.Document
 import com.github.kereis.medit.domain.editor.TextEditor
 import com.github.kereis.medit.domain.explorer.files.AbstractFileLoader
 import com.github.kereis.medit.domain.explorer.files.File
-import com.github.kereis.medit.parser.MarkdownParser
 import com.github.kereis.medit.ui.BaseFragment
 import com.github.kereis.medit.ui.components.SelectableEditText
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,9 +34,6 @@ class EditorFragment :
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentEditorBinding
         get() = FragmentEditorBinding::inflate
-
-    // @Inject
-    // lateinit var fileStorageService: FileStorageService
 
     @Inject
     lateinit var fileLoader: AbstractFileLoader
@@ -83,24 +79,6 @@ class EditorFragment :
     }
 
     private fun readBundle() {
-        // arguments?.let { args ->
-        //     args.getString("FILE_NAME")?.let { rawPath ->
-        //         val path = Paths.get(rawPath)
-        //
-        //         fileStorageService.findFile(path)?.let { file ->
-        //             runBlocking {
-        //                 fileStorageService.loadDocument(file).handleResult(
-        //                     onSuccess = {
-        //                         Timber.i("document found - now loading")
-        //                         load(it)
-        //                     },
-        //                     onFailure = { Timber.e(it) }
-        //                 )
-        //             }
-        //         }
-        //     }
-        // }
-
         Timber.d("Reading bundle")
 
         arguments?.let {
@@ -145,9 +123,7 @@ class EditorFragment :
                     viewModel.setActiveDocument(newDocument)
                     close()
                 }
-            //
-            // // viewModel.updateDocumentFilePath(uri)
-            //
+
             viewModel.activeDocument.value?.let { document ->
                 runBlocking {
                     try {
@@ -192,7 +168,8 @@ class EditorFragment :
         }
 
         binding.fabRenderMd.setOnClickListener {
-            val view = MarkdownParser.render(requireContext(), binding.contentInput.text.toString())
+            val view = MarkdownRenderFragment(binding.contentInput.text.toString())
+
             activity?.supportFragmentManager?.commit {
                 replace(R.id.fragment_container, view)
                 addToBackStack(null)
