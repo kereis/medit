@@ -1,8 +1,7 @@
 package com.github.kereis.medit.explorer
 
-import android.content.Context
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.platform.app.InstrumentationRegistry
+import com.github.kereis.medit.TestUtils.retrieveAppContext
 import com.github.kereis.medit.domain.editor.Document
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -130,9 +129,6 @@ class AndroidFileLoaderTest {
 
         Assert.assertTrue(saveSuccessful)
     }
-
-    private fun retrieveAppContext(): Context =
-        InstrumentationRegistry.getInstrumentation().targetContext
 
     private fun provideMarkdownFile(content: String): File {
         val testMarkdownFile = tempFolder.newFile("test_MarkdownFile.md")
