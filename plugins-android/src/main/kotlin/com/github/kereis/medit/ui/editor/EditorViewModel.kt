@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.github.kereis.medit.domain.editor.Document
-import com.github.kereis.medit.domain.explorer.files.File
+import com.github.kereis.medit.domain.explorer.files.FileReference
 import dagger.hilt.android.lifecycle.HiltViewModel
 import timber.log.Timber
 import java.net.URI
@@ -26,7 +26,7 @@ class EditorViewModel
             Document(
                 "NewFile",
                 "My new content",
-                File(
+                FileReference(
                     null,
                     "NewFile.md",
                     URI(""),

@@ -7,7 +7,7 @@ java {
 }
 
 dependencies {
-    implementation project(':domain')
+    api project(':domain')
 
     api "androidx.room:room-common:$room_version"
 }

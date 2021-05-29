@@ -2,13 +2,13 @@ package com.github.kereis.medit.domain.explorer.files
 
 interface RecentFileRepository {
 
-    suspend fun getAll(): List<File>
+    suspend fun getAll(): List<FileReference>
 
-    suspend fun getLastRecentlyUsedFiles(period: Int): List<File>
+    suspend fun getLastRecentlyUsedFiles(period: Int): List<FileReference>
 
-    suspend fun update(vararg files: File)
+    suspend fun update(vararg fileReferences: FileReference)
 
-    suspend fun insert(vararg newFiles: File)
+    suspend fun insert(vararg newFileReferences: FileReference)
 
-    suspend fun delete(file: File)
+    suspend fun delete(fileReference: FileReference)
 }

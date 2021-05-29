@@ -7,7 +7,7 @@ package com.github.kereis.medit.domain.mapping
  */
 interface DataMapper<S, T> {
 
-    fun to(source: S): T
+    fun toTargetType(source: S): T
 
-    fun from(target: T): S
+    fun toSourceType(target: T): S
 }

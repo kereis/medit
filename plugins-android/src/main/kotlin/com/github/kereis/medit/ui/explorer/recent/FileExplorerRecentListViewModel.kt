@@ -6,7 +6,7 @@ import androidx.lifecycle.distinctUntilChanged
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
-import com.github.kereis.medit.domain.explorer.files.File
+import com.github.kereis.medit.domain.explorer.files.FileReference
 import com.github.kereis.medit.domain.explorer.files.RecentFileRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -20,7 +20,7 @@ class FileExplorerRecentListViewModel
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val currentFileList = savedStateHandle.getLiveData<File>("recent_files", null)
+    private val currentFileList = savedStateHandle.getLiveData<FileReference>("recent_files", null)
 
     val fetchFileList = currentFileList.distinctUntilChanged().switchMap {
         liveData(viewModelScope.coroutineContext + Dispatchers.IO) {

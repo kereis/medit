@@ -5,7 +5,7 @@ import android.net.Uri
 import android.provider.OpenableColumns
 import com.github.kereis.medit.domain.editor.Document
 import com.github.kereis.medit.domain.explorer.files.AbstractFileLoader
-import com.github.kereis.medit.domain.explorer.files.File
+import com.github.kereis.medit.domain.explorer.files.FileReference
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.withContext
@@ -58,17 +58,17 @@ class AndroidFileLoader(
             close()
         }
 
-        val documentFile = File(
+        val documentFile = FileReference(
             id = null,
             fileName = fileName,
-            filePath = uri,
+            rawFilePath = uri,
             lastAccess = OffsetDateTime.now(),
         )
 
         return@withContext Document(
             title = "",
             content = fileContent.joinToString("\n"),
-            file = documentFile
+            fileReference = documentFile
         )
     }
 
@@ -77,7 +77,7 @@ class AndroidFileLoader(
         withContext(coroutineContext) {
             try {
                 context.contentResolver.openFileDescriptor(
-                    Uri.parse(document.file.filePath.toString()),
+                    Uri.parse(document.fileReference.rawFilePath.toString()),
                     "w"
                 )?.use { descriptor ->
                     FileOutputStream(descriptor.fileDescriptor).use { outputStream ->

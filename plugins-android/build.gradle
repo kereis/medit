@@ -46,10 +46,10 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
-    implementation project(':plugins-android-database')
-    implementation project(':application')
-    implementation project(':domain')
-    implementation project(':abstraction-code')
+    api project(':plugins-android-database')
+    api project(':application')
+    api project(':domain')
+    api project(':abstraction-code')
 
     implementation 'androidx.core:core-ktx:1.3.2'
     implementation 'androidx.appcompat:appcompat:1.2.0'
@@ -68,6 +68,7 @@ dependencies {
 
     /* Dagger DI */
     implementation "com.google.dagger:hilt-android:$hilt_version"
+    implementation project(path: ':adapters-android-database')
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
     // implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"

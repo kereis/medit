@@ -16,7 +16,7 @@ import com.github.kereis.medit.databinding.FragmentEditorBinding
 import com.github.kereis.medit.domain.editor.Document
 import com.github.kereis.medit.domain.editor.TextEditor
 import com.github.kereis.medit.domain.explorer.files.AbstractFileLoader
-import com.github.kereis.medit.domain.explorer.files.File
+import com.github.kereis.medit.domain.explorer.files.FileReference
 import com.github.kereis.medit.ui.BaseFragment
 import com.github.kereis.medit.ui.components.SelectableEditText
 import dagger.hilt.android.AndroidEntryPoint
@@ -74,7 +74,7 @@ class EditorFragment :
         TODO("Not yet implemented")
     }
 
-    override fun saveAs(file: File) {
+    override fun saveAs(fileReference: FileReference) {
         TODO("Not yet implemented")
     }
 
@@ -113,10 +113,10 @@ class EditorFragment :
 
                         title = viewModel.activeDocument.value?.title ?: "",
                         content = viewModel.activeDocument.value?.content ?: "",
-                        file = File(
+                        fileReference = FileReference(
                             id = null,
                             fileName = fileName,
-                            filePath = URI(uri.toString()),
+                            rawFilePath = URI(uri.toString()),
                             lastAccess = OffsetDateTime.now()
                         )
                     )

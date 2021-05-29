@@ -1,6 +1,6 @@
 package com.github.kereis.medit.domain.editor
 
-import com.github.kereis.medit.domain.explorer.files.File
+import com.github.kereis.medit.domain.explorer.files.FileReference
 
 interface TextEditor {
 
@@ -26,5 +26,5 @@ interface TextEditor {
 
     fun save()
 
-    fun saveAs(file: File)
+    fun saveAs(fileReference: FileReference)
 }
