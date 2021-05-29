@@ -18,14 +18,4 @@ import javax.inject.Singleton
     ]
 )
 @InstallIn(SingletonComponent::class)
-object AppModule {
-
-    @Singleton
-    @Provides
-    fun provideRoomInstance(
-        @ApplicationContext context: Context
-    ) = AppDatabase.getInstance(context)
-
-    @Provides
-    fun provideRecentFilesDao(db: AppDatabase) = db.recentFilesDao()
-}
+object AppModule

@@ -10,6 +10,7 @@ import com.github.kereis.medit.domain.explorer.files.FileReference
 import com.github.kereis.medit.domain.explorer.files.RecentFileRepository
 import com.github.kereis.medit.domain.mapping.DataMapper
 import com.github.kereis.medit.explorer.AndroidFileLoader
+import com.github.kereis.medit.plugins.database.di.AndroidDatabaseModule
 import com.github.kereis.medit.plugins.database.files.RecentFileDao
 import com.github.kereis.medit.plugins.database.files.RoomRecentFileRepository
 import dagger.Module
@@ -22,7 +23,8 @@ import javax.inject.Singleton
 
 @Module(
     includes = [
-        AndroidDatabaseAdapterModule::class
+        AndroidDatabaseAdapterModule::class,
+        AndroidDatabaseModule::class
     ]
 )
 @InstallIn(SingletonComponent::class)
@@ -32,20 +34,9 @@ object FileManagementModule {
     @Singleton
     fun ioDispatcher() = Dispatchers.IO
 
-    @AnyThread
-    @Singleton
-    @Provides
-    fun provideRecentFileRepository(
-        recentFilesDao: RecentFileDao,
-        fileEntityToFileReferenceMapper: DataMapper<FileEntity, FileReference>
-    ): RecentFileRepository =
-        RoomRecentFileRepository(recentFilesDao, fileEntityToFileReferenceMapper)
-
     @Singleton
     @Provides
     fun provideAndroidFileLoader(
         @ApplicationContext context: Context
     ): AbstractFileLoader = AndroidFileLoader(ioDispatcher(), context)
-
-
 }
