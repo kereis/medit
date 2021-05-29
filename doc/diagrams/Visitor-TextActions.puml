@@ -1,0 +1,81 @@
+@startuml
+'package domain <<Rectangle>> {
+'    class FileReference
+'    class RecentFileRepository
+'}
+'
+'interface RecentFileRepository {
+'    + suspend getAll(): List<FileReference>
+'    + suspend getLastRecentlyUsedFiles(period: Int): List<FileReference>
+'    + suspend update(files: FileReference[])
+'    + suspend insert(newFiles: FileReference[])
+'    + suspend delete(file: FileReference)
+'}
+
+package domain <<Rectangle>> {
+    class FileReference
+    interface TextEditor
+    abstract TextAction
+    class Document
+}
+
+package application <<Rectangle>> {
+    class BlockTextAction
+    class InlineSpanTextAction
+}
+
+package plugins-android <<Rectangle>> {
+    class EditorFragment
+}
+
+package "Android Library" <<Rectangle>> {
+    class EditorFragment implements TextEditor, Fragment
+}
+
+
+
+class FileReference {
+    + id: String?
+    + fileName: String
+    + fileExtension: String?
+    + filePath: Path
+    + lastAccess: OffsetDateTime
+}
+'
+'package "plugins-android-database" <<Rectangle>> {
+'    class RoomRecentFileRepository
+'}
+'
+'class RoomRecentFileRepository implements RecentFileRepository
+'
+'package "Android Room Database" <<Database>> {
+'}
+'
+'RoomRecentFileRepository --> "Android Room Database"
+'
+'"Android Room Database" "1" *-- "viele" FileReference
+
+interface TextEditor {
+    + selectionStart: Int
+    + selectionEnd: Int
+    + text: String
+    + hasSelection: Boolean
+
+    + replace(startIndex: Int, endIndex: Int, text: String)
+    + insert(atIndex: Int, text: String)
+    + setCursor(document: Document)
+    + save()
+    + saveAs(file: FileReference)
+}
+
+abstract TextAction {
+    + apply(textEditor: TextEditor)
+}
+
+class BlockTextAction extends TextAction {
+}
+
+class InlineSpanTextAction extends TextAction {
+}
+
+@enduml
