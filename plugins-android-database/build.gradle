@@ -49,17 +49,21 @@ dependencies {
     api project(":adapters-android-database")
     api project(":abstraction-code")
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+    // implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_version"
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
     implementation 'androidx.core:core-ktx:1.3.2'
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'com.google.android.material:material:1.3.0'
     testImplementation 'junit:junit:4.+'
+
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     /* Dagger DI */
-    implementation "com.google.dagger:dagger:$dagger_version"
-    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+//    implementation "com.google.dagger:dagger:$dagger_version"
+//    kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
     /* Android Room framework */
     implementation "androidx.room:room-runtime:$room_version"

@@ -1,5 +1,6 @@
 apply plugin: 'kotlin'
 apply plugin: 'org.jlleitschuh.gradle.ktlint'
+apply plugin: 'kotlin-kapt'
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -10,4 +11,8 @@ dependencies {
     api project(':domain')
 
     api "androidx.room:room-common:$room_version"
+    // kapt "androidx.room:room-compiler:$room_version"
+
+    api "com.google.dagger:dagger:2.33"
+    kapt 'com.google.dagger:dagger-compiler:2.33'
 }

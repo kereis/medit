@@ -44,8 +44,6 @@ android {
 
 dependencies {
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-
     api project(':plugins-android-database')
     api project(':application')
     api project(':domain')
@@ -68,20 +66,19 @@ dependencies {
 
     /* Dagger DI */
     implementation "com.google.dagger:hilt-android:$hilt_version"
-    implementation project(path: ':adapters-android-database')
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
     // implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
 
     /* Room */
-    implementation "androidx.room:room-runtime:$room_version"
-    kapt "androidx.room:room-compiler:$room_version"
+    // implementation "androidx.room:room-runtime:$room_version"
+    // kapt "androidx.room:room-compiler:$room_version"
 
     // optional - Kotlin Extensions and Coroutines support for Room
-    implementation "androidx.room:room-ktx:$room_version"
+    // implementation "androidx.room:room-ktx:$room_version"
 
     // optional - Test helpers
-    testImplementation "androidx.room:room-testing:$room_version"
+    // testImplementation "androidx.room:room-testing:$room_version"
     
     /* Logging */
     implementation "com.jakewharton.timber:timber:$timber_version"
