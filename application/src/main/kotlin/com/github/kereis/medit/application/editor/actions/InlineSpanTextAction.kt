@@ -13,6 +13,7 @@ import com.github.kereis.medit.domain.editor.actions.TextAction
  * @version 1.0.0
  */
 
+@Deprecated("Use InlineTextAction")
 class InlineSpanTextAction(private val token: String) : TextAction() {
 
     override fun apply(textEditor: TextEditor) {
