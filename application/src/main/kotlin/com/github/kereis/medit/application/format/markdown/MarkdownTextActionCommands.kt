@@ -4,18 +4,6 @@ import com.github.kereis.medit.application.editor.actions.BlockTextActionCommand
 import com.github.kereis.medit.application.editor.actions.InlineTextActionCommand
 import com.github.kereis.medit.domain.editor.TextEditor
 
-// enum class MarkdownTextActionCommands(val command: Command) {
-// BOLD(InlineTextActionCommand("**")),
-// ITALIC(InlineTextActionCommand("*")),
-// INLINE_CODE(InlineTextActionCommand("`")),
-// LINK(InlineTextActionCommand("")),
-//
-// CODE_BLOCK(BlockTextActionCommand("```")),
-// QUOTE(BlockTextActionCommand(">")),
-// PICTURE
-// Headers
-// }
-
 sealed class MarkdownTextActionCommands {
 
     class BoldCommand(textEditor: TextEditor) : InlineTextActionCommand(textEditor, "**")
