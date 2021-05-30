@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import com.github.kereis.medit.R
 import com.github.kereis.medit.databinding.FragmentFileExplorerBinding
-import com.github.kereis.medit.domain.explorer.files.AbstractFileLoader
+import com.github.kereis.medit.domain.explorer.files.FileLoader
 import com.github.kereis.medit.ui.BaseFragment
 import com.github.kereis.medit.ui.EditorActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,7 +20,7 @@ class FileExplorerFragment :
     BaseFragment<FragmentFileExplorerBinding>(R.layout.fragment_file_explorer) {
 
     @Inject
-    lateinit var fileLoader: AbstractFileLoader
+    lateinit var fileLoader: FileLoader
 
     override val bindingInflater:
             (LayoutInflater, ViewGroup?, Boolean) -> FragmentFileExplorerBinding

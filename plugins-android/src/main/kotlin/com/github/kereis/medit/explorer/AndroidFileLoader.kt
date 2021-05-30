@@ -4,7 +4,7 @@ import android.content.Context
 import android.net.Uri
 import android.provider.OpenableColumns
 import com.github.kereis.medit.domain.editor.Document
-import com.github.kereis.medit.domain.explorer.files.AbstractFileLoader
+import com.github.kereis.medit.domain.explorer.files.FileLoader
 import com.github.kereis.medit.domain.explorer.files.FileReference
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Job
@@ -26,7 +26,7 @@ import java.util.stream.Collectors
 class AndroidFileLoader(
     dispatcher: CoroutineDispatcher,
     private val context: Context
-) : AbstractFileLoader() {
+) : FileLoader() {
 
     private val coroutineContext = Job() + dispatcher
 

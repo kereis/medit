@@ -16,7 +16,7 @@ import com.github.kereis.medit.application.format.markdown.MarkdownTextActionCom
 import com.github.kereis.medit.databinding.FragmentEditorBinding
 import com.github.kereis.medit.domain.editor.Document
 import com.github.kereis.medit.domain.editor.TextEditor
-import com.github.kereis.medit.domain.explorer.files.AbstractFileLoader
+import com.github.kereis.medit.domain.explorer.files.FileLoader
 import com.github.kereis.medit.domain.explorer.files.FileReference
 import com.github.kereis.medit.ui.BaseFragment
 import com.github.kereis.medit.ui.components.SelectableEditText
@@ -37,7 +37,7 @@ class EditorFragment :
         get() = FragmentEditorBinding::inflate
 
     @Inject
-    lateinit var fileLoader: AbstractFileLoader
+    lateinit var fileLoader: FileLoader
 
     @Inject
     lateinit var textActionCommandExecutor: TextActionCommandExecutor

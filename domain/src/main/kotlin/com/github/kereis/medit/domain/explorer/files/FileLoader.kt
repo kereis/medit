@@ -4,14 +4,14 @@ import com.github.kereis.medit.domain.editor.Document
 import java.net.URI
 
 /**
- * # AbstractFileLoader
+ * # FileLoader
  *
  * Defines interface for file loaders that can be implemented at plugin layer
  *
  * @author kereis
  * @version 1.0.0
  */
-abstract class AbstractFileLoader {
+abstract class FileLoader {
 
     /**
      * Load a file by its [URI], read the lines and put them into a [Document]
