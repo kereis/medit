@@ -15,9 +15,6 @@ class CommandHistory {
             CommandHistoryEntry(command, backupState)
         )
 
-    fun pop(
-        command: Command,
-        backupState: List<String>
-    ): CommandHistoryEntry<List<String>> =
+    fun pop(): CommandHistoryEntry<List<String>> =
         history.jumpToPreviousState()
 }

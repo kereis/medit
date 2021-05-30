@@ -1,5 +1,7 @@
 package com.github.kereis.medit.domain.editor
 
+import java.util.Stack
+
 /**
  * # History
  * Stores different states of data type [T]. Each operation is thread-safe.
@@ -7,7 +9,7 @@ package com.github.kereis.medit.domain.editor
  * @author kereis
  */
 class History<T> {
-    private val historyList: ArrayList<T> = ArrayList()
+    private val historyList: Stack<T> = Stack()
 
     val nextStateAvailable: Boolean get() = isNextStateAvailable()
     val previousStateAvailable: Boolean get() = isPreviousStateAvailable()
@@ -16,18 +18,20 @@ class History<T> {
 
     @Synchronized
     fun add(element: T): Boolean {
-        TODO("Not yet implemented")
+        historyList.push(element)
+
+        return true
     }
 
     @Synchronized
     fun remove(element: T): Boolean {
-        TODO("Not yet implemented")
+        historyList.remove(element)
+
+        return true
     }
 
     @Synchronized
-    fun jumpToPreviousState(): T {
-        TODO("Not yet implemented")
-    }
+    fun jumpToPreviousState(): T = historyList.pop()
 
     @Synchronized
     fun jumpToNextState(): T {

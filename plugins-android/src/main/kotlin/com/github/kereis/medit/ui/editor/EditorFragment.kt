@@ -11,7 +11,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import com.github.kereis.medit.R
-import com.github.kereis.medit.application.format.markdown.MarkdownTextActions
+import com.github.kereis.medit.application.format.TextActionCommandExecutor
+import com.github.kereis.medit.application.format.markdown.MarkdownTextActionCommands
 import com.github.kereis.medit.databinding.FragmentEditorBinding
 import com.github.kereis.medit.domain.editor.Document
 import com.github.kereis.medit.domain.editor.TextEditor
@@ -37,6 +38,9 @@ class EditorFragment :
 
     @Inject
     lateinit var fileLoader: AbstractFileLoader
+
+    @Inject
+    lateinit var textActionCommandExecutor: TextActionCommandExecutor
 
     private val viewModel by activityViewModels<EditorViewModel>()
 
@@ -158,13 +162,25 @@ class EditorFragment :
 
     private fun setup() {
         binding.actionBarBold.setOnClickListener {
-            MarkdownTextActions.BOLD.textAction.apply(this)
+            // MarkdownTextActions.BOLD.textAction.apply(this)
+            textActionCommandExecutor.executeCommand(
+                MarkdownTextActionCommands.BoldCommand(this),
+                text.split("\n")
+            )
         }
         binding.actionBarItalics.setOnClickListener {
-            MarkdownTextActions.ITALIC.textAction.apply(this)
+            // MarkdownTextActions.ITALIC.textAction.apply(this)
+            textActionCommandExecutor.executeCommand(
+                MarkdownTextActionCommands.ItalicCommand(this),
+                text.split("\n")
+            )
         }
         binding.actionBarInlineCode.setOnClickListener {
-            MarkdownTextActions.INLINE_CODE.textAction.apply(this)
+            // MarkdownTextActions.INLINE_CODE.textAction.apply(this)
+            textActionCommandExecutor.executeCommand(
+                MarkdownTextActionCommands.InlineCodeCommand(this),
+                text.split("\n")
+            )
         }
 
         binding.fabRenderMd.setOnClickListener {

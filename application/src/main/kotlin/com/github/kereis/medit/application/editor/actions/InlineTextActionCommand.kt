@@ -3,7 +3,7 @@ package com.github.kereis.medit.application.editor.actions
 import com.github.kereis.medit.domain.editor.TextEditor
 import com.github.kereis.medit.domain.editor.actions.Command
 
-class InlineTextActionCommand(
+open class InlineTextActionCommand(
     private val textEditor: TextEditor,
     private val character: String
 ) : Command(textEditor) {
