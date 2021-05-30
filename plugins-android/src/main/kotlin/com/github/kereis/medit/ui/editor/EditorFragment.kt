@@ -12,12 +12,12 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import com.github.kereis.medit.R
 import com.github.kereis.medit.application.format.TextActionCommandExecutor
-import com.github.kereis.medit.application.format.markdown.MarkdownTextActionCommands
 import com.github.kereis.medit.databinding.FragmentEditorBinding
 import com.github.kereis.medit.domain.editor.Document
 import com.github.kereis.medit.domain.editor.TextEditor
 import com.github.kereis.medit.domain.explorer.files.FileLoader
 import com.github.kereis.medit.domain.explorer.files.FileReference
+import com.github.kereis.medit.domain.format.markdown.MarkdownTextActionCommands
 import com.github.kereis.medit.ui.BaseFragment
 import com.github.kereis.medit.ui.components.SelectableEditText
 import dagger.hilt.android.AndroidEntryPoint

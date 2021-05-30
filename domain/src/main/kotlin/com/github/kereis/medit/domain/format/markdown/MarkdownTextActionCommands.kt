@@ -1,8 +1,8 @@
-package com.github.kereis.medit.application.format.markdown
+package com.github.kereis.medit.domain.format.markdown
 
-import com.github.kereis.medit.application.editor.actions.BlockTextActionCommand
-import com.github.kereis.medit.application.editor.actions.InlineTextActionCommand
 import com.github.kereis.medit.domain.editor.TextEditor
+import com.github.kereis.medit.domain.editor.actions.BlockTextActionCommand
+import com.github.kereis.medit.domain.editor.actions.InlineTextActionCommand
 
 sealed class MarkdownTextActionCommands {
 

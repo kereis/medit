@@ -1,7 +1,6 @@
-package com.github.kereis.medit.application.editor.actions
+package com.github.kereis.medit.domain.editor.actions
 
 import com.github.kereis.medit.domain.editor.TextEditor
-import com.github.kereis.medit.domain.editor.actions.Command
 
 open class InlineTextActionCommand(
     private val textEditor: TextEditor,

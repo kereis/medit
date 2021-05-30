@@ -8,4 +8,6 @@ java {
 dependencies {
 
     api project(":abstraction-code")
+
+    testImplementation 'junit:junit:4.+'
 }
