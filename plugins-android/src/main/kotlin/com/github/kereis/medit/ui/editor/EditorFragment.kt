@@ -116,7 +116,7 @@ class EditorFragment :
                         fileReference = FileReference(
                             id = null,
                             fileName = fileName,
-                            rawFilePath = URI(uri.toString()),
+                            rawFilePath = uri.toString(),
                             lastAccess = OffsetDateTime.now()
                         )
                     )

@@ -29,7 +29,7 @@ class EditorViewModel
                 FileReference(
                     null,
                     "NewFile.md",
-                    URI(""),
+                    "",
                     OffsetDateTime.now()
                 )
             )

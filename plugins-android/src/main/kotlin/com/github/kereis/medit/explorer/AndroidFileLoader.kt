@@ -61,7 +61,7 @@ class AndroidFileLoader(
         val documentFile = FileReference(
             id = null,
             fileName = fileName,
-            rawFilePath = uri,
+            rawFilePath = uri.toString(),
             lastAccess = OffsetDateTime.now(),
         )
 
@@ -77,7 +77,7 @@ class AndroidFileLoader(
         withContext(coroutineContext) {
             try {
                 context.contentResolver.openFileDescriptor(
-                    Uri.parse(document.fileReference.rawFilePath.toString()),
+                    Uri.parse(document.fileReference.rawFilePath),
                     "w"
                 )?.use { descriptor ->
                     FileOutputStream(descriptor.fileDescriptor).use { outputStream ->
