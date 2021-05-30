@@ -2,7 +2,6 @@ package com.github.kereis.medit.adapters.explorer.room.files
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.github.kereis.medit.domain.explorer.files.FileReference
 import java.time.OffsetDateTime
 
 @Entity(tableName = "recent_files")
@@ -14,10 +13,6 @@ data class FileEntity(
     val filePath: String,
     val lastAccess: OffsetDateTime,
 )
-
-fun Array<out FileReference>.asFileEntityArray(): Array<out FileEntity> = map {
-    FileEntity(it.id!!, it.fileName, it.rawFilePath.toString(), it.lastAccess)
-}.toTypedArray()
 
 fun getSampleFileEntityData(): Array<FileEntity> {
     return arrayOf(
