@@ -16,6 +16,52 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <RelativeLayout
+        android:id="@+id/main__intro_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/appbar"
+        android:layout_margin="@dimen/activity_horizontal_margin">
+
+        <TextView
+            android:id="@+id/main__intro_fragment__welcome_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Welcome to MeDit - a Markdown editor for Android!"
+            android:gravity="center_horizontal"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:fontFamily="sans-serif-black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/main__intro_fragment__description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pick a recently opened file in the list below or choose a file using the system's file picker"
+            android:gravity="center_horizontal"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/main__intro_fragment__welcome_text"
+            android:layout_marginBottom="12dp" />
+
+        <Button
+            android:id="@+id/main__intro_fragment__button_file_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Open file picker"
+            android:layout_below="@id/main__intro_fragment__description" />
+
+        <Button
+            android:id="@+id/main__intro_fragment__button_example_doc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Open example doc"
+            android:layout_below="@id/main__intro_fragment__description"
+            android:layout_toRightOf="@id/main__intro_fragment__button_file_picker"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="16dp" />
+    </RelativeLayout>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/main__fragment_container"
@@ -23,7 +69,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_below="@id/appbar" />
+        android:layout_below="@id/main__intro_fragment" />
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

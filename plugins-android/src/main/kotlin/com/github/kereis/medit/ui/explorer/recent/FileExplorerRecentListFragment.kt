@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -47,7 +48,15 @@ class FileExplorerRecentListFragment :
             LinearLayoutManager(requireContext())
         binding.fileExplorerRecentFilesListView.adapter = adapter
 
-        viewModel.fetchFileList.observe(viewLifecycleOwner, adapter::setFileList)
+        viewModel.fetchFileList.observe(viewLifecycleOwner) {
+            if (it.isEmpty()) {
+                binding.fileExplorerRecentFilesEmptyAlert.visibility = View.VISIBLE
+            } else {
+                binding.fileExplorerRecentFilesEmptyAlert.visibility = View.INVISIBLE
+            }
+
+            adapter.setFileList(it)
+        }
     }
 
     override fun onFileClicked(clickedFile: FileReference) {

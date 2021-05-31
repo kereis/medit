@@ -12,4 +12,13 @@
         android:layout_height="match_parent"
         tools:layout_editor_absoluteY="328dp"
         tools:layout_editor_absoluteX="65dp" />
+
+    <TextView
+        android:id="@+id/file_explorer__recent_files_empty_alert"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="No files recently opened. Go open some!"
+        android:gravity="center"
+        android:fontFamily="sans-serif-light"
+        android:textSize="20sp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
