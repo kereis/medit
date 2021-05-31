@@ -34,7 +34,7 @@ sealed class MarkdownTextActionCommands {
                 throw Exception("level must be between 1 and 6")
             }
 
-            startBlock = "#".repeat(level) + " "
+            startBlock = "\n" + "#".repeat(level) + " "
             endBlock = "" // we don't need a whole block
         }
     }
