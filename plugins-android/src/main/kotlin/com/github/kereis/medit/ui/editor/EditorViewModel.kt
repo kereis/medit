@@ -9,10 +9,10 @@ import com.github.kereis.medit.domain.editor.Document
 import com.github.kereis.medit.domain.explorer.files.FileReference
 import com.github.kereis.medit.domain.explorer.files.RecentFileRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.launch
 import java.time.OffsetDateTime
 import javax.inject.Inject
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class EditorViewModel

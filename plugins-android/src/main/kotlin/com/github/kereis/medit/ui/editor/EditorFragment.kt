@@ -23,15 +23,15 @@ import com.github.kereis.medit.ui.BaseFragment
 import com.github.kereis.medit.ui.components.SelectableEditText
 import com.github.kereis.medit.ui.components.ToastService
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.FileNotFoundException
+import java.net.URI
+import java.time.OffsetDateTime
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
-import java.io.FileNotFoundException
-import java.net.URI
-import java.time.OffsetDateTime
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class EditorFragment :

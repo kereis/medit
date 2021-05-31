@@ -1,9 +1,9 @@
 package com.github.kereis.medit.domain.explorer.files
 
-import org.junit.Assert
-import org.junit.Test
 import java.net.URISyntaxException
 import java.time.OffsetDateTime
+import org.junit.Assert
+import org.junit.Test
 
 class FileReferenceTest {
 

@@ -20,7 +20,7 @@ import timber.log.Timber
 @AndroidEntryPoint
 class FileExplorerRecentListFragment :
     BaseFragment<FragmentFileExplorerRecentListBinding>
-        (R.layout.fragment_file_explorer_recent_list),
+    (R.layout.fragment_file_explorer_recent_list),
     FileExplorerFileElementViewHolder.OnClickListener {
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean)

@@ -8,8 +8,8 @@ import com.github.kereis.medit.databinding.FragmentPreviewBinding
 import com.github.kereis.medit.parser.MarkdownMarkupLanguageRenderer
 import com.github.kereis.medit.ui.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 import javax.inject.Inject
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MarkdownRenderFragment(

@@ -9,11 +9,11 @@ import androidx.lifecycle.viewModelScope
 import com.github.kereis.medit.domain.explorer.files.FileReference
 import com.github.kereis.medit.domain.explorer.files.RecentFileRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import javax.inject.Inject
 
 @HiltViewModel
 class FileExplorerRecentListViewModel

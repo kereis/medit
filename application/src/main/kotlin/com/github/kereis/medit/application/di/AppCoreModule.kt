@@ -7,8 +7,8 @@ import com.github.kereis.medit.application.format.TextActionCommandExecutor
 import com.github.kereis.medit.domain.explorer.files.RecentFileRepository
 import dagger.Module
 import dagger.Provides
-import kotlinx.coroutines.Dispatchers
 import javax.inject.Singleton
+import kotlinx.coroutines.Dispatchers
 
 @Module
 object AppCoreModule {

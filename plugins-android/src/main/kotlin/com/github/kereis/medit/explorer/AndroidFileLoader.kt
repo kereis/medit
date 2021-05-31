@@ -7,15 +7,15 @@ import android.provider.OpenableColumns
 import com.github.kereis.medit.domain.editor.Document
 import com.github.kereis.medit.domain.explorer.files.FileLoader
 import com.github.kereis.medit.domain.explorer.files.FileReference
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.withContext
-import timber.log.Timber
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.net.URI
 import java.time.OffsetDateTime
 import java.util.stream.Collectors
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 /**
  * # AndroidFileLoader

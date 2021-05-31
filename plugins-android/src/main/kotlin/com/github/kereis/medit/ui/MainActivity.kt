@@ -12,8 +12,8 @@ import com.github.kereis.medit.databinding.ActivityMainBinding
 import com.github.kereis.medit.domain.explorer.files.RecentFileRepository
 import com.github.kereis.medit.ui.explorer.recent.FileExplorerRecentListFragment
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 import javax.inject.Inject
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity :

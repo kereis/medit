@@ -3,6 +3,7 @@ package com.github.kereis.medit.explorer
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.kereis.medit.TestUtils.retrieveAppContext
 import com.github.kereis.medit.domain.editor.Document
+import java.io.File
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert
@@ -10,7 +11,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import org.junit.runner.RunWith
-import java.io.File
 
 @RunWith(AndroidJUnit4::class)
 class AndroidFileLoaderTest {
