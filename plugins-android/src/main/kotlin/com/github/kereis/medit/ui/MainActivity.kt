@@ -43,9 +43,25 @@ class MainActivity :
             filePickerRequest.launch(arrayOf("text/*"))
         }
 
+        binding.mainIntroFragmentButtonExampleDoc.setOnClickListener {
+            // openEditorActivity(Uri.parse("file:///android_asset/INTRO.md"))
+            openEditorActivityWithIntro()
+        }
+
         supportFragmentManager.commit {
             replace(binding.mainFragmentContainer.id, FileExplorerRecentListFragment())
         }
+    }
+
+    private fun openEditorActivityWithIntro() {
+        val intent = Intent(this, EditorActivity::class.java)
+
+        val bundle = Bundle()
+        bundle.putBoolean("INTRO", true)
+
+        intent.putExtras(bundle)
+
+        startActivity(intent)
     }
 
     private fun openEditorActivity(uri: Uri) {

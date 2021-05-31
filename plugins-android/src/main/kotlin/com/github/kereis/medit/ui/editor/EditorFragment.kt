@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
+import androidx.lifecycle.lifecycleScope
 import com.github.kereis.medit.R
 import com.github.kereis.medit.application.format.TextActionCommandExecutor
 import com.github.kereis.medit.databinding.FragmentEditorBinding
@@ -22,6 +23,8 @@ import com.github.kereis.medit.ui.BaseFragment
 import com.github.kereis.medit.ui.components.SelectableEditText
 import com.github.kereis.medit.ui.components.ToastService
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.io.FileNotFoundException
@@ -95,7 +98,9 @@ class EditorFragment :
 
         arguments?.let {
             it.getString("FILE_PATH")?.let { rawUri ->
+
                 Timber.d("Got FILE_PATH from bundle: $rawUri")
+
                 runBlocking {
                     try {
                         fileLoader.load(URI(rawUri))?.let { document ->
@@ -110,6 +115,28 @@ class EditorFragment :
                         )
                         requireActivity().finish()
                         return@runBlocking
+                    }
+                }
+            }
+
+            if (it.getBoolean("INTRO")) {
+                Timber.d("Running INTRO mode")
+
+                lifecycleScope.launch(Dispatchers.Main) {
+                    try {
+                        requireContext().assets.open("INTRO.md").use { stream ->
+                            stream.bufferedReader().use { reader ->
+                                val content = reader.readLines().joinToString("\n")
+                                viewModel.onContentChanged(
+                                    content
+                                )
+                                binding.contentInput.setText(content)
+                            }
+                        }
+                    } catch (e: Exception) {
+                        throw IllegalStateException(
+                            "trying to run INTRO mode but no INTRO.md found; $e"
+                        )
                     }
                 }
             }

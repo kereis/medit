@@ -23,6 +23,7 @@ class EditorActivity : AppCompatActivity(R.layout.activity_editor) {
 
         intent.extras?.let { bundle ->
             Timber.d("Got file path in EditorActivity bundle: ${bundle.getString("FILE_PATH")}")
+            Timber.d("Got INTRO flag in EditorActivity bundle: ${bundle.getBoolean("INTRO")}")
             editorFragment.arguments = bundle
         }
 
