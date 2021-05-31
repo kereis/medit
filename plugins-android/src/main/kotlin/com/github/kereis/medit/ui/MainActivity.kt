@@ -39,6 +39,10 @@ class MainActivity :
             startActivity(intent)
         }
 
+        binding.mainIntroFragmentButtonFilePicker.setOnClickListener {
+            filePickerRequest.launch(arrayOf("text/*"))
+        }
+
         supportFragmentManager.commit {
             replace(binding.mainFragmentContainer.id, FileExplorerRecentListFragment())
         }
