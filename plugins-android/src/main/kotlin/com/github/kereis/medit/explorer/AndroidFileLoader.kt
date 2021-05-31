@@ -11,6 +11,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.withContext
 import timber.log.Timber
+import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.net.URI
 import java.time.OffsetDateTime
@@ -33,6 +34,7 @@ class AndroidFileLoader(
     private val coroutineContext = Job() + dispatcher
 
     @Suppress("BlockingMethodInNonBlockingContext") // We use Dispatchers.IO by DI
+    @Throws(FileNotFoundException::class)
     override suspend fun load(uri: URI): Document? = withContext(coroutineContext) {
         val androidUri = Uri.parse(uri.toString())
         val inputStream =
@@ -77,6 +79,7 @@ class AndroidFileLoader(
     }
 
     @Suppress("BlockingMethodInNonBlockingContext") // We use Dispatchers.IO by DI
+    @Throws(FileNotFoundException::class)
     override suspend fun save(document: Document): Boolean =
         withContext(coroutineContext) {
             try {

@@ -1,10 +1,7 @@
 package com.github.kereis.medit.ui.explorer.recent
 
-import android.net.Uri
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.documentfile.provider.DocumentFile
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.kereis.medit.R
@@ -25,12 +22,6 @@ class FileExplorerRecentListFragment :
     private val viewModel by activityViewModels<FileExplorerRecentListViewModel>()
     private lateinit var adapter: FileExplorerRecentListAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        adapter = FileExplorerRecentListAdapter(requireContext())
-    }
-
     override fun initView() {
         super.initView()
 
@@ -38,19 +29,10 @@ class FileExplorerRecentListFragment :
             LinearLayoutManager(requireContext())
         binding.fileExplorerRecentFilesListView.adapter = adapter
 
-        viewModel.fetchFileList.observe(
-            viewLifecycleOwner,
-            {
-                // TODO Move into mapper class
-                adapter.setFileList(
-                    it.mapNotNull { domainFile ->
-                        DocumentFile.fromSingleUri(
-                            requireContext(),
-                            Uri.parse(domainFile.filePath.path)
-                        )
-                    }
-                )
-            }
-        )
+        viewModel.fetchFileList.observe(viewLifecycleOwner, adapter::setFileList)
+    }
+
+    fun setAdapter(adapter: FileExplorerRecentListAdapter) {
+        this.adapter = adapter
     }
 }

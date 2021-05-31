@@ -8,19 +8,16 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import com.github.kereis.medit.R
 import com.github.kereis.medit.databinding.FragmentFileExplorerBinding
-import com.github.kereis.medit.domain.explorer.files.FileLoader
+import com.github.kereis.medit.domain.explorer.files.FileReference
 import com.github.kereis.medit.ui.BaseFragment
 import com.github.kereis.medit.ui.EditorActivity
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class FileExplorerFragment :
-    BaseFragment<FragmentFileExplorerBinding>(R.layout.fragment_file_explorer) {
-
-    @Inject
-    lateinit var fileLoader: FileLoader
+    BaseFragment<FragmentFileExplorerBinding>(R.layout.fragment_file_explorer),
+    FileExplorerFileElementViewHolder.OnClickListener {
 
     override val bindingInflater:
             (LayoutInflater, ViewGroup?, Boolean) -> FragmentFileExplorerBinding
@@ -29,15 +26,22 @@ class FileExplorerFragment :
     override fun initView() {
         toolbarTitle = "File Explorer"
 
-        binding.fileExplorerNavView.setOnNavigationItemSelectedListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.navigation_fileExplorerStorageListFragment -> {
-                    filePickerRequest.launch(arrayOf("text/*"))
-                }
-            }
+        // binding.fileExplorerNavView.setOnNavigationItemSelectedListener { menuItem ->
+        //     when (menuItem.itemId) {
+        //         R.id.navigation_fileExplorerStorageListFragment -> {
+        //             filePickerRequest.launch(arrayOf("text/*"))
+        //         }
+        //     }
+        //
+        //     false
+        // }
 
-            false
-        }
+        // val recentListFragment = FileExplorerRecentListFragment()
+        // recentListFragment.setAdapter(FileExplorerRecentListAdapter(requireContext(), this))
+        //
+        // requireActivity().supportFragmentManager.commit {
+        //     replace(binding.fileExplorerFragmentContainer.id, recentListFragment)
+        // }
 
         super.initView()
     }
@@ -63,4 +67,12 @@ class FileExplorerFragment :
                 Timber.d("Won't start EditorActivity as filePickerRequest returned null")
             }
         }
+
+    override fun onFileClicked(clickedFile: FileReference) {
+        openEditorActivity(Uri.parse(clickedFile.rawFilePath))
+    }
+
+    override fun onFileLongClicked(clickedFile: FileReference) {
+        Timber.d("Long press on $clickedFile")
+    }
 }

@@ -16,9 +16,9 @@ data class FileEntity(
 
 fun getSampleFileEntityData(): Array<FileEntity> {
     return arrayOf(
-        FileEntity(1, "MyTestFile", "/hi/my/home", OffsetDateTime.now()),
-        FileEntity(2, "MyTestFile2", "/hi/my2/home", OffsetDateTime.now()),
-        FileEntity(3, "MyTestFile3", "/hi/my123/home", OffsetDateTime.now()),
-        FileEntity(4, "MyTestFile4", "/hi/my/home", OffsetDateTime.now()),
+        FileEntity(1, "MyTestFile.md", "/hi/my/home", OffsetDateTime.now()),
+        FileEntity(2, "MyTestFile2.md", "/hi/my2/home", OffsetDateTime.now()),
+        FileEntity(3, "MyTestFile3.md", "/hi/my123/home", OffsetDateTime.now()),
+        FileEntity(4, "MyTestFile4.md", "/hi/my/home", OffsetDateTime.now()),
     )
 }

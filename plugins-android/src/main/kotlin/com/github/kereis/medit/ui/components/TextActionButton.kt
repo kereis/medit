@@ -1,4 +1,4 @@
-package com.github.kereis.medit.ui.editor
+package com.github.kereis.medit.ui.components
 
 import android.content.Context
 import android.util.AttributeSet

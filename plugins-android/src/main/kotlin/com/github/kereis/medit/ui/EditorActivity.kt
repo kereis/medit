@@ -27,7 +27,7 @@ class EditorActivity : AppCompatActivity(R.layout.activity_editor) {
         }
 
         supportFragmentManager.commit {
-            replace(R.id.fragment_container, editorFragment)
+            replace(binding.fragmentContainer.id, editorFragment)
         }
     }
 }

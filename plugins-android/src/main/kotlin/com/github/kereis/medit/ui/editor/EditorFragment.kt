@@ -20,9 +20,11 @@ import com.github.kereis.medit.domain.explorer.files.FileReference
 import com.github.kereis.medit.domain.format.markdown.MarkdownTextActionCommands
 import com.github.kereis.medit.ui.BaseFragment
 import com.github.kereis.medit.ui.components.SelectableEditText
+import com.github.kereis.medit.ui.components.ToastService
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
+import java.io.FileNotFoundException
 import java.net.URI
 import java.time.OffsetDateTime
 import javax.inject.Inject
@@ -41,6 +43,9 @@ class EditorFragment :
 
     @Inject
     lateinit var textActionCommandExecutor: TextActionCommandExecutor
+
+    @Inject
+    lateinit var toastService: ToastService
 
     private val viewModel by activityViewModels<EditorViewModel>()
 
@@ -89,9 +94,18 @@ class EditorFragment :
             it.getString("FILE_PATH")?.let { rawUri ->
                 Timber.d("Got FILE_PATH from bundle: $rawUri")
                 runBlocking {
-                    fileLoader.load(URI(rawUri))?.let { document ->
-                        Timber.d("Document $rawUri loaded -> $document")
-                        viewModel.setActiveDocument(document)
+                    try {
+                        fileLoader.load(URI(rawUri))?.let { document ->
+                            Timber.d("Document $rawUri loaded -> $document")
+                            viewModel.setActiveDocument(document)
+                        }
+                    } catch (fnfex: FileNotFoundException) {
+                        Timber.e("could not file while starting activity: $fnfex")
+                        toastService.showLong(
+                            "Could not find file with path $rawUri. Does the file exist?"
+                        )
+                        requireActivity().finish()
+                        return@runBlocking
                     }
                 }
             }

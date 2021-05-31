@@ -2,26 +2,89 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp"
-    android:orientation="vertical" >
+    android:paddingStart="8dp"
+    android:paddingEnd="8dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:background="?android:attr/selectableItemBackground"
+    android:backgroundTint="#673AB7">
 
-    <TextView
-        android:id="@+id/file_explorer__recent_files_element_name"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+    <ImageView
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_margin="8dp"
+        android:scaleType="fitCenter"
+        android:background="@drawable/text_document_icon_48"
+        android:backgroundTint="@color/purple_700"
+        android:backgroundTintMode="src_in" />
 
-    <TextView
-        android:id="@+id/file_explorer__recent_files_element_path"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/file_explorer__recent_files_element_last_access"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        <TextView
+            android:id="@+id/file_explorer__recent_files_element_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="name"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif-black" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/file_explorer__recent_files_element_path_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="File path:"
+                android:paddingEnd="3dp" />
+
+            <TextView
+                android:id="@+id/file_explorer__recent_files_element_path"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="file:///my/path/to/file"
+                android:paddingStart="3dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/file_explorer__recent_files_element_last_access_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Last access:"
+                android:paddingEnd="3dp" />
+
+            <TextView
+                android:id="@+id/file_explorer__recent_files_element_last_access"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Last access date here"
+                android:paddingStart="3dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/file_explorer__recent_files_element_last_access"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:text="Last access date here"-->
+    <!--        android:layout_weight="1" />-->
 
 </LinearLayout>

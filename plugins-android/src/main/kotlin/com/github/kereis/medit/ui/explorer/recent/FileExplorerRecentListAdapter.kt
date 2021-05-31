@@ -3,19 +3,20 @@ package com.github.kereis.medit.ui.explorer.recent
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.documentfile.provider.DocumentFile
 import androidx.recyclerview.widget.RecyclerView
 import com.github.kereis.medit.databinding.FragmentFileExplorerRecentListElementBinding
+import com.github.kereis.medit.domain.explorer.files.FileReference
 import com.github.kereis.medit.ui.AbstractViewHolder
 import com.github.kereis.medit.ui.explorer.FileExplorerFileElementViewHolder
 
 class FileExplorerRecentListAdapter(
-    private val context: Context
+    private val context: Context,
+    private val onClickListener: FileExplorerFileElementViewHolder.OnClickListener
 ) : RecyclerView.Adapter<AbstractViewHolder<*>>() {
 
-    private var fileList = listOf<DocumentFile>()
+    private var fileList = listOf<FileReference>()
 
-    fun setFileList(fileList: List<DocumentFile>) {
+    fun setFileList(fileList: List<FileReference>) {
         this.fileList = fileList
         notifyDataSetChanged()
     }
@@ -27,7 +28,7 @@ class FileExplorerRecentListAdapter(
             false
         )
 
-        return FileExplorerFileElementViewHolder(null, itemBinding)
+        return FileExplorerFileElementViewHolder(onClickListener, itemBinding)
     }
 
     override fun onBindViewHolder(holder: AbstractViewHolder<*>, position: Int) {
