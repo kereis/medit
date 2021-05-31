@@ -11,9 +11,6 @@ import java.util.Stack
 class History<T> {
     private val historyList: Stack<T> = Stack()
 
-    val nextStateAvailable: Boolean get() = isNextStateAvailable()
-    val previousStateAvailable: Boolean get() = isPreviousStateAvailable()
-
     val iterator: Iterator<T> get() = historyList.iterator()
 
     @Synchronized
@@ -32,17 +29,4 @@ class History<T> {
 
     @Synchronized
     fun jumpToPreviousState(): T = historyList.pop()
-
-    @Synchronized
-    fun jumpToNextState(): T {
-        TODO("Not yet implemented")
-    }
-
-    private fun isNextStateAvailable(): Boolean {
-        TODO("Not yet implemented")
-    }
-
-    private fun isPreviousStateAvailable(): Boolean {
-        TODO("Not yet implemented")
-    }
 }
