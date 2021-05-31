@@ -12,11 +12,13 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import javax.inject.Named
 
 @Module(
     includes = [
         AndroidDatabaseAdapterModule::class,
-        AndroidDatabaseModule::class
+        AndroidDatabaseModule::class,
     ]
 )
 @InstallIn(SingletonComponent::class)
@@ -28,4 +30,8 @@ object FileManagementModule {
         ioDispatcher: CoroutineDispatcher,
         @ApplicationContext context: Context,
     ): FileLoader = AndroidFileLoader(ioDispatcher, context)
+
+    @Singleton
+    @Provides
+    fun ioDispatcher() = Dispatchers.IO
 }

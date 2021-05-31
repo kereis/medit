@@ -26,17 +26,4 @@ data class FileReference(
 
     override fun toString() =
         "File(id=$id, fileName='$fileName', filePath=$rawFilePath, lastAccess=$lastAccess)"
-
-    companion object {
-
-        @JvmStatic
-        fun updateAccessTime(fileReference: FileReference): FileReference {
-            return FileReference(
-                fileReference.id,
-                fileReference.fileName,
-                fileReference.rawFilePath,
-                OffsetDateTime.now()
-            )
-        }
-    }
 }

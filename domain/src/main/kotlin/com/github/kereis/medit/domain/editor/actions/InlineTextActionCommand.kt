@@ -5,7 +5,7 @@ import com.github.kereis.medit.domain.editor.TextEditor
 open class InlineTextActionCommand(
     private val textEditor: TextEditor,
     private val character: String
-) : Command(textEditor) {
+) : Command() {
 
     override fun execute() {
         val start = textEditor.selectionStart

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.github.kereis.medit.application.files.FileReferenceAccessDateUpdater
 import com.github.kereis.medit.domain.editor.Document
 import com.github.kereis.medit.domain.explorer.files.FileReference
 import com.github.kereis.medit.domain.explorer.files.RecentFileRepository
@@ -19,6 +20,7 @@ class EditorViewModel
 @Inject constructor(
     private val recentFileRepository: RecentFileRepository,
     private val ioDispatcher: CoroutineDispatcher,
+    private val fileRefAccessDateUpdater: FileReferenceAccessDateUpdater,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -68,12 +70,12 @@ class EditorViewModel
                 )
             )
 
-            recentFileRepository.update(FileReference.updateAccessTime(it))
+            recentFileRepository.update(fileRefAccessDateUpdater.updateTimestamp(it))
         } ?: run {
 
             val id =
                 recentFileRepository.insert(
-                    FileReference.updateAccessTime(document.fileReference)
+                    fileRefAccessDateUpdater.updateTimestamp(document.fileReference)
                 )[0]
             _activeDocument.postValue(
                 Document(

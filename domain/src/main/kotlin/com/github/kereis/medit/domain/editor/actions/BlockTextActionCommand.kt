@@ -5,7 +5,7 @@ import com.github.kereis.medit.domain.editor.TextEditor
 open class BlockTextActionCommand(
     private val textEditor: TextEditor,
     character: String
-) : Command(textEditor) {
+) : Command() {
 
     protected open val startBlock = "\n$character"
     protected open val endBlock = "\n\n$character\n"

@@ -13,8 +13,7 @@ import dagger.hilt.components.SingletonComponent
     includes = [
         AppCoreModule::class,
         FileManagementModule::class,
-        MarkupLanguageRendererModule::class,
-        KotlinCoroutinesModule::class,
+        MarkupLanguageRendererModule::class
     ]
 )
 @InstallIn(SingletonComponent::class)
