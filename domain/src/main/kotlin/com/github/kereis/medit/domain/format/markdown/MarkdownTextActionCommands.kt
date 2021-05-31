@@ -14,7 +14,12 @@ sealed class MarkdownTextActionCommands {
 
     class CodeBlockCommand(textEditor: TextEditor) : BlockTextActionCommand(textEditor, "```")
 
-    class QuoteBlockCommand(textEditor: TextEditor) : BlockTextActionCommand(textEditor, ">")
+    class QuoteBlockCommand(
+        textEditor: TextEditor
+    ) : BlockTextActionCommand(textEditor, ">") {
+
+        override val endBlock: String = ""
+    }
 
     class HeaderCommand(
         textEditor: TextEditor,
@@ -36,7 +41,7 @@ sealed class MarkdownTextActionCommands {
 
     class LinkCommand(textEditor: TextEditor) : BlockTextActionCommand(textEditor, "") {
 
-        override val startBlock = "["
+        override val startBlock = "[test_here"
         override val endBlock = "](link_here)"
     }
 
@@ -47,4 +52,7 @@ sealed class MarkdownTextActionCommands {
     }
 
     class LatexCommand(textEditor: TextEditor) : BlockTextActionCommand(textEditor, "$$")
+
+    class StrikeThroughCommand(textEditor: TextEditor) :
+        InlineTextActionCommand(textEditor, "~~")
 }

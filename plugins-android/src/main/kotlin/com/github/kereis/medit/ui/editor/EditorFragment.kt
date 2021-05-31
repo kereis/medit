@@ -1,12 +1,12 @@
 package com.github.kereis.medit.ui.editor
 
-// import com.github.kereis.medit.application.files.FileStorageService
 import android.provider.OpenableColumns
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
@@ -57,6 +57,8 @@ class EditorFragment :
     @Inject
     lateinit var ioDispatcher: CoroutineDispatcher
 
+    private lateinit var headerLevelSelectionDialog: AlertDialog
+
     private val viewModel by activityViewModels<EditorViewModel>()
 
     override fun initView() {
@@ -64,6 +66,21 @@ class EditorFragment :
         readBundle()
         setup()
         super.initView()
+
+        var selection = 1
+        headerLevelSelectionDialog = AlertDialog.Builder(requireContext())
+            .setTitle("Select header level")
+            .setPositiveButton("Select") { _, _ ->
+                textActionCommandExecutor.executeCommand(
+                    MarkdownTextActionCommands.HeaderCommand(this, selection),
+                    text.split("\n")
+                )
+            }
+            .setNegativeButton("Cancel") { _, _ -> }
+            .setSingleChoiceItems(arrayOf("1", "2", "3", "4", "5"), 0) { _, item ->
+                selection = item + 1
+            }
+            .create()
     }
 
     override val selectionStart: Int
@@ -201,25 +218,62 @@ class EditorFragment :
 
     private fun setup() {
         binding.actionBarBold.setOnClickListener {
-            // MarkdownTextActions.BOLD.textAction.apply(this)
             textActionCommandExecutor.executeCommand(
                 MarkdownTextActionCommands.BoldCommand(this),
                 text.split("\n")
             )
         }
         binding.actionBarItalics.setOnClickListener {
-            // MarkdownTextActions.ITALIC.textAction.apply(this)
             textActionCommandExecutor.executeCommand(
                 MarkdownTextActionCommands.ItalicCommand(this),
                 text.split("\n")
             )
         }
         binding.actionBarInlineCode.setOnClickListener {
-            // MarkdownTextActions.INLINE_CODE.textAction.apply(this)
             textActionCommandExecutor.executeCommand(
                 MarkdownTextActionCommands.InlineCodeCommand(this),
                 text.split("\n")
             )
+        }
+        binding.actionBarBlockCode.setOnClickListener {
+            textActionCommandExecutor.executeCommand(
+                MarkdownTextActionCommands.CodeBlockCommand(this),
+                text.split("\n")
+            )
+        }
+        binding.actionBarQuote.setOnClickListener {
+            // MarkdownTextActions.INLINE_CODE.textAction.apply(this)
+            textActionCommandExecutor.executeCommand(
+                MarkdownTextActionCommands.QuoteBlockCommand(this),
+                text.split("\n")
+            )
+        }
+        binding.actionBarLink.setOnClickListener {
+            textActionCommandExecutor.executeCommand(
+                MarkdownTextActionCommands.LinkCommand(this),
+                text.split("\n")
+            )
+        }
+        binding.actionBarLatex.setOnClickListener {
+            textActionCommandExecutor.executeCommand(
+                MarkdownTextActionCommands.LatexCommand(this),
+                text.split("\n")
+            )
+        }
+        binding.actionBarImage.setOnClickListener {
+            textActionCommandExecutor.executeCommand(
+                MarkdownTextActionCommands.ImageCommand(this),
+                text.split("\n")
+            )
+        }
+        binding.actionBarStrikeThrough.setOnClickListener {
+            textActionCommandExecutor.executeCommand(
+                MarkdownTextActionCommands.StrikeThroughCommand(this),
+                text.split("\n")
+            )
+        }
+        binding.actionBarHeader.setOnClickListener {
+            headerLevelSelectionDialog.show()
         }
 
         binding.fabRenderMd.setOnClickListener {

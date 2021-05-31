@@ -23,7 +23,6 @@ class FileExplorerRecentListFragment :
         (R.layout.fragment_file_explorer_recent_list),
     FileExplorerFileElementViewHolder.OnClickListener {
 
-    // TODO Fix ktlint heavily enforced linebreaks -> Exclude explicitly?
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean)
     -> FragmentFileExplorerRecentListBinding
         get() = FragmentFileExplorerRecentListBinding::inflate
