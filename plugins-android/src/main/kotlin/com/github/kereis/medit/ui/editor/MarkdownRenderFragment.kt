@@ -35,7 +35,7 @@ class MarkdownRenderFragment(
 
         if (newToolbar != null) {
             newToolbar.title = "Markdown Preview"
-            newToolbar.setNavigationIcon(R.drawable.ic_dashboard_black_24dp)
+            newToolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_36)
             newToolbar.setNavigationOnClickListener {
                 if (!parentFragmentManager.popBackStackImmediate())
                     activity?.onBackPressed()

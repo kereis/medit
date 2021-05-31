@@ -166,6 +166,8 @@ class EditorFragment :
 
     private val fileSaverIntent =
         registerForActivityResult(ActivityResultContracts.CreateDocument()) { uri ->
+            if (uri == null) return@registerForActivityResult
+
             Timber.d("fileSaverIntent = $uri, ${uri.path}")
 
             var newDocument: Document? = null
