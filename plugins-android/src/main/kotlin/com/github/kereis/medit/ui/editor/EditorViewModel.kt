@@ -71,8 +71,10 @@ class EditorViewModel
             recentFileRepository.update(FileReference.updateAccessTime(it))
         } ?: run {
 
-        val id =
-            recentFileRepository.insert(FileReference.updateAccessTime(document.fileReference))[0]
+            val id =
+                recentFileRepository.insert(
+                    FileReference.updateAccessTime(document.fileReference)
+                )[0]
             _activeDocument.postValue(
                 Document(
                     document.title,
