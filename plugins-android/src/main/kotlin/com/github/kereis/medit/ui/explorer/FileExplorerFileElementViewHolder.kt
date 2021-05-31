@@ -12,6 +12,7 @@ class FileExplorerFileElementViewHolder(
     interface OnClickListener {
         fun onFileClicked(clickedFile: FileReference)
         fun onFileLongClicked(clickedFile: FileReference)
+        fun onDelete(clickedFile: FileReference)
     }
 
     override fun bind(item: FileReference) = with(binding) {
@@ -25,6 +26,9 @@ class FileExplorerFileElementViewHolder(
         root.setOnLongClickListener {
             onClickListener?.onFileLongClicked(item)
             return@setOnLongClickListener true
+        }
+        fileExplorerRecentFilesElementDeleteEntryButton.setOnClickListener {
+            onClickListener?.onDelete(item)
         }
     }
 }

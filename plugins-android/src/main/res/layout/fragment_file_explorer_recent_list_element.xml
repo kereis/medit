@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingStart="8dp"
@@ -18,12 +18,17 @@
         android:scaleType="fitCenter"
         android:background="@drawable/text_document_icon_48"
         android:backgroundTint="@color/purple_700"
-        android:backgroundTintMode="src_in" />
+        android:backgroundTintMode="src_in"
+        android:layout_alignParentStart="true"
+        android:id="@+id/file_explorer__recent_files_element_icon" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/file_explorer__recent_files_element_details_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_toRightOf="@id/file_explorer__recent_files_element_icon"
+        android:layout_toLeftOf="@id/file_explorer__recent_files_element_delete_entry_button">
 
         <TextView
             android:id="@+id/file_explorer__recent_files_element_name"
@@ -79,12 +84,12 @@
         </LinearLayout>
     </LinearLayout>
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/file_explorer__recent_files_element_delete_entry_button"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_margin="8dp"
+        android:layout_alignParentEnd="true"
+        android:text="X" />
 
-    <!--    <TextView-->
-    <!--        android:id="@+id/file_explorer__recent_files_element_last_access"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="0dp"-->
-    <!--        android:text="Last access date here"-->
-    <!--        android:layout_weight="1" />-->
-
-</LinearLayout>
+</RelativeLayout>

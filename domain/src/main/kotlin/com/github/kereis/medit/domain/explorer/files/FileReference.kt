@@ -6,7 +6,7 @@ import java.net.URISyntaxException
 import java.time.OffsetDateTime
 
 data class FileReference(
-    val id: Int?,
+    val id: Long?,
     val fileName: String,
     val rawFilePath: String,
     var lastAccess: OffsetDateTime
@@ -19,7 +19,7 @@ data class FileReference(
     init {
         try {
             filePath = URI(rawFilePath)
-        } catch(se: URISyntaxException) {
+        } catch (se: URISyntaxException) {
             throw se
         }
     }

@@ -16,6 +16,7 @@ import com.github.kereis.medit.domain.editor.Document
 import com.github.kereis.medit.domain.editor.TextEditor
 import com.github.kereis.medit.domain.explorer.files.FileLoader
 import com.github.kereis.medit.domain.explorer.files.FileReference
+import com.github.kereis.medit.domain.explorer.files.RecentFileRepository
 import com.github.kereis.medit.domain.format.markdown.MarkdownTextActionCommands
 import com.github.kereis.medit.ui.BaseFragment
 import com.github.kereis.medit.ui.components.SelectableEditText
@@ -45,6 +46,9 @@ class EditorFragment :
 
     @Inject
     lateinit var toastService: ToastService
+
+    @Inject
+    lateinit var recentFileRepository: RecentFileRepository
 
     private val viewModel by activityViewModels<EditorViewModel>()
 
@@ -111,10 +115,14 @@ class EditorFragment :
         }
     }
 
+    private fun feedDocumentMetadata(document: Document) {
+    }
+
     private val fileSaverIntent =
         registerForActivityResult(ActivityResultContracts.CreateDocument()) { uri ->
             Timber.d("fileSaverIntent = $uri, ${uri.path}")
 
+            var newDocument: Document? = null
             requireContext().contentResolver.query(
                 uri,
                 null,
@@ -126,7 +134,7 @@ class EditorFragment :
                     val nameIndex = getColumnIndex(OpenableColumns.DISPLAY_NAME)
                     moveToFirst()
                     val fileName = getString(nameIndex)
-                    val newDocument = Document(
+                    newDocument = Document(
 
                         title = viewModel.activeDocument.value?.title ?: "",
                         content = viewModel.activeDocument.value?.content ?: "",
@@ -137,19 +145,19 @@ class EditorFragment :
                             lastAccess = OffsetDateTime.now()
                         )
                     )
-                    viewModel.setActiveDocument(newDocument)
+                    viewModel.setActiveDocument(newDocument!!)
+                    Timber.d("$newDocument")
                     close()
                 }
 
-            viewModel.activeDocument.value?.let { document ->
+            newDocument?.let {
                 runBlocking {
                     try {
-                        val saveSuccessful = fileLoader.save(document)
+                        Timber.d("$it")
+                        val saveSuccessful = fileLoader.save(it)
 
                         if (saveSuccessful) {
                             toastService.showShort("Saved!")
-
-                            viewModel.setActiveDocument(document)
                         } else {
                             toastService.showShort("Saving failed!")
                         }
@@ -158,6 +166,9 @@ class EditorFragment :
                         toastService.showLong("Failed! ${e.localizedMessage} - $uri")
                     }
                 }
+            } ?: run {
+                toastService.showLong("Could not save file.")
+                Timber.w("Could not save $newDocument?")
             }
         }
 

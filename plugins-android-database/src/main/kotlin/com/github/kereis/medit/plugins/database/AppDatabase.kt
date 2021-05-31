@@ -6,16 +6,18 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.github.kereis.medit.adapters.explorer.room.files.FileEntity
+import com.github.kereis.medit.adapters.explorer.room.files.URITypeConverter
 import com.github.kereis.medit.adapters.explorer.room.files.getSampleFileEntityData
 import com.github.kereis.medit.adapters.explorer.room.time.DateTimeTypeConverter
 import com.github.kereis.medit.domain.mapping.DataMapper
 import com.github.kereis.medit.plugins.database.files.RecentFileDao
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
+import java.net.URI
 import java.time.OffsetDateTime
 
-@Database(entities = [FileEntity::class], version = 2)
-@TypeConverters(DateTimeTypeConverter::class)
+@Database(entities = [FileEntity::class], version = 3)
+@TypeConverters(DateTimeTypeConverter::class, URITypeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun recentFilesDao(): RecentFileDao
@@ -27,14 +29,16 @@ abstract class AppDatabase : RoomDatabase() {
 
         fun getInstance(
             context: Context,
-            dateTimeTypeConverter: DataMapper<String, OffsetDateTime>
+            dateTimeTypeConverter: DataMapper<String, OffsetDateTime>,
+            uriTypeConverter: DataMapper<String, URI>
         ): AppDatabase {
             return instance
                 ?: synchronized(lockObj) {
                     instance
                         ?: buildDatabase(
                             context,
-                            dateTimeTypeConverter
+                            dateTimeTypeConverter,
+                            uriTypeConverter
                         )
                             .also { instance = it }
                 }
@@ -42,7 +46,8 @@ abstract class AppDatabase : RoomDatabase() {
 
         private fun buildDatabase(
             context: Context,
-            dateTimeTypeConverter: DataMapper<String, OffsetDateTime>
+            dateTimeTypeConverter: DataMapper<String, OffsetDateTime>,
+            uriTypeConverter: DataMapper<String, URI>
         ): AppDatabase {
             val db = Room.databaseBuilder(
                 context.applicationContext,
@@ -50,6 +55,7 @@ abstract class AppDatabase : RoomDatabase() {
                 "medit.db"
             )
                 .addTypeConverter(dateTimeTypeConverter)
+                .addTypeConverter(uriTypeConverter)
                 .fallbackToDestructiveMigration()
                 .build()
 

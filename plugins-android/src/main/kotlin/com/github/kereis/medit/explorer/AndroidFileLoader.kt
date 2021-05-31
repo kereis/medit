@@ -1,6 +1,7 @@
 package com.github.kereis.medit.explorer
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.provider.OpenableColumns
 import com.github.kereis.medit.domain.editor.Document
@@ -69,7 +70,7 @@ class AndroidFileLoader(
             lastAccess = OffsetDateTime.now(),
         )
 
-        recentFileRepository.insert(documentFile)
+        // recentFileRepository.insert(documentFile)
 
         return@withContext Document(
             title = "",
@@ -82,9 +83,12 @@ class AndroidFileLoader(
     @Throws(FileNotFoundException::class)
     override suspend fun save(document: Document): Boolean =
         withContext(coroutineContext) {
+            val androidUri: Uri
             try {
+                androidUri = Uri.parse(document.fileReference.rawFilePath)
+                Timber.d("AndroidFileLoader.save -> $androidUri from ${document.fileReference}")
                 context.contentResolver.openFileDescriptor(
-                    Uri.parse(document.fileReference.rawFilePath),
+                    androidUri,
                     "w"
                 )?.use { descriptor ->
                     FileOutputStream(descriptor.fileDescriptor).use { outputStream ->
@@ -99,7 +103,16 @@ class AndroidFileLoader(
             }
 
             // TODO Are we aware that the updated FileReference's reference is not updated?
-            recentFileRepository.update(FileReference.updateAccessTime(document.fileReference))
+            // document.fileReference.id?.let {
+            //     recentFileRepository.update(FileReference.updateAccessTime(document.fileReference))
+            // } ?: run {
+            //     recentFileRepository.insert(FileReference.updateAccessTime(document.fileReference))
+            // }
+
+            context.contentResolver.takePersistableUriPermission(
+                androidUri,
+                Intent.FLAG_GRANT_READ_URI_PERMISSION
+            )
 
             true
         }

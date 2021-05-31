@@ -4,17 +4,21 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.github.kereis.medit.domain.editor.Document
 import com.github.kereis.medit.domain.explorer.files.FileReference
+import com.github.kereis.medit.domain.explorer.files.RecentFileRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.net.URI
 import java.time.OffsetDateTime
 import javax.inject.Inject
 
 @HiltViewModel
 class EditorViewModel
 @Inject constructor(
+    private val recentFileRepository: RecentFileRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -25,10 +29,10 @@ class EditorViewModel
             "active_document",
             Document(
                 "NewFile",
-                "My new content",
+                "",
                 FileReference(
                     null,
-                    "NewFile.md",
+                    "",
                     "",
                     OffsetDateTime.now()
                 )
@@ -54,8 +58,34 @@ class EditorViewModel
         _selectionEnd.value = end
     }
 
-    fun setActiveDocument(document: Document) {
-        _activeDocument.value = document
-        _content.value = document.content
+    fun setActiveDocument(document: Document) = viewModelScope.launch(Dispatchers.IO) {
+        recentFileRepository.getByURI(document.fileReference.filePath)?.let {
+            _activeDocument.postValue(
+                Document(
+                    document.title,
+                    document.content,
+                    it
+                )
+            )
+
+            recentFileRepository.update(FileReference.updateAccessTime(it))
+        } ?: run {
+            val id =
+                recentFileRepository.insert(FileReference.updateAccessTime(document.fileReference))[0]
+            _activeDocument.postValue(
+                Document(
+                    document.title,
+                    document.content,
+                    FileReference(
+                        id,
+                        document.fileReference.fileName,
+                        document.fileReference.rawFilePath,
+                        document.fileReference.lastAccess
+                    )
+                )
+            )
+        }
+
+        _content.postValue(document.content)
     }
 }

@@ -4,6 +4,7 @@ import com.github.kereis.medit.adapters.explorer.room.files.FileEntity
 import com.github.kereis.medit.domain.explorer.files.FileReference
 import com.github.kereis.medit.domain.explorer.files.RecentFileRepository
 import com.github.kereis.medit.domain.mapping.DataMapper
+import java.net.URI
 
 class RoomRecentFileRepository(
     private val recentFileDao: RecentFileDao,
@@ -11,6 +12,10 @@ class RoomRecentFileRepository(
 ) : RecentFileRepository {
     override suspend fun getAll(): List<FileReference> {
         return recentFileDao.getAll().map(fileEntityToFileReferenceMapper::toTargetType)
+    }
+
+    override suspend fun getByURI(uri: URI): FileReference? {
+        return recentFileDao.getByURI(uri)?.let(fileEntityToFileReferenceMapper::toTargetType)
     }
 
     override suspend fun getLastRecentlyUsedFiles(period: Int): List<FileReference> {
@@ -27,8 +32,8 @@ class RoomRecentFileRepository(
         )
     }
 
-    override suspend fun insert(vararg newFileReferences: FileReference) {
-        recentFileDao.insert(
+    override suspend fun insert(vararg newFileReferences: FileReference): List<Long> {
+        return recentFileDao.insert(
             *newFileReferences
                 .map(fileEntityToFileReferenceMapper::toSourceType)
                 .toTypedArray()

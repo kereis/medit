@@ -8,7 +8,7 @@ import java.time.OffsetDateTime
 data class FileEntity(
 
     @PrimaryKey
-    val id: Int,
+    val id: Long?,
     val fileName: String,
     val filePath: String,
     val lastAccess: OffsetDateTime,

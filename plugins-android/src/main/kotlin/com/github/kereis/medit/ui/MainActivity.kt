@@ -9,20 +9,21 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.commit
 import com.github.kereis.medit.R
 import com.github.kereis.medit.databinding.ActivityMainBinding
-import com.github.kereis.medit.domain.explorer.files.FileReference
-import com.github.kereis.medit.ui.explorer.FileExplorerFileElementViewHolder
-import com.github.kereis.medit.ui.explorer.recent.FileExplorerRecentListAdapter
+import com.github.kereis.medit.domain.explorer.files.RecentFileRepository
 import com.github.kereis.medit.ui.explorer.recent.FileExplorerRecentListFragment
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity :
-    AppCompatActivity(R.layout.activity_main),
-    FileExplorerFileElementViewHolder.OnClickListener {
+    AppCompatActivity(R.layout.activity_main) {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var toolbar: Toolbar
+
+    @Inject
+    lateinit var recentFileReference: RecentFileRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,11 +39,8 @@ class MainActivity :
             startActivity(intent)
         }
 
-        val recentListFragment = FileExplorerRecentListFragment()
-        recentListFragment.setAdapter(FileExplorerRecentListAdapter(this, this))
-
         supportFragmentManager.commit {
-            replace(binding.mainFragmentContainer.id, recentListFragment)
+            replace(binding.mainFragmentContainer.id, FileExplorerRecentListFragment())
         }
     }
 
@@ -55,14 +53,6 @@ class MainActivity :
         intent.putExtras(bundle)
 
         startActivity(intent)
-    }
-
-    override fun onFileClicked(clickedFile: FileReference) {
-        openEditorActivity(Uri.parse(clickedFile.rawFilePath))
-    }
-
-    override fun onFileLongClicked(clickedFile: FileReference) {
-        Timber.d("Long press on $clickedFile")
     }
 
     private val filePickerRequest =

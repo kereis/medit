@@ -1,10 +1,8 @@
 package com.github.kereis.medit.plugins.database.di
 
 import android.content.Context
-import androidx.annotation.AnyThread
 import com.github.kereis.medit.adapters.explorer.room.di.AndroidDatabaseAdapterModule
 import com.github.kereis.medit.adapters.explorer.room.files.FileEntity
-import com.github.kereis.medit.adapters.explorer.room.time.DateTimeTypeConverter
 import com.github.kereis.medit.domain.explorer.files.FileReference
 import com.github.kereis.medit.domain.explorer.files.RecentFileRepository
 import com.github.kereis.medit.domain.mapping.DataMapper
@@ -16,6 +14,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import java.net.URI
 import java.time.OffsetDateTime
 import javax.inject.Singleton
 
@@ -31,15 +30,14 @@ object AndroidDatabaseModule {
     @Provides
     fun provideRoomInstance(
         @ApplicationContext context: Context,
-        dateTimeTypeConverter: DataMapper<String, OffsetDateTime>
-    ) = AppDatabase.getInstance(context, dateTimeTypeConverter)
+        dateTimeTypeConverter: DataMapper<String, OffsetDateTime>,
+        uriTypeConverter: DataMapper<String, URI>
+    ) = AppDatabase.getInstance(context, dateTimeTypeConverter, uriTypeConverter)
 
     @Provides
     fun provideRecentFilesDao(db: AppDatabase) = db.recentFilesDao()
 
     @Provides
-    @Singleton
-    @AnyThread
     fun provideRecentFileRepository(
         recentFilesDao: RecentFileDao,
         fileEntityToFileReferenceMapper: DataMapper<FileEntity, FileReference>

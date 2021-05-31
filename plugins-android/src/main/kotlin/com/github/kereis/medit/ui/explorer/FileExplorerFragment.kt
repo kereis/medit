@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import com.github.kereis.medit.R
 import com.github.kereis.medit.databinding.FragmentFileExplorerBinding
-import com.github.kereis.medit.domain.explorer.files.FileReference
 import com.github.kereis.medit.ui.BaseFragment
 import com.github.kereis.medit.ui.EditorActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -16,8 +15,7 @@ import timber.log.Timber
 
 @AndroidEntryPoint
 class FileExplorerFragment :
-    BaseFragment<FragmentFileExplorerBinding>(R.layout.fragment_file_explorer),
-    FileExplorerFileElementViewHolder.OnClickListener {
+    BaseFragment<FragmentFileExplorerBinding>(R.layout.fragment_file_explorer) {
 
     override val bindingInflater:
             (LayoutInflater, ViewGroup?, Boolean) -> FragmentFileExplorerBinding
@@ -67,12 +65,4 @@ class FileExplorerFragment :
                 Timber.d("Won't start EditorActivity as filePickerRequest returned null")
             }
         }
-
-    override fun onFileClicked(clickedFile: FileReference) {
-        openEditorActivity(Uri.parse(clickedFile.rawFilePath))
-    }
-
-    override fun onFileLongClicked(clickedFile: FileReference) {
-        Timber.d("Long press on $clickedFile")
-    }
 }
