@@ -20,7 +20,8 @@ class FileExplorerRecentListViewModel
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val currentFileList = savedStateHandle.getLiveData<FileReference>("recent_files", null)
+    private val currentFileList =
+        savedStateHandle.getLiveData<List<FileReference>>("recent_files", null)
 
     val fetchFileList = currentFileList.distinctUntilChanged().switchMap {
         liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
