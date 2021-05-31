@@ -146,14 +146,12 @@ class EditorFragment :
                         )
                     )
                     viewModel.setActiveDocument(newDocument!!)
-                    Timber.d("$newDocument")
                     close()
                 }
 
             newDocument?.let {
                 runBlocking {
                     try {
-                        Timber.d("$it")
                         val saveSuccessful = fileLoader.save(it)
 
                         if (saveSuccessful) {

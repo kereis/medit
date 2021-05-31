@@ -70,8 +70,6 @@ class AndroidFileLoader(
             lastAccess = OffsetDateTime.now(),
         )
 
-        // recentFileRepository.insert(documentFile)
-
         return@withContext Document(
             title = "",
             content = fileContent.joinToString("\n"),
@@ -102,13 +100,7 @@ class AndroidFileLoader(
                 throw e
             }
 
-            // TODO Are we aware that the updated FileReference's reference is not updated?
-            // document.fileReference.id?.let {
-            //     recentFileRepository.update(FileReference.updateAccessTime(document.fileReference))
-            // } ?: run {
-            //     recentFileRepository.insert(FileReference.updateAccessTime(document.fileReference))
-            // }
-
+            // We need permission by Android to access the file without using Intents
             context.contentResolver.takePersistableUriPermission(
                 androidUri,
                 Intent.FLAG_GRANT_READ_URI_PERMISSION

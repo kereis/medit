@@ -11,7 +11,6 @@ import com.github.kereis.medit.domain.explorer.files.RecentFileRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.time.OffsetDateTime
 import javax.inject.Inject
 
@@ -53,14 +52,14 @@ class EditorViewModel
     }
 
     fun onSelectionChanged(start: Int, end: Int) {
-        Timber.d("onSelectionChanged: %d, %d", start, end)
         _selectionStart.value = start
         _selectionEnd.value = end
     }
 
     fun setActiveDocument(document: Document) = viewModelScope.launch(Dispatchers.IO) {
         recentFileRepository.getByURI(document.fileReference.filePath)?.let {
-            _activeDocument.postValue(
+
+        _activeDocument.postValue(
                 Document(
                     document.title,
                     document.content,
@@ -70,7 +69,8 @@ class EditorViewModel
 
             recentFileRepository.update(FileReference.updateAccessTime(it))
         } ?: run {
-            val id =
+
+        val id =
                 recentFileRepository.insert(FileReference.updateAccessTime(document.fileReference))[0]
             _activeDocument.postValue(
                 Document(
