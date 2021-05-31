@@ -1,8 +1,7 @@
 package com.github.kereis.medit.application.di
 
-import com.github.kereis.medit.application.files.FileReferenceAccessDateUpdater
+import com.github.kereis.medit.application.files.FileReferenceDataUpdater
 import com.github.kereis.medit.application.format.TextActionCommandExecutor
-import com.github.kereis.medit.domain.explorer.files.RecentFileRepository
 import dagger.Module
 import dagger.Provides
 import java.time.Clock
@@ -15,7 +14,7 @@ object AppCoreModule {
     fun provideTextActionCommandExecutor() = TextActionCommandExecutor()
 
     @Provides
-    fun provideFileReferenceAccessDateUpdater(clock: Clock) = FileReferenceAccessDateUpdater(clock)
+    fun provideFileReferenceDataUpdater(clock: Clock) = FileReferenceDataUpdater(clock)
 
     @Provides
     @Singleton

@@ -20,7 +20,7 @@ class EditorViewModel
 @Inject constructor(
     private val recentFileRepository: RecentFileRepository,
     private val ioDispatcher: CoroutineDispatcher,
-    private val fileRefAccessDateUpdater: FileReferenceAccessDateUpdater,
+    private val fileRefDataUpdater: FileReferenceDataUpdater,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -70,12 +70,12 @@ class EditorViewModel
                 )
             )
 
-            recentFileRepository.update(fileRefAccessDateUpdater.updateTimestamp(it))
+            recentFileRepository.update(fileRefDataUpdater.updateTimestamp(it))
         } ?: run {
 
             val id =
                 recentFileRepository.insert(
-                    fileRefAccessDateUpdater.updateTimestamp(document.fileReference)
+                    fileRefDataUpdater.updateTimestamp(document.fileReference)
                 )[0]
             _activeDocument.postValue(
                 Document(

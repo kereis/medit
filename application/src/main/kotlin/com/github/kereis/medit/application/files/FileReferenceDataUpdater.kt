@@ -4,7 +4,7 @@ import com.github.kereis.medit.domain.explorer.files.FileReference
 import java.time.Clock
 import java.time.OffsetDateTime
 
-class FileReferenceAccessDateUpdater(
+class FileReferenceDataUpdater(
     private val clock: Clock
 ) {
 
@@ -14,5 +14,13 @@ class FileReferenceAccessDateUpdater(
             fileReference.fileName,
             fileReference.rawFilePath,
             OffsetDateTime.now(clock)
+        )
+
+    fun updateId(fileReference: FileReference, newId: Long) =
+        FileReference(
+            newId,
+            fileReference.fileName,
+            fileReference.rawFilePath,
+            fileReference.lastAccess
         )
 }
