@@ -23,6 +23,7 @@ import com.github.kereis.medit.ui.BaseFragment
 import com.github.kereis.medit.ui.components.SelectableEditText
 import com.github.kereis.medit.ui.components.ToastService
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -52,6 +53,9 @@ class EditorFragment :
 
     @Inject
     lateinit var recentFileRepository: RecentFileRepository
+
+    @Inject
+    lateinit var ioDispatcher: CoroutineDispatcher
 
     private val viewModel by activityViewModels<EditorViewModel>()
 

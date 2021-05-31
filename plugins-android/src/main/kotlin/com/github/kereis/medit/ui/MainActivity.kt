@@ -44,7 +44,6 @@ class MainActivity :
         }
 
         binding.mainIntroFragmentButtonExampleDoc.setOnClickListener {
-            // openEditorActivity(Uri.parse("file:///android_asset/INTRO.md"))
             openEditorActivityWithIntro()
         }
 

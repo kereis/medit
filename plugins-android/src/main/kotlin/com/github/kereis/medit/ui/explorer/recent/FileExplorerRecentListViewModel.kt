@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.github.kereis.medit.domain.explorer.files.FileReference
 import com.github.kereis.medit.domain.explorer.files.RecentFileRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -18,6 +19,7 @@ import javax.inject.Inject
 class FileExplorerRecentListViewModel
 @Inject constructor(
     private val recentFileRepository: RecentFileRepository,
+    private val ioDispatcher: CoroutineDispatcher,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -25,14 +27,14 @@ class FileExplorerRecentListViewModel
         savedStateHandle.getLiveData<List<FileReference>>("recent_files", listOf())
 
     val fetchFileList = currentFileList.distinctUntilChanged().switchMap {
-        liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
+        liveData(viewModelScope.coroutineContext + ioDispatcher) {
             val list = recentFileRepository.getAll()
             Timber.d("Got list of files! %s", list.toString())
             emit(list)
         }
     }
 
-    fun deleteFileEntry(fileReference: FileReference) = viewModelScope.launch(Dispatchers.IO) {
+    fun deleteFileEntry(fileReference: FileReference) = viewModelScope.launch(ioDispatcher) {
         recentFileRepository.delete(fileReference)
         currentFileList.postValue(recentFileRepository.getAll())
     }

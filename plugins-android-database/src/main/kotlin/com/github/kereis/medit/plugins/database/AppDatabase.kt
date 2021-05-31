@@ -7,12 +7,9 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.github.kereis.medit.adapters.explorer.room.files.FileEntity
 import com.github.kereis.medit.adapters.explorer.room.files.URITypeConverter
-import com.github.kereis.medit.adapters.explorer.room.files.getSampleFileEntityData
 import com.github.kereis.medit.adapters.explorer.room.time.DateTimeTypeConverter
 import com.github.kereis.medit.domain.mapping.DataMapper
 import com.github.kereis.medit.plugins.database.files.RecentFileDao
-import kotlinx.coroutines.runBlocking
-import timber.log.Timber
 import java.net.URI
 import java.time.OffsetDateTime
 
@@ -60,10 +57,10 @@ abstract class AppDatabase : RoomDatabase() {
                 .build()
 
             // TODO: Other mechanism for debug entries?
-            runBlocking {
-                Timber.i("Pre-populating room database!")
-                db.recentFilesDao().insert(*getSampleFileEntityData())
-            }
+            // runBlocking {
+            //     Timber.i("Pre-populating room database!")
+            //     db.recentFilesDao().insert(*getSampleFileEntityData())
+            // }
 
             return db
         }

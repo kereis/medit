@@ -7,7 +7,6 @@ import android.provider.OpenableColumns
 import com.github.kereis.medit.domain.editor.Document
 import com.github.kereis.medit.domain.explorer.files.FileLoader
 import com.github.kereis.medit.domain.explorer.files.FileReference
-import com.github.kereis.medit.domain.explorer.files.RecentFileRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.withContext
@@ -28,7 +27,6 @@ import java.util.stream.Collectors
  */
 class AndroidFileLoader(
     dispatcher: CoroutineDispatcher,
-    private val recentFileRepository: RecentFileRepository,
     private val context: Context
 ) : FileLoader() {
 

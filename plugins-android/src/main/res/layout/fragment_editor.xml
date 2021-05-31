@@ -84,7 +84,6 @@
         </HorizontalScrollView>
     </LinearLayout>
 
-    <!-- // TODO REWORK -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:contentDescription="@string/fragment_editor_fab_render_md"
         android:id="@+id/fab_render_md"

@@ -9,7 +9,7 @@ import com.github.kereis.medit.domain.editor.Document
 import com.github.kereis.medit.domain.explorer.files.FileReference
 import com.github.kereis.medit.domain.explorer.files.RecentFileRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import java.time.OffsetDateTime
 import javax.inject.Inject
@@ -18,6 +18,7 @@ import javax.inject.Inject
 class EditorViewModel
 @Inject constructor(
     private val recentFileRepository: RecentFileRepository,
+    private val ioDispatcher: CoroutineDispatcher,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -56,10 +57,10 @@ class EditorViewModel
         _selectionEnd.value = end
     }
 
-    fun setActiveDocument(document: Document) = viewModelScope.launch(Dispatchers.IO) {
+    fun setActiveDocument(document: Document) = viewModelScope.launch(ioDispatcher) {
         recentFileRepository.getByURI(document.fileReference.filePath)?.let {
 
-        _activeDocument.postValue(
+            _activeDocument.postValue(
                 Document(
                     document.title,
                     document.content,
