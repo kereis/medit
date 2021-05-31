@@ -6,7 +6,6 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
@@ -148,27 +147,15 @@ class EditorFragment :
                         val saveSuccessful = fileLoader.save(document)
 
                         if (saveSuccessful) {
-                            Toast.makeText(
-                                this@EditorFragment.mContext,
-                                "Saved!",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            toastService.showShort("Saved!")
 
                             viewModel.setActiveDocument(document)
                         } else {
-                            Toast.makeText(
-                                this@EditorFragment.mContext,
-                                "Failed!",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            toastService.showShort("Saving failed!")
                         }
                     } catch (e: Exception) {
                         Timber.e(e)
-                        Toast.makeText(
-                            this@EditorFragment.mContext,
-                            "Failed! ${e.localizedMessage} - $uri",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        toastService.showLong("Failed! ${e.localizedMessage} - $uri")
                     }
                 }
             }
