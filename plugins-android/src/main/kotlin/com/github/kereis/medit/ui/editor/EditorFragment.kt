@@ -101,6 +101,7 @@ class EditorFragment :
                         fileLoader.load(URI(rawUri))?.let { document ->
                             Timber.d("Document $rawUri loaded -> $document")
                             viewModel.setActiveDocument(document)
+                            binding.contentInput.setText(document.content)
                         }
                     } catch (fnfex: FileNotFoundException) {
                         Timber.e("could not file while starting activity: $fnfex")
@@ -113,9 +114,6 @@ class EditorFragment :
                 }
             }
         }
-    }
-
-    private fun feedDocumentMetadata(document: Document) {
     }
 
     private val fileSaverIntent =
@@ -201,8 +199,6 @@ class EditorFragment :
                 addToBackStack(null)
             }
         }
-
-        binding.contentInput.setText(viewModel.content.value.toString())
 
         binding.contentInput.addTextChangedListener(
             object : TextWatcher {
