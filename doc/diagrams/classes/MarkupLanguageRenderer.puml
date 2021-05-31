@@ -1,0 +1,14 @@
+@startuml
+package plugins-android <<Rectangle>> {
+    abstract class MarkupLanguageRenderer {
+        + setTextForView(textView: TextView, textToRender: String)
+    }
+}
+
+package "Android Library" <<Rectangle>> {
+    class TextView
+}
+
+MarkupLanguageRenderer --> TextView
+
+@enduml

@@ -1,0 +1,7 @@
+@startuml
+package domain <<Rectangle>> {
+    abstract class Command {
+        + execute(): void
+    }
+}
+@enduml

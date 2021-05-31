@@ -1,0 +1,83 @@
+@startuml
+package domain <<Rectangle>> {
+
+    interface TextEditor {
+        + selectionStart: Int
+        + selectionEnd: Int
+        + text: String
+        + hasSelection: Boolean
+
+        + replace(startIndex: Int, endIndex: Int, text: String)
+        + insert(atIndex: Int, text: String)
+        + setCursor(document: Document)
+        + save()
+        + saveAs(file: FileReference)
+    }
+
+    abstract class Command {
+        + execute(): void
+    }
+
+    class BlockTextActionCommand extends Command {
+        - textEditor: TextEditor
+        - character: String
+    }
+
+    class InlineTextActionCommand extends Command {
+        - textEditor: TextEditor
+        - character: String
+    }
+
+    class CommandHistoryEntry {
+        + command: Command
+        + backupState: E
+    }
+    CommandHistoryEntry --> Command
+
+    class CommandHistory {
+        - history: History<CommandHistoryEntry<List<String>>
+        + push(command: Command, backupState: List<String>): Boolean
+        + pop(): CommandHistoryEntry<List<String>>
+    }
+    CommandHistory ..> History
+    CommandHistory ..> CommandHistoryEntry
+    CommandHistory --> Command
+
+    class History {
+        - historyList: Stack<T>
+        + iterator: Iterator<T>
+
+        + add(element: T): Boolean
+        + remove(element: T): Boolean
+        + jumpToPreviousState(): T
+    }
+
+    note top of History
+        T steht für einen primitiven Datentypen
+        im <i>diamond operator</i>
+    end note
+
+    BlockTextActionCommand ..> TextEditor
+    InlineTextActionCommand ..> TextEditor
+}
+
+package application <<Rectangle>> {
+    class TextActionCommandExecutor {
+        - history: CommandHistory
+        + executeCommand(command: Command, currentContent: List<String>)
+        + undo(): CommandHistoryEntry<List<String>>
+    }
+    TextActionCommandExecutor --> Command
+    TextActionCommandExecutor ..> CommandHistory
+}
+
+package plugins-android <<Rectangle>> {
+    class EditorFragment
+    EditorFragment ..> TextActionCommandExecutor
+}
+
+package "Android Library" <<Rectangle>> {
+    class EditorFragment implements TextEditor, Fragment
+}
+
+@enduml

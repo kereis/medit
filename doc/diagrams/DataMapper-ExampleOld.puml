@@ -1,0 +1,44 @@
+@startuml
+package domain <<Rectangle>> {
+    class FileReference {
+        + id: Long?
+        + fileName: String
+        + rawFilePath: String
+        + filePath: URI
+        + lastAccess: OffsetDateTime
+    }
+    class RecentFileRepository
+}
+
+interface RecentFileRepository {
+    + suspend getAll(): List<FileReference>
+    + suspend getLastRecentlyUsedFiles(period: Int): List<FileReference>
+    + suspend update(files: FileReference[])
+    + suspend insert(newFiles: FileReference[])
+    + suspend delete(file: FileReference)
+}
+
+package "plugins-android-database" <<Rectangle>> {
+    class RoomRecentFileRepository
+}
+
+package "adapters-android-database" <<Rectangle>> {
+    class FileEntity {
+        + id: Long?
+        + fileName: String,
+        + filePath: String,
+        + lastAccess: OffsetDateTime
+    }
+}
+
+class RoomRecentFileRepository implements RecentFileRepository
+
+package "Android Room Database" <<Database>> {
+}
+
+RoomRecentFileRepository --> "Android Room Database"
+RoomRecentFileRepository --> FileEntity
+RecentFileRepository --> FileReference
+"Android Room Database" "1" *-- "n" FileEntity
+
+@enduml

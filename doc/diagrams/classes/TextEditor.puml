@@ -1,0 +1,17 @@
+@startuml
+package domain <<Rectangle>> {
+    interface TextEditor {
+        + selectionStart: Int
+        + selectionEnd: Int
+        + text: String
+        + hasSelection: Boolean
+
+        + replace(startIndex: Int, endIndex: Int, text: String)
+        + insert(atIndex: Int, text: String)
+        + setCursor(document: Document)
+        + save()
+        + saveAs(file: FileReference)
+    }
+}
+
+@enduml

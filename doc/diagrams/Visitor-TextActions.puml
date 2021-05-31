@@ -32,16 +32,13 @@ package "Android Library" <<Rectangle>> {
     class EditorFragment implements TextEditor, Fragment
 }
 
-
-
 class FileReference {
-    + id: String?
+    + id: Long?
     + fileName: String
-    + fileExtension: String?
-    + filePath: Path
+    + rawFilePath: String
+    + filePath: URI
     + lastAccess: OffsetDateTime
 }
-'
 'package "plugins-android-database" <<Rectangle>> {
 '    class RoomRecentFileRepository
 '}

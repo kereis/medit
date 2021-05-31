@@ -1,0 +1,24 @@
+@startuml
+package domain <<Rectangle>> {
+    class FileReference {
+        + id: Long?
+        + fileName: String
+        + rawFilePath: String
+        + filePath: URI
+        + lastAccess: OffsetDateTime
+    }
+
+    class Document {
+        + title: String
+        + content: String
+    }
+
+    class DocumentAggregate {
+        + document: Document
+        + fileReference: FileReference
+    }
+    FileReference *-- DocumentAggregate
+    Document *-- DocumentAggregate
+}
+
+@enduml

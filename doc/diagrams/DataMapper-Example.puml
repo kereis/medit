@@ -1,0 +1,59 @@
+@startuml
+package domain <<Rectangle>> {
+    interface DataMapper {
+        + toSourceType(target: T): S
+        + toTargetType(source: S): T
+    }
+
+    note top of DataMapper
+        <b>S</b>ource und <b>T</b>arget stehen jeweils
+        für einen primitiven Datentypen
+        im <i>diamond operator</i>
+    end note
+
+    class FileReference {
+        + id: Long?
+        + fileName: String
+        + rawFilePath: String
+        + filePath: URI
+        + lastAccess: OffsetDateTime
+    }
+    class RecentFileRepository
+}
+
+interface RecentFileRepository {
+    + suspend getAll(): List<FileReference>
+    + suspend getLastRecentlyUsedFiles(period: Int): List<FileReference>
+    + suspend update(files: FileReference[])
+    + suspend insert(newFiles: FileReference[])
+    + suspend delete(file: FileReference)
+}
+
+package "plugins-android-database" <<Rectangle>> {
+    class RoomRecentFileRepository
+}
+
+package "adapters-android-database" <<Rectangle>> {
+    class FileEntity {
+        + id: Long?
+        + fileName: String,
+        + filePath: String,
+        + lastAccess: OffsetDateTime
+    }
+    class FileEntityToFileReferenceMapper implements DataMapper {
+        + toSourceType(target: FileReference): FileEntity
+        + toTargetType(source: FileEntity): FileReference
+    }
+}
+
+class RoomRecentFileRepository implements RecentFileRepository
+
+package "Android Room Database" <<Database>> {
+}
+
+RoomRecentFileRepository --> "Android Room Database"
+RoomRecentFileRepository ..> FileEntityToFileReferenceMapper
+RecentFileRepository --> FileReference
+"Android Room Database" "1" *-- "n" FileEntity
+
+@enduml
